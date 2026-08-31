@@ -1,0 +1,46 @@
+{
+  "summary": "Iteration-5 regression test of the backend-only code-quality refactor (secrets-based gen_code + /hasil split into build_peta/build_disk/build_bacaan) on Triwikramā/Candradimuka. Backend: 55/55 pytest tests pass (36 existing backend_test.py + 12 test_rename_bands.py + a new 19-test test_refactor_hasil.py). Verified /api/sesi/{id}/hasil key set is EXACTLY the iteration-4 set (sesi_id, jenis, tier_nama, peserta, skor, kategori, kategori_desc, kategori_paragraf, terbuka, selesai_at, created_at, jumlah_soal, tampil_di_papan, perjalanan_id, perjalanan_selesai, peta, disk) with 'bacaan' added only when terbuka; peserta has no email/google_sub/_id; peta always 3 tiers with keys {key,nama,persen} and diacritic names, persen filled only for finished tiers (unpaid Bhurloka -> [50,None,None], paid full journey -> [25,100,75]); disk length == draw size, matches the DB chosen-option scores in soal_ids order, None for unanswered; bacaan.sebaran == {25:17,50:0,75:90,100:30} summing 137, menonjol=75 with level+text, tangga exactly 3 with all 4 sub-keys, latihan mapped to the weakest tier (Bhurloka -> 'Cek Diri Dasa Kreta'), kode_dipakai equals the consumed code. build_peta()/build_disk() imported directly and recomputed from Mongo produce output identical to the API response (pure-helper equivalence). gen_code: 300 draws are all 8-char uppercase-alnum, unique, >25 distinct chars; all 55 seeded codes still match ^[A-Z0-9]{8}$ and are unique. Draws 17/30/90, option-text-only /sesi payload (no \"skor\" anywhere), cross-session exclusion + per-session shuffle, code reuse refused ('sudah dipakai'), Bearer-only 401 gating on bayar/lanjut/papan/sertifikat/auth/me (plus bogus bearer), band names + no legacy 'Nyaring Sela'/'Nyaring Jati' in DB, /papan 3 tiers + 400 on unknown jenis, serial format + /validasi check-char 404 + 10/min 429 + 3-key payload — all still hold. Frontend: complete 17-question Bhurloka journey driven in the browser on the public URL; result page renders kategori (Lulungu 63%), matching paragraph, Profile Disk canvas (300x300) and Peta Kejernihan with 63%/belum/belum; a paid+finished journey page renders 25%/100%/75% bars plus the full Pembacaan Lengkap (sebaran 17/0/90/30, menonjol Nyaring, 3 tangga, latihan 'Cek Diri Dasa Kreta'). No CORS/net::ERR_FAILED errors and no console errors on the paid page. ZERO behaviour change detected from the refactor.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "GET /api/periksa/{kode}", "issue": "STILL MISSING (pre-existing, carried from iteration 4): the /periksa frontend page calls it and shows FastAPI's raw English 'Not Found'. Either implement or drop the page."},
+      {"endpoint": "GET /api/sesi/{id}/hasil", "issue": "Spec wording mismatch only, not a regression: skor is round(mean of chosen scores) — a 9x100 + 8x25 Bhurloka run returns 65, not a 25-step floor value. Behaviour is unchanged from iteration 4 (score_sesi untouched); the review request's phrase 'floor 25' means the option floor is 25, not that the mean is floored to a 25 grid."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [
+      {"flow": "Anonymous result page", "issue": "Two console 'Failed to load resource: 401' entries from GET /api/auth/me while no session exists. Harmless (login prompt renders correctly) but noisy — skip the call when candra_token is absent.", "affected_selectors": ["[data-testid=\"login-prompt\"]"]}
+    ],
+    "design_issues": [
+      {"screen": "Hasil (result)", "issues": ["No contrast/spacing/alignment problems found; bars, disk legend and paid reading all align to the same 1920px content column."]}
+    ]
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_refactor_hasil.py",
+    "/app/backend/tests/backend_test.py",
+    "/app/backend/tests/test_rename_bands.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "Nothing blocking — the refactor is behaviour-preserving; no fix required for it.",
+    "Optional (carried over): implement GET /api/periksa/{kode} or remove the /periksa route/page.",
+    "Optional: guard the /api/auth/me call in the frontend behind the presence of localStorage candra_token to stop the two 401s on anonymous result pages."
+  ],
+  "critical_code_review_comments": [
+    "gen_code() with secrets.choice over A-Z0-9 (8 chars, ~41 bits) is fine for these seeded codes; the collision check on insert should stay if codes are ever bulk-generated at scale.",
+    "build_bacaan() iterates js.items() (insertion order from the Mongo cursor) rather than TIER_ORDER; totals/dist are order-independent so output is stable today, but 'tangga' picks the first 3 of allchosen, which therefore depends on cursor order. Iterate TIER_ORDER inside build_bacaan to make the reading deterministic.",
+    "build_disk()/build_peta() are pure and unit-tested against the endpoint — good split. Consider also extracting score_sesi's per-question lookup (three next() scans over the same pilihan list) into one pass for clarity."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_refactor_hasil.py",
+    "/app/frontend/src/components/ResultMap.jsx"
+  ],
+  "success_rate": {"backend": "100%", "frontend": "100%"},
+  "seed_data_creation": "TEST_R5_* peserta/journeys via pytest (one paid full 137-question journey, one partial, one mixed-score Bhurloka) and one TEST_FE5_Smoke Bhurloka journey completed in the browser. Consumed 3 'bacaan' codes this run; 8 unused 'bacaan' codes remain in kode_akses.",
+  "should_call_test_agent_after_fix": false,
+  "should_main_agent_self_test": true,
+  "test_credentials": "/app/memory/test_credentials.md — Google auth simulated by inserting peserta.google_sub + user_sessions and sending Authorization: Bearer <session_token>; browser flows by setting localStorage candra_token + candra_peserta before navigating. Admin key CANDRA2026.",
+  "context_for_next_testing_agent": "Run `cd /app/backend && python -m pytest tests/ -q` (pytest.ini forces -n 2 --dist loadscope) — 55 tests, all green. New file test_refactor_hasil.py pins the exact /hasil key set (HASIL_KEYS/BACAAN_KEYS constants) plus build_peta/build_disk purity and gen_code entropy; update HASIL_KEYS if the payload legitimately changes. IMPORTANT: only 8 unused 'bacaan' codes remain — each full-journey test consumes one (backend_test full journey, test_rename_bands papan_akasa, test_refactor_hasil paid journey = 3 per suite run), so re-seed/reset kode_akses in ~2 more full runs. I added data-testid=\"peta-row-{key}\" and data-testid=\"peta-persen-{key}\" to ResultMap.jsx — use them to assert tier bars. Reusable paid journey for UI checks: sesi 6d79f8d5-c487-4725-9bb2-c04962ffaa80 / token TEST_3933dc841dd3438da13ceb61b3801283 / peserta a19c4eb7-2b47-4bdd-9390-83582ea67604 (peta 25/100/75).",
+  "rca_of_the_issue": "No defect introduced by the refactor. The single initial test failure was my own wrong expectation (assumed the tier percentage was floored to a 25-step grid); server.py score_sesi has always used round(total/n) and is untouched by this change, confirmed by reading the function and by the unchanged iteration-4 assertions still passing. All three extracted helpers were additionally verified to be pure by recomputing from MongoDB and comparing to the live API response."
+}

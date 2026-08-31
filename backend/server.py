@@ -83,8 +83,9 @@ def now_iso():
     return datetime.now(timezone.utc).isoformat()
 
 
-def gen_code(n=8):
-    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=n))
+def gen_code(n: int = 8) -> str:
+    # Access codes act as tokens, so use a cryptographically secure source.
+    return ''.join(secrets.choice(string.ascii_uppercase + string.digits) for _ in range(n))
 
 
 def item_tingkat(it: Dict) -> Optional[str]:
@@ -537,6 +538,60 @@ async def journey_sesis(pj_id: str) -> Dict[str, Dict]:
     return out
 
 
+def build_peta(js: Dict[str, Dict]) -> List[Dict[str, Any]]:
+    """Result map: one clarity percentage per tier across the journey (None if untaken)."""
+    peta: List[Dict[str, Any]] = []
+    for key in TIER_ORDER:
+        ts = js.get(key)
+        pct = None
+        if ts and ts.get("status") == "selesai":
+            pct = ts.get("skor")
+            if pct is None:
+                pct = score_sesi(ts)[0]
+        peta.append({"key": key, "nama": TIER_BY_KEY[key]["nama"], "persen": pct})
+    return peta
+
+
+def build_disk(s: Dict) -> List[Optional[int]]:
+    """Ordered list of the chosen option score per question (None if unanswered)."""
+    jawaban = s.get("jawaban", {})
+    return [next((p["skor"] for p in s["soal_detail"][str(no)]["pilihan"]
+                  if p["token"] == jawaban.get(str(no))), None) for no in s["soal_ids"]]
+
+
+def build_bacaan(js: Dict[str, Dict], pj: Optional[Dict]) -> Dict[str, Any]:
+    """Written reading (included with Rp17.000): distribution, prominent state, ladders, exercise."""
+    allchosen: List[Dict] = []
+    alldist = {25: 0, 50: 0, 75: 0, 100: 0}
+    tier_scores: Dict[str, int] = {}
+    for key in TIER_ORDER:  # deterministic order, independent of cursor order
+        ts = js.get(key)
+        if not ts or ts.get("status") != "selesai":
+            continue
+        sk, di, ch, _ = score_sesi(ts)
+        tier_scores[key] = sk
+        for kk in alldist:
+            alldist[kk] += di[kk]
+        allchosen += ch
+    menonjol_skor = max(alldist.items(), key=lambda kv: (kv[1], kv[0]))[0] if any(alldist.values()) else None
+    c75 = [c for c in allchosen if c["chosen_skor"] == 75]
+    pick = c75 if len(c75) >= 3 else c75 + [c for c in allchosen if c["chosen_skor"] == 50]
+    tangga = [{"skenario": c["skenario"], "pilihan_dipilih": c["chosen_teks"], "pilihan_seratus": c["best_teks"],
+               "beda": "Bedanya terletak pada meneruskan kesadaran menjadi tindakan nyata, bukan berhenti pada pengamatan."}
+              for c in pick[:3]]
+    latihan = None
+    if tier_scores:
+        weakest = min(tier_scores.keys(), key=lambda k: tier_scores[k])
+        latihan = {"tier": TIER_BY_KEY[weakest]["nama"], "nama": EXERCISE_BY_TIER[weakest]}
+    return {
+        "sebaran": {str(k): alldist[k] for k in (25, 50, 75, 100)},
+        "menonjol": {"skor": menonjol_skor, "level": LEVEL_NAMA.get(menonjol_skor, ""), "bacaan": MENONJOL_BACAAN.get(menonjol_skor, "")},
+        "tangga": tangga,
+        "latihan": latihan,
+        "kode_dipakai": pj.get("kode_dipakai") if pj else None,
+    }
+
+
 @api_router.get("/sesi/{sesi_id}/hasil")
 async def hasil(sesi_id: str):
     s = await db.sesi.find_one({"id": sesi_id})
@@ -544,24 +599,11 @@ async def hasil(sesi_id: str):
         raise HTTPException(404, "Sesi tidak ditemukan")
     pj = await db.perjalanan.find_one({"id": s.get("perjalanan_id")})
     peserta = await db.peserta.find_one({"id": s["peserta_id"]}, {"_id": 0, "email": 0, "google_sub": 0})
-    skor, dist, chosen, n = score_sesi(s)
+    skor, _, _, n = score_sesi(s)
     nama, desc = kategori_for(skor)
-
-    # Result map: tier percentages across the journey
     js = await journey_sesis(s["perjalanan_id"]) if s.get("perjalanan_id") else {s["jenis"]: s}
-    peta = []
-    for key in TIER_ORDER:
-        tier = TIER_BY_KEY[key]
-        ts = js.get(key)
-        pct = None
-        if ts and ts.get("status") == "selesai":
-            pct = ts.get("skor")
-            if pct is None:
-                pct = score_sesi(ts)[0]
-        peta.append({"key": key, "nama": tier["nama"], "persen": pct})
-
     terbuka = bool(pj and pj.get("terbuka"))
-    out = {
+    out: Dict[str, Any] = {
         "sesi_id": sesi_id, "jenis": s["jenis"], "tier_nama": TIER_BY_KEY[s["jenis"]]["nama"],
         "peserta": peserta, "skor": skor, "kategori": nama, "kategori_desc": desc,
         "kategori_paragraf": KATEGORI_PARAGRAF.get(nama, ""),
@@ -569,40 +611,11 @@ async def hasil(sesi_id: str):
         "jumlah_soal": n, "tampil_di_papan": s.get("tampil_di_papan", False),
         "perjalanan_id": s.get("perjalanan_id"),
         "perjalanan_selesai": bool(pj and pj.get("selesai_at")),
-        "peta": peta,
-        "disk": [next((p["skor"] for p in s["soal_detail"][str(no)]["pilihan"]
-                       if p["token"] == s.get("jawaban", {}).get(str(no))), None) for no in s["soal_ids"]],
+        "peta": build_peta(js),
+        "disk": build_disk(s),
     }
-
-    # Written reading (included with Rp17.000): shown when journey is paid (terbuka)
     if terbuka:
-        allchosen = []
-        alldist = {25: 0, 50: 0, 75: 0, 100: 0}
-        tier_scores = {}
-        for key, ts in js.items():
-            if ts.get("status") != "selesai":
-                continue
-            sk, di, ch, nn = score_sesi(ts)
-            tier_scores[key] = sk
-            for kk in alldist:
-                alldist[kk] += di[kk]
-            allchosen += ch
-        menonjol_skor = max(alldist.items(), key=lambda kv: (kv[1], kv[0]))[0] if any(alldist.values()) else None
-        c75 = [c for c in allchosen if c["chosen_skor"] == 75]
-        pick = c75 if len(c75) >= 3 else c75 + [c for c in allchosen if c["chosen_skor"] == 50]
-        tangga = [{"skenario": c["skenario"], "pilihan_dipilih": c["chosen_teks"], "pilihan_seratus": c["best_teks"],
-                   "beda": "Bedanya terletak pada meneruskan kesadaran menjadi tindakan nyata, bukan berhenti pada pengamatan."} for c in pick[:3]]
-        latihan = None
-        if tier_scores:
-            weakest = min(tier_scores.keys(), key=lambda k: tier_scores[k])
-            latihan = {"tier": TIER_BY_KEY[weakest]["nama"], "nama": EXERCISE_BY_TIER[weakest]}
-        out["bacaan"] = {
-            "sebaran": {str(k): alldist[k] for k in (25, 50, 75, 100)},
-            "menonjol": {"skor": menonjol_skor, "level": LEVEL_NAMA.get(menonjol_skor, ""), "bacaan": MENONJOL_BACAAN.get(menonjol_skor, "")},
-            "tangga": tangga,
-            "latihan": latihan,
-            "kode_dipakai": pj.get("kode_dipakai") if pj else None,
-        }
+        out["bacaan"] = build_bacaan(js, pj)
     return out
 
 

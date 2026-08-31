@@ -5,10 +5,10 @@ export const ResultMap = ({ peta }) => (
     {peta.map((t) => {
       const taken = t.persen != null;
       return (
-        <div key={t.key || t.nama} style={{ marginBottom: 14 }}>
+        <div key={t.key || t.nama} data-testid={`peta-row-${t.key || t.nama}`} style={{ marginBottom: 14 }}>
           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
             <span className="serif" style={{ fontSize: 18, color: "var(--ink)" }}>{t.nama}</span>
-            <span className="mono" style={{ fontSize: 13, color: taken ? "var(--patina)" : "var(--ink-3)" }}>
+            <span className="mono" data-testid={`peta-persen-${t.key || t.nama}`} style={{ fontSize: 13, color: taken ? "var(--patina)" : "var(--ink-3)" }}>
               {taken ? `${t.persen}%` : "belum"}
             </span>
           </div>

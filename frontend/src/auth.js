@@ -20,6 +20,7 @@ export function useAuth() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (window.location.hash?.includes("session_id=")) { setLoading(false); return; }
+    if (!localStorage.getItem("candra_token")) { setLoading(false); return; }
     api.get("/auth/me").then((r) => setUser(r.data)).catch(() => setUser(null)).finally(() => setLoading(false));
   }, []);
   return { user, loading, setUser };
