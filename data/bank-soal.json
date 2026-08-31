@@ -1,43 +1,2254 @@
 {
-  "soal": [
+ "soal": [
+  {
+   "no": 1,
+   "bagian": 1,
+   "judul": "Kebisingan Media Sosial",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Di linimasa Anda muncul narasi viral yang menyudutkan kelompok atau tokoh yang selama ini Anda dukung, lengkap dengan potongan video yang tampak meyakinkan. Reaksi pertama Anda adalah…",
+   "pilihan": [
     {
-      "no": 1,
-      "bagian": 1,
-      "judul": "Membaca Situasi Genting",
-      "jenis": "skenario",
-      "skenario": "Sebuah pesan masuk di tengah malam mengabarkan bahwa rencana kerja yang kamu susun berbulan-bulan dibatalkan sepihak. Apa yang pertama kali terjadi di dalam dirimu sebelum kamu memutuskan bertindak?",
-      "pilihan": [
-        { "skor": 25, "teks": "Amarah langsung menguasai dan aku membalas pesan itu saat itu juga tanpa berpikir." },
-        { "skor": 50, "teks": "Aku kesal, tetapi menahan diri sambil mengingatkan diri bahwa aku sedang kesal." },
-        { "skor": 75, "teks": "Aku mengamati gejolak itu muncul dan reda, lalu menilai kabar itu apa adanya." },
-        { "skor": 100, "teks": "Aku menerima kabar itu, menimbang langkah nyata berikutnya, dan mulai menyusunnya malam itu." }
-      ]
+     "skor": 25,
+     "teks": "Segera menuliskan pembelaan di kolom komentar, sebab membiarkan tuduhan seperti ini tanpa jawaban sama saja membiarkan kebohongan menang di ruang publik."
     },
     {
-      "no": 2,
-      "bagian": 2,
-      "judul": "Menimbang Niat",
-      "jenis": "skenario",
-      "skenario": "Kamu diminta membantu seseorang yang selama ini kurang menghargaimu. Tidak ada yang akan tahu apakah kamu membantu dengan sungguh-sungguh atau setengah hati. Apa yang menuntun tindakanmu?",
-      "pilihan": [
-        { "skor": 25, "teks": "Aku menolak diam-diam karena ia tidak pantas mendapat bantuanku." },
-        { "skor": 50, "teks": "Aku membantu seadanya supaya terlihat baik, bukan karena benar-benar ingin." },
-        { "skor": 75, "teks": "Aku membantu dengan tulus, meski masih menyimpan sedikit rasa terganggu." },
-        { "skor": 100, "teks": "Aku membantu sepenuhnya karena nilai yang kupegang tidak bergantung pada perlakuannya." }
-      ]
+     "skor": 50,
+     "teks": "Menelusuri rekam jejak pengunggah dan tokoh di dalam video itu, lalu menyusun bantahan berdasarkan temuan tersebut supaya pembaca lain bisa menilai kredibilitas sumbernya."
     },
     {
-      "no": 3,
-      "bagian": 3,
-      "judul": "Ruang bagi yang Lain",
-      "jenis": "skenario",
-      "skenario": "Dalam sebuah percakapan, lawan bicaramu mengungkapkan pandangan yang berlawanan keras dengan keyakinanmu. Bagaimana kamu menempatkan dirimu?",
-      "pilihan": [
-        { "skor": 25, "teks": "Aku memotong dan meluruskan bahwa ia keliru sebelum ia selesai bicara." },
-        { "skor": 50, "teks": "Aku mendengarkan sambil menyiapkan bantahan di kepalaku." },
-        { "skor": 75, "teks": "Aku mendengarkan penuh, lalu menyampaikan pandanganku dengan tenang." },
-        { "skor": 100, "teks": "Aku benar-benar masuk ke cara ia melihat dunia sebelum menimbang pandanganku sendiri." }
-      ]
+     "skor": 75,
+     "teks": "Menutup aplikasi tanpa berkomentar, karena narasi semacam ini memang dibuat untuk memancing reaksi, dan tidak memberi reaksi adalah cara paling jernih menanggapinya."
+    },
+    {
+     "skor": 100,
+     "teks": "Mencari rekaman utuhnya, memeriksa bagian yang dipotong, lalu memuat perbandingannya apa adanya — termasuk bila ternyata potongan itu tidak mengubah apa pun."
     }
-  ]
+   ]
+  },
+  {
+   "no": 2,
+   "bagian": 1,
+   "judul": "Kritik dari Atasan di Depan Umum",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Dalam rapat kerja yang dihadiri banyak rekan, atasan Anda mengkritik hasil kerja Anda dengan kasar dan menggunakan kalimat yang menyerang pribadi. Bagaimana Anda merespons?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menyampaikan saat itu juga bahwa cara penyampaian seperti itu tidak pantas di forum, sebab menerima diam-diam justru mengajarkan orang bahwa Anda bisa diperlakukan begitu."
+    },
+    {
+     "skor": 50,
+     "teks": "Mencatat kritiknya tanpa membantah, lalu setelah rapat menyiapkan data yang menunjukkan bahwa sebagian besar kekeliruan itu sebenarnya berasal dari bagian lain."
+    },
+    {
+     "skor": 75,
+     "teks": "Menerima seluruhnya tanpa ekspresi, mengingatkan diri bahwa harga diri Anda tidak ditentukan penilaian orang lain, lalu melanjutkan pekerjaan seperti biasa."
+    },
+    {
+     "skor": 100,
+     "teks": "Menanyakan bagian mana persisnya yang keliru sampai jelas, mengakui yang memang keliru di forum itu, lalu meminta waktu berdua untuk membicarakan cara penyampaiannya."
+    }
+   ]
+  },
+  {
+   "no": 3,
+   "bagian": 1,
+   "judul": "Gosip di Lingkungan Kerja",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Di kantin kantor, rekan-rekan sedang membicarakan gosip tentang kehidupan pribadi seorang rekan lain yang tidak hadir. Mereka mengajak Anda menanggapi. Apa tindakan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menyanggah gosip itu dengan tegas di depan mereka, sebab membiarkan pembicaraan seperti ini berjalan sama saja ikut menghancurkan nama orang yang tidak hadir."
+    },
+    {
+     "skor": 50,
+     "teks": "Ikut duduk dan mendengarkan sampai selesai, supaya Anda tahu persis siapa yang menyebarkannya dan bisa mengingatkan orang itu pada kesempatan lain."
+    },
+    {
+     "skor": 75,
+     "teks": "Tidak menanggapi lalu pamit dengan alasan pekerjaan, sebab ikut mendengarkan pun sudah membuat batin Anda membawa beban yang bukan urusan Anda."
+    },
+    {
+     "skor": 100,
+     "teks": "Mengatakan Anda tidak tahu duduk perkaranya lalu bertanya kabar baik apa dari orang itu, dan tetap tinggal sampai obrolannya berpindah sendiri."
+    }
+   ]
+  },
+  {
+   "no": 4,
+   "bagian": 1,
+   "judul": "Menghadapi Provokasi Jalan Raya",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Saat berkendara, sebuah kendaraan menyerobot jalur Anda dengan kasar, lalu pengemudinya membunyikan klakson panjang dan melotot seolah Anda yang bersalah. Apa yang Anda lakukan?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Mengikutinya sampai lampu merah dan menegurnya lewat jendela, sebab pengemudi seperti ini tidak akan pernah berubah kalau tidak pernah ada yang menegur."
+    },
+    {
+     "skor": 50,
+     "teks": "Merekam pelat nomornya dan mengunggahnya ke akun pelaporan lalu lintas, agar ada catatannya dan pengemudi lain terhindar dari kelakuan serupa di kemudian hari."
+    },
+    {
+     "skor": 75,
+     "teks": "Memberi jalan lalu melepaskannya, mengingatkan diri bahwa Anda tidak tahu apa yang sedang dialami orang itu dan tidak perlu ikut membawa emosinya."
+    },
+    {
+     "skor": 100,
+     "teks": "Memberi jalan, lalu memeriksa sendiri apakah posisi kendaraan Anda tadi memang sudah benar, sebab yang bisa Anda perbaiki hanya bagian Anda sendiri."
+    }
+   ]
+  },
+  {
+   "no": 5,
+   "bagian": 1,
+   "judul": "Pujian Berlebihan",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Seorang anak buah memuji presentasi Anda secara berlebihan dan menyebut Anda satu-satunya pemimpin yang bisa menyelamatkan divisi ini. Bagaimana Anda menerimanya?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menerimanya dengan hangat dan menyebut bahwa orang yang jeli menilai seperti dia memang pantas mendapat perhatian lebih dari perusahaan ke depannya."
+    },
+    {
+     "skor": 50,
+     "teks": "Menerimanya seperlunya sambil mencatat bahwa orang ini pandai membaca situasi, dan menyimpan penilaian itu sebagai pertimbangan penempatan tugas nanti."
+    },
+    {
+     "skor": 75,
+     "teks": "Menanggapinya seadanya lalu mengalihkan pembicaraan, sebab pujian berlebihan hanya akan menumpulkan penilaian Anda terhadap kekurangan pekerjaan sendiri."
+    },
+    {
+     "skor": 100,
+     "teks": "Mengucapkan terima kasih, menyebut dua nama yang mengerjakan bagian tersulitnya, lalu menanyakan bagian mana dari presentasi tadi yang menurut dia paling lemah."
+    }
+   ]
+  },
+  {
+   "no": 6,
+   "bagian": 1,
+   "judul": "Berita Keberhasilan Kompetitor",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Saingan terberat Anda baru saja memenangkan penghargaan internasional yang sangat bergengsi. Apa reaksi pertama yang muncul di batin Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Memeriksa karyanya dengan teliti dan menyampaikan kepada rekan bahwa penghargaan seperti ini sering lebih ditentukan jaringan daripada mutu karyanya sendiri."
+    },
+    {
+     "skor": 50,
+     "teks": "Mengucapkan selamat secara terbuka lalu mempelajari karya mereka untuk mencari celah yang bisa Anda kalahkan pada kesempatan penilaian berikutnya."
+    },
+    {
+     "skor": 75,
+     "teks": "Tidak ikut menanggapi dan kembali pada pekerjaan sendiri, sebab pencapaian orang lain tidak mengurangi apa pun dari nilai karya yang sedang Anda kerjakan."
+    },
+    {
+     "skor": 100,
+     "teks": "Mengirim ucapan yang menyebut bagian mana dari karya mereka yang Anda anggap lebih baik, lalu menanyakan bagaimana bagian itu mereka kerjakan."
+    }
+   ]
+  },
+  {
+   "no": 7,
+   "bagian": 1,
+   "judul": "Keluhan Pelanggan yang Marah",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Seorang pelanggan datang marah-marah karena produknya rusak, padahal kerusakan itu jelas terjadi karena ia tidak membaca instruksi pemakaian. Bagaimana sikap Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menjelaskan dengan tegas bahwa kerusakan itu di luar tanggungan, sebab melayani tuntutan yang tidak berdasar hanya akan merugikan pelanggan lain yang tertib."
+    },
+    {
+     "skor": 50,
+     "teks": "Menyodorkan lembar instruksi dan ketentuan garansinya, lalu memintanya membaca sendiri bagian yang terlewat supaya duduk perkaranya jelas bagi kedua pihak."
+    },
+    {
+     "skor": 75,
+     "teks": "Mendengarkan sampai marahnya reda tanpa membantah, lalu mengarahkannya ke bagian layanan keluhan agar ditangani orang yang memang berwenang menanganinya."
+    },
+    {
+     "skor": 100,
+     "teks": "Membiarkannya selesai bicara, mengakui bahwa instruksinya memang mudah terlewat, menawarkan perbaikan berbagi biaya, dan mengusulkan instruksinya dicetak lebih jelas."
+    }
+   ]
+  },
+  {
+   "no": 8,
+   "bagian": 1,
+   "judul": "Antrean yang Diserobot",
+   "jenis": "jangkar-palsu",
+   "skenario": "Setelah mengantre satu jam, seseorang memotong antrean di depan loket dengan alasan ia kerabat petugas. Apa yang Anda lakukan?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menegurnya dengan suara yang cukup terdengar oleh semua yang mengantre, sebab pembiaran seperti inilah yang membuat kebiasaan menyerobot terus hidup di mana-mana."
+    },
+    {
+     "skor": 50,
+     "teks": "Mengingatkan orang itu bahwa memotong antrean di layanan publik melanggar ketentuan pelayanan, dengan nada yang membuatnya sadar sedang diperhatikan."
+    },
+    {
+     "skor": 75,
+     "teks": "Mengalah dan tetap menunggu giliran, sebab kejadian sekecil ini tidak sebanding dengan tenaga dan ketenangan yang harus Anda keluarkan untuk melawannya."
+    },
+    {
+     "skor": 100,
+     "teks": "Menyampaikan kepada petugas di depan orang itu bahwa antrean sudah berjalan satu jam, menanyakan urutan mana yang berlaku, lalu menerima jawabannya."
+    }
+   ]
+  },
+  {
+   "no": 9,
+   "bagian": 1,
+   "judul": "Kegagalan Rencana Liburan",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Liburan keluarga yang disiapkan berbulan-bulan batal total di hari keberangkatan karena pembatalan sepihak maskapai akibat cuaca buruk. Bagaimana keadaan batin Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menuntut kompensasi di loket sampai jelas, sebab keluarga Anda sudah menyiapkan ini berbulan-bulan dan hak penumpang tidak boleh dilepaskan begitu saja."
+    },
+    {
+     "skor": 50,
+     "teks": "Menerima pembatalannya lalu menjelaskan panjang kepada keluarga bahwa ini murni kelalaian maskapai, supaya kekecewaan mereka tertuju pada pihak yang memang bersalah."
+    },
+    {
+     "skor": 75,
+     "teks": "Menerima keadaan sebagai hal di luar kendali siapa pun, menenangkan diri sendiri lebih dulu, lalu membiarkan tiap anggota keluarga memulihkan suasananya masing-masing."
+    },
+    {
+     "skor": 100,
+     "teks": "Mengurus haknya di loket seperlunya, lalu bertanya kepada anak-anak apa yang ingin mereka kerjakan hari ini dan menjalankan pilihan mereka."
+    }
+   ]
+  },
+  {
+   "no": 10,
+   "bagian": 1,
+   "judul": "Permintaan Sumbangan Dadakan",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Seseorang mengetuk pintu rumah Anda meminta sumbangan dengan proposal pembangunan yang tampak tidak resmi dan mencurigakan. Apa tindakan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menolak dan mengingatkannya bahwa cara meminta seperti ini merugikan lembaga yang benar-benar membutuhkan, lalu menyarankannya berhenti sebelum ada warga yang melapor."
+    },
+    {
+     "skor": 50,
+     "teks": "Memberi sedikit uang tanpa banyak bertanya, sebab menolak mentah-mentah berisiko menimbulkan masalah sementara jumlah sekecil itu tidak akan merugikan Anda."
+    },
+    {
+     "skor": 75,
+     "teks": "Menolak dengan sopan tanpa berdebat, sebab memberi tanpa tahu kepada siapa justru ikut menyuburkan cara meminta yang tidak jelas seperti ini."
+    },
+    {
+     "skor": 100,
+     "teks": "Menanyakan nama lembaga dan alamat kegiatannya, mencatatnya, mengatakan Anda akan memeriksanya dulu dan memberi kabar — lalu benar-benar memeriksanya."
+    }
+   ]
+  },
+  {
+   "no": 11,
+   "bagian": 1,
+   "judul": "Kritik Terhadap Karya Anda",
+   "jenis": "jangkar-palsu",
+   "skenario": "Seseorang di internet berkomentar bahwa karya yang Anda rasa paling bermakna itu biasa saja, membosankan, dan tidak memiliki esensi. Bagaimana Anda merespons?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Mengingatkannya bahwa komentar merendahkan seperti itu bisa dilaporkan sebagai pencemaran nama baik, agar dia lebih berhati-hati menilai karya orang."
+    },
+    {
+     "skor": 50,
+     "teks": "Menulis balasan yang menguraikan maksud dan rujukan karya itu, supaya pembaca lain bisa menilai sendiri apakah kritik tadi memang punya dasar."
+    },
+    {
+     "skor": 75,
+     "teks": "Membiarkannya tanpa membalas, sebab karya yang sudah dilepas ke publik memang bukan lagi milik Anda untuk dibela dari penilaian siapa pun."
+    },
+    {
+     "skor": 100,
+     "teks": "Menanyakan bagian mana yang terasa membosankan baginya, dan bila jawabannya masuk akal, mencatatnya untuk karya berikutnya."
+    }
+   ]
+  },
+  {
+   "no": 12,
+   "bagian": 1,
+   "judul": "Kesalahan Rekan Setim",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Tim Anda gagal memenangkan tender karena seorang rekan melakukan kesalahan fatal pada dokumen harga di menit terakhir. Apa yang Anda lakukan?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menyampaikan di forum evaluasi bahwa kekeliruan sebesar ini harus jelas siapa pelakunya, sebab tim tidak akan membaik kalau kesalahan besar dibiarkan kabur."
+    },
+    {
+     "skor": 50,
+     "teks": "Tidak menyebutnya di forum, tetapi memastikan manajer mengetahui duduk perkaranya secara berdua, agar penilaian kinerja tahun ini tidak salah sasaran."
+    },
+    {
+     "skor": 75,
+     "teks": "Menerima kegagalan sebagai tanggung jawab bersama dan tidak ikut membahas siapa yang keliru, sebab mencari pelaku hanya akan merusak kepercayaan di dalam tim."
+    },
+    {
+     "skor": 100,
+     "teks": "Mengajak tim menelusuri di titik mana pemeriksaan terakhir tidak berjalan, menyebut lebih dulu bagian yang luput dari Anda sendiri, lalu menyusun pemeriksaan ganda."
+    }
+   ]
+  },
+  {
+   "no": 13,
+   "bagian": 1,
+   "judul": "Anak yang Mogok Sekolah",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anak Anda yang biasanya rajin tiba-tiba menolak berangkat sekolah tanpa alasan jelas, sementara Anda harus menghadiri rapat penting pagi itu. Bagaimana tindakan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menegaskan bahwa sekolah bukan pilihan dan tetap mengantarnya berangkat, sebab membiarkan sekali saja akan membuat pagi-pagi berikutnya jauh lebih sulit."
+    },
+    {
+     "skor": 50,
+     "teks": "Menawarkan sesuatu yang dia sukai bila mau berangkat hari ini, lalu menanyakan alasannya nanti malam saat suasananya sudah jauh lebih tenang."
+    },
+    {
+     "skor": 75,
+     "teks": "Membiarkannya tidak berangkat hari ini tanpa banyak bertanya, sebab anak yang sedang menolak biasanya belum siap menjelaskan dan tidak baik dipaksa."
+    },
+    {
+     "skor": 100,
+     "teks": "Menunda berangkat lima belas menit, bertanya sampai dia mau bercerita, memutuskan bersamanya, lalu memberi tahu kantor bahwa Anda akan terlambat."
+    }
+   ]
+  },
+  {
+   "no": 14,
+   "bagian": 1,
+   "judul": "Fitnah di Grup Komunitas",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Di grup komunitas, seseorang menyebarkan tangkapan layar yang sengaja diedit untuk memfitnah bahwa Anda menggelapkan uang kas. Apa tindakan pertama Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Membantah di grup saat itu juga dengan bukti seadanya, sebab tuduhan sebesar ini kalau dibiarkan sehari saja sudah cukup untuk melekat pada nama Anda."
+    },
+    {
+     "skor": 50,
+     "teks": "Menyimpan tangkapan layar itu, meminta pendapat beberapa anggota yang Anda percaya, lalu menyiapkan bantahan yang paling telak sebelum menjawab di grup."
+    },
+    {
+     "skor": 75,
+     "teks": "Tidak menjawab apa pun dan menonaktifkan notifikasi, sebab kebenaran akan terlihat sendiri dan membalas hanya akan memperpanjang keramaian yang tidak perlu."
+    },
+    {
+     "skor": 100,
+     "teks": "Meminta bendahara membuka mutasi kas kepada seluruh anggota, memuat kronologinya sekali tanpa menyebut siapa pun, lalu menyerahkan penilaiannya kepada forum."
+    }
+   ]
+  },
+  {
+   "no": 15,
+   "bagian": 1,
+   "judul": "Inventaris Kantor Dibawa Pulang",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anda melihat sendiri rekan kerja dekat Anda memasukkan beberapa rim kertas dan alat tulis kantor ke tasnya untuk keperluan sekolah anaknya. Bagaimana sikap Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Mengingatkannya saat itu juga di depan yang lain, sebab dibiarkan diam-diam justru akan membuat rekan lain menganggap kebiasaan seperti ini wajar saja."
+    },
+    {
+     "skor": 50,
+     "teks": "Tidak menegurnya, tetapi mengusulkan di rapat agar pencatatan alat tulis diperketat, supaya persoalannya selesai tanpa ada seorang pun yang perlu dipermalukan."
+    },
+    {
+     "skor": 75,
+     "teks": "Menganggap tidak melihat apa pun, sebab menilai kesulitan hidup orang lain dari satu kejadian bukan hak Anda dan hanya akan merusak hubungan baik."
+    },
+    {
+     "skor": 100,
+     "teks": "Menemuinya berdua, menyebut apa yang Anda lihat tanpa menuduh, menanyakan apakah dia sedang kesulitan, lalu menyepakati bagaimana ini diselesaikan."
+    }
+   ]
+  },
+  {
+   "no": 46,
+   "bagian": 1,
+   "judul": "Bintang Satu Tanpa Keterangan",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anda pengemudi ojek daring. Seorang penumpang memberi bintang satu tanpa keterangan apa pun, padahal perjalanannya lancar. Nilai rata-rata Anda turun dan pesanan ikut berkurang. Apa yang Anda lakukan?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menuliskan kekesalan Anda di grup pengemudi lengkap dengan nama akun penumpang itu, supaya rekan lain berhati-hati menerima pesanan darinya."
+    },
+    {
+     "skor": 50,
+     "teks": "Mengajukan sanggahan panjang ke pusat bantuan dengan menyertakan tangkapan layar rute dan waktu, agar penilaian sepihak itu dihapus dari akun Anda."
+    },
+    {
+     "skor": 75,
+     "teks": "Menerimanya tanpa mempersoalkan, sebab satu penilaian tidak menentukan siapa Anda, dan meributkannya hanya menghabiskan waktu mengejar pesanan berikutnya."
+    },
+    {
+     "skor": 100,
+     "teks": "Memeriksa perjalanan itu sekali lagi untuk mencari yang mungkin terlewat, mengajukan sanggahan singkat, lalu melanjutkan bekerja tanpa menunggu jawabannya."
+    }
+   ]
+  },
+  {
+   "no": 47,
+   "bagian": 1,
+   "judul": "Pembeli Menawar dengan Harga Aplikasi",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anda pemilik warung. Seorang pembeli menawar sambil menunjukkan harga barang yang sama di aplikasi belanja daring, jauh di bawah harga Anda. Bagaimana Anda menanggapinya?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menjelaskan bahwa membeli di aplikasi akan mematikan warung di kampung sendiri, dan mengajaknya memikirkan tetangganya sebelum menawar sejauh itu."
+    },
+    {
+     "skor": 50,
+     "teks": "Menguraikan hitungan modal, ongkos kirim, dan sewa tempat sampai ia paham bahwa harga aplikasi itu memang tidak mungkin ditandingi warung mana pun."
+    },
+    {
+     "skor": 75,
+     "teks": "Mempersilakannya membeli di aplikasi kalau memang lebih murah, sebab memaksa orang membeli di tempat Anda bukan cara berdagang yang benar."
+    },
+    {
+     "skor": 100,
+     "teks": "Menyebut harga terbaik yang masih masuk akal bagi Anda, mengatakan silakan bila di sana lebih murah, lalu menawarkan pengantaran hari itu juga."
+    }
+   ]
+  },
+  {
+   "no": 48,
+   "bagian": 1,
+   "judul": "Murid Merekam Anda Mengajar",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anda guru. Seorang murid merekam Anda saat mengajar lalu mengunggah potongannya ke media sosial dengan keterangan yang menyudutkan. Apa tindakan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menemui murid itu di kelas berikutnya dan memintanya menghapus unggahan tersebut saat itu juga, sebab merekam guru tanpa izin melanggar tata tertib."
+    },
+    {
+     "skor": 50,
+     "teks": "Melaporkannya ke kepala sekolah disertai tangkapan layar dan aturan sekolah tentang perekaman, agar penanganannya berjalan resmi dan tercatat rapi."
+    },
+    {
+     "skor": 75,
+     "teks": "Membiarkannya tanpa menanggapi apa pun, sebab menanggapi unggahan seperti ini justru akan memperbesar perhatian orang kepadanya."
+    },
+    {
+     "skor": 100,
+     "teks": "Menonton rekamannya sampai habis, memperbaiki bagian yang memang terdengar keliru, lalu menanyakan kepada murid itu apa yang membuatnya merasa perlu merekam."
+    }
+   ]
+  },
+  {
+   "no": 49,
+   "bagian": 1,
+   "judul": "Warga Baru yang Dibicarakan",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Di grup RT, warga ramai membicarakan keluarga yang baru pindah — soal pekerjaannya, tamunya, dan kebiasaannya. Belum ada yang pernah bertemu langsung dengan mereka. Apa yang Anda tulis?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Mengingatkan di grup bahwa membicarakan orang yang belum dikenal itu tidak pantas, dan meminta semua berhenti sebelum keluarga itu mendengarnya."
+    },
+    {
+     "skor": 50,
+     "teks": "Menanyakan apakah ada yang sudah benar-benar bertemu mereka, supaya terlihat sendiri bahwa pembicaraan ini sebenarnya tidak berdasar apa pun."
+    },
+    {
+     "skor": 75,
+     "teks": "Tidak menanggapi apa pun dan membiarkan pembicaraan itu reda sendiri, sebab ikut menulis hanya akan menambah panjang percakapannya."
+    },
+    {
+     "skor": 100,
+     "teks": "Mengetuk pintu mereka membawa sesuatu, berkenalan sebentar, lalu menyampaikan di grup bahwa Anda sudah bertemu dan mereka baik-baik saja."
+    }
+   ]
+  },
+  {
+   "no": 50,
+   "bagian": 1,
+   "judul": "Komentar Tetangga tentang Anak Anda",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anda membesarkan anak seorang diri. Seorang tetangga berkomentar di depan orang lain bahwa anak Anda kurang perhatian karena tidak punya orang tua yang lengkap. Bagaimana Anda menanggapinya?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Membalas saat itu juga bahwa dia tidak tahu apa-apa tentang keluarga Anda, sebab dibiarkan sekali saja komentar seperti ini akan terus berulang."
+    },
+    {
+     "skor": 50,
+     "teks": "Menyebutkan pencapaian anak Anda di sekolah dengan tenang, supaya orang-orang yang mendengar tahu bahwa penilaian tetangga itu tidak sesuai kenyataan."
+    },
+    {
+     "skor": 75,
+     "teks": "Tersenyum dan tidak menanggapinya, sebab penilaian orang tentang cara Anda membesarkan anak tidak mengubah apa pun dari yang Anda kerjakan tiap hari."
+    },
+    {
+     "skor": 100,
+     "teks": "Menanyakan kepada anak Anda sendiri apakah ada yang ia rasa kurang, dan mendengarkan jawabannya sebelum memutuskan komentar itu perlu ditanggapi atau tidak."
+    }
+   ]
+  },
+  {
+   "no": 51,
+   "bagian": 1,
+   "judul": "Upah Dipotong Sepihak",
+   "jenis": "berjangkar",
+   "skenario": "Anda buruh harian. Mandor memotong upah hari ini dengan alasan pekerjaan belum selesai, padahal keterlambatannya karena bahan baru datang siang. Beberapa rekan memilih diam. Apa tindakan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menolak pulang sebelum upah penuh dibayarkan dan mengajak rekan-rekan berhenti bekerja besok, sebab dibiarkan sekali saja ini akan menjadi kebiasaan."
+    },
+    {
+     "skor": 50,
+     "teks": "Menemui mandor sendirian dan menyampaikan bahwa pemotongan upah sepihak melanggar aturan, agar dia tahu Anda memahami hak Anda sendiri."
+    },
+    {
+     "skor": 75,
+     "teks": "Menerima potongan hari ini dan mulai mencari pekerjaan di tempat lain, sebab berdebat dengan mandor hanya akan membuat Anda tidak dipanggil lagi."
+    },
+    {
+     "skor": 100,
+     "teks": "Menanyakan bersama rekan-rekan catatan jam kerja hari itu, mencocokkannya dengan waktu bahan datang, lalu meminta selisihnya dibayar pada hari berikutnya."
+    }
+   ]
+  },
+  {
+   "no": 52,
+   "bagian": 1,
+   "judul": "Kabar Berantai tentang Pupuk Palsu",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anda petani. Sebuah pesan berantai menyebut merek pupuk yang biasa Anda pakai ternyata palsu, disertai foto kemasan yang berbeda sedikit. Musim tanam tinggal dua minggu. Apa yang Anda kerjakan?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Berhenti memakainya dan menyebarkan pesan itu ke kelompok tani, sebab terlambat mengabari bisa membuat sekampung ikut memakai pupuk palsu."
+    },
+    {
+     "skor": 50,
+     "teks": "Membandingkan kemasan yang Anda punya dengan foto di pesan itu sampai yakin, lalu menyimpulkan sendiri apakah kabar tersebut masuk akal atau tidak."
+    },
+    {
+     "skor": 75,
+     "teks": "Mengabaikan pesan itu dan tetap memakai pupuk yang sama, sebab kabar berantai semacam ini hampir selalu tidak bisa dipercaya."
+    },
+    {
+     "skor": 100,
+     "teks": "Membawa kemasannya ke penyuluh atau toko resminya untuk dicocokkan, lalu mengabari kelompok tani hasilnya — baik ternyata palsu maupun tidak."
+    }
+   ]
+  },
+  {
+   "no": 53,
+   "bagian": 1,
+   "judul": "Permintaan Kiriman dari Kampung",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anda merantau dan setiap bulan mengirim uang ke kampung. Permintaannya makin sering dan makin besar, sementara penghasilan Anda tidak bertambah. Bagaimana Anda menyikapinya?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Tetap mengirim sebisanya tanpa mengatakan apa pun, sebab menolak permintaan keluarga sendiri akan dianggap lupa asal setelah hidup di kota."
+    },
+    {
+     "skor": 50,
+     "teks": "Mengirim seperti biasa sambil menjelaskan panjang tentang mahalnya biaya hidup di kota, agar mereka mengerti sendiri bahwa permintaan itu memberatkan."
+    },
+    {
+     "skor": 75,
+     "teks": "Mengurangi kiriman tanpa memberi tahu alasannya, sebab menjelaskan keadaan sendiri hanya akan membuat mereka merasa bersalah kepada Anda."
+    },
+    {
+     "skor": 100,
+     "teks": "Menyampaikan berapa yang benar-benar bisa Anda kirim tiap bulan, menanyakan kebutuhan mana yang paling mendesak, lalu menepati angka itu."
+    }
+   ]
+  },
+  {
+   "no": 54,
+   "bagian": 1,
+   "judul": "Kemarahan di Ruang Tunggu",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anda petugas puskesmas. Keluarga pasien memarahi Anda keras-keras di depan ruang tunggu karena antrean lama, padahal keterlambatan itu karena satu dokter mendadak berhalangan. Apa sikap Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menjelaskan dengan suara yang sama kerasnya bahwa dokternya berhalangan, supaya semua yang menunggu tahu Anda tidak sedang bermalas-malasan."
+    },
+    {
+     "skor": 50,
+     "teks": "Menunjukkan papan jadwal dan daftar antrean untuk membuktikan bahwa urutannya sudah benar dan keterlambatan ini sepenuhnya di luar kendali Anda."
+    },
+    {
+     "skor": 75,
+     "teks": "Mendengarkan sampai selesai tanpa membalas lalu melanjutkan pekerjaan, sebab menanggapi kemarahan di ruang tunggu tidak akan mempercepat siapa pun."
+    },
+    {
+     "skor": 100,
+     "teks": "Menyampaikan berapa lama lagi perkiraannya dan siapa yang bisa dihubungi bila mendesak, lalu memberi tahu kepala puskesmas agar jadwalnya diperbaiki."
+    }
+   ]
+  },
+  {
+   "no": 55,
+   "bagian": 1,
+   "judul": "Anak dan Gawainya",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anak Anda menghabiskan hampir seluruh waktu luangnya dengan gawai dan mulai marah bila diminta berhenti. Apa langkah pertama Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Mengambil gawainya dan menyimpannya, sebab kebiasaan yang sudah sejauh ini tidak akan berubah kalau hanya dibicarakan baik-baik saja."
+    },
+    {
+     "skor": 50,
+     "teks": "Memasang aplikasi pembatas waktu di gawainya dan menetapkan jadwal pemakaian, supaya batasnya jelas tanpa perlu bertengkar setiap hari."
+    },
+    {
+     "skor": 75,
+     "teks": "Membiarkannya sementara sambil mengamati, sebab melarang justru akan membuatnya mencari cara lain dan menutup diri dari Anda."
+    },
+    {
+     "skor": 100,
+     "teks": "Menanyakan apa yang ia kerjakan di sana dan ikut menontonnya sebentar, lalu menyepakati waktu bersama yang juga berlaku untuk gawai Anda."
+    }
+   ]
+  },
+  {
+   "no": 56,
+   "bagian": 1,
+   "judul": "Linimasa yang Selalu Membuat Marah",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anda menyadari sebulan terakhir hampir semua yang muncul di linimasa membuat Anda marah, dan Anda makin sering ikut berkomentar keras. Apa langkah pertama Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Berhenti membuka media sosial sama sekali, sebab tempat itu memang sudah tidak menyisakan apa pun yang berguna untuk dibaca."
+    },
+    {
+     "skor": 50,
+     "teks": "Mulai memilah akun yang Anda ikuti dan membisukan yang paling memancing, supaya linimasa Anda kembali berisi hal yang lebih berguna."
+    },
+    {
+     "skor": 75,
+     "teks": "Tetap membaca tetapi berhenti berkomentar, sebab yang merusak ketenangan bukan beritanya melainkan keinginan untuk selalu menanggapinya."
+    },
+    {
+     "skor": 100,
+     "teks": "Memeriksa apa saja yang Anda tekan dan bagikan sebulan terakhir, sebab yang muncul di linimasa sebagian besar gema dari perbuatan Anda sendiri."
+    }
+   ]
+  },
+  {
+   "no": 57,
+   "bagian": 1,
+   "judul": "Telepon Mengatasnamakan Bank",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Seseorang menelepon mengaku dari bank, menyebut ada transaksi mencurigakan, dan meminta Anda menyebutkan kode yang baru saja masuk ke ponsel Anda. Apa yang Anda lakukan?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Memarahi penelepon itu dan mengancam akan melaporkannya, sebab penipu seperti ini perlu tahu bahwa tidak semua orang mudah dibohongi."
+    },
+    {
+     "skor": 50,
+     "teks": "Menanyakan balik nama, cabang, dan nomor pegawainya untuk menguji apakah dia benar-benar dari bank sebelum Anda memutuskan menjawab."
+    },
+    {
+     "skor": 75,
+     "teks": "Menutup telepon tanpa berkata apa-apa dan memblokir nomornya, sebab berbicara lebih lama dengan penipu tidak pernah menguntungkan siapa pun."
+    },
+    {
+     "skor": 100,
+     "teks": "Menutup telepon, menghubungi sendiri nomor resmi bank dari kartu Anda, lalu mengabari orang tua atau tetangga yang mungkin ditelepon juga."
+    }
+   ]
+  },
+  {
+   "no": 58,
+   "bagian": 1,
+   "judul": "Pinjaman yang Tidak Pernah Disinggung",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Seorang rekan meminjam uang enam bulan lalu dan tidak pernah menyinggungnya lagi, padahal Anda mulai membutuhkannya. Setiap bertemu ia tampak biasa saja. Apa yang Anda lakukan?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menagihnya di depan rekan-rekan lain sekali saja, sebab orang yang lupa seperti ini biasanya baru ingat kalau sudah merasa tidak enak."
+    },
+    {
+     "skor": 50,
+     "teks": "Menyinggungnya lewat guyonan dalam obrolan, supaya dia teringat sendiri tanpa Anda harus terlihat menagih secara terang-terangan."
+    },
+    {
+     "skor": 75,
+     "teks": "Merelakannya dan tidak menagih lagi, sebab uang yang sudah dipinjamkan lebih baik dianggap hilang daripada merusak hubungan pertemanan."
+    },
+    {
+     "skor": 100,
+     "teks": "Menemuinya berdua, mengatakan Anda sedang membutuhkannya, dan menanyakan kapan kira-kira ia sanggup — lalu menerima jadwal yang ia sebut."
+    }
+   ]
+  },
+  {
+   "no": 59,
+   "bagian": 1,
+   "judul": "Foto Dagangan Dipakai Orang Lain",
+   "jenis": "berjangkar",
+   "skenario": "Anda menemukan foto dagangan Anda dipakai akun lain untuk berjualan barang serupa, lengkap dengan keterangan seolah itu dagangannya sendiri. Apa tindakan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Berkomentar di unggahannya bahwa foto itu milik Anda, supaya calon pembelinya tahu dia sedang berjualan memakai gambar orang lain."
+    },
+    {
+     "skor": 50,
+     "teks": "Mengabarkannya ke grup pedagang dan meminta rekan-rekan ikut melaporkan akun itu, agar penurunannya berjalan jauh lebih cepat."
+    },
+    {
+     "skor": 75,
+     "teks": "Membiarkannya dan mulai memberi tanda air pada foto Anda berikutnya, sebab mengejar satu akun tidak akan menghentikan yang lainnya."
+    },
+    {
+     "skor": 100,
+     "teks": "Mengirim pesan langsung memintanya menurunkan foto itu dan memberi tenggat, lalu melaporkannya lewat jalur resmi bila tetap tidak diturunkan."
+    }
+   ]
+  },
+  {
+   "no": 60,
+   "bagian": 1,
+   "judul": "Dompet Tertinggal di Jok",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anda pengemudi ojek daring. Setelah penumpang turun, Anda menemukan dompet berisi uang dan kartu identitas tertinggal di jok. Pesanan berikutnya sudah menunggu. Apa yang Anda kerjakan?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Langsung memutar balik mencarinya sendiri di sekitar tempat turun tadi, sebab dompet berisi identitas terlalu berbahaya untuk terlambat sedikit pun."
+    },
+    {
+     "skor": 50,
+     "teks": "Memotretnya lebih dulu sebagai bukti sudah Anda temukan dalam keadaan utuh, baru melaporkannya ke aplikasi agar tidak dituduh mengambil isinya."
+    },
+    {
+     "skor": 75,
+     "teks": "Menyerahkannya ke pusat bantuan aplikasi lalu melanjutkan pekerjaan, sebab urusan mengembalikan barang bukan tanggung jawab seorang pengemudi."
+    },
+    {
+     "skor": 100,
+     "teks": "Melaporkannya lewat aplikasi, menyebut Anda bersedia menunggu di titik terdekat, lalu melanjutkan pesanan berikutnya sambil menunggu kabarnya."
+    }
+   ]
+  },
+  {
+   "no": 16,
+   "bagian": 2,
+   "judul": "Laporan Proyek Sempurna",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anak buah Anda menyerahkan laporan bahwa program pemberdayaan yang Anda pimpin berjalan seratus persen sukses tanpa satu pun hambatan di lapangan. Bagaimana Anda menyikapinya?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menandatanganinya dan meneruskan kabar baik itu ke manajemen, sebab meragukan laporan anak buah tanpa dasar hanya akan mematikan semangat tim yang sudah bekerja."
+    },
+    {
+     "skor": 50,
+     "teks": "Memintanya melengkapi laporan dengan dokumentasi dan data pendukung yang lebih rinci, supaya laporan itu tetap kuat bila nanti dipertanyakan oleh direksi."
+    },
+    {
+     "skor": 75,
+     "teks": "Menyimpannya tanpa menandatangani, sebab laporan tanpa satu pun kendala hampir pasti belum lengkap, lalu menunggu sampai ada keterangan lain yang muncul sendiri."
+    },
+    {
+     "skor": 100,
+     "teks": "Menemui tiga penerima manfaat tanpa didampingi siapa pun, menanyakan apa yang tidak berjalan, lalu merevisi laporan itu dengan temuan tersebut apa adanya."
+    }
+   ]
+  },
+  {
+   "no": 17,
+   "bagian": 2,
+   "judul": "Kebijakan Populer tapi Merusak",
+   "jenis": "berjangkar",
+   "skenario": "Sebagai kepala desa, Anda didesak warga mengizinkan pembangunan pabrik di area tangkapan air desa karena menjanjikan lapangan kerja dan dana bantuan besar. Apa keputusan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menyetujui izinnya karena warga sendiri yang meminta, sebab menolak keinginan mayoritas bukan kewenangan kepala desa yang justru dipilih oleh mereka."
+    },
+    {
+     "skor": 50,
+     "teks": "Menyetujuinya dengan syarat perusahaan menandatangani perjanjian kompensasi dan pemulihan lingkungan, supaya desa tetap terlindungi bila suatu saat terjadi kerusakan."
+    },
+    {
+     "skor": 75,
+     "teks": "Menolak menerbitkan izin karena risikonya terlalu besar untuk ditanggung desa, dan menyerahkan urusan lapangan kerja pada mekanisme yang berjalan sendiri."
+    },
+    {
+     "skor": 100,
+     "teks": "Menunda keputusan sampai kajian dampak yang memang diwajibkan untuk usaha sebesar ini selesai, membuka hasilnya kepada warga, lalu memutuskan bersama mereka."
+    }
+   ]
+  },
+  {
+   "no": 18,
+   "bagian": 2,
+   "judul": "Dua Ahli yang Bertolak Belakang",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Dua ahli yang sama-sama dihormati menyajikan analisis yang bertolak belakang mengenai arah investasi teknologi perusahaan. Bagaimana Anda menengahinya?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Memilih analisis dari ahli yang rekam jejaknya selama ini paling terbukti benar, sebab dalam keputusan sepenting ini pengalaman lebih bisa dipegang daripada model."
+    },
+    {
+     "skor": 50,
+     "teks": "Meminta keduanya mempresentasikan ulang di depan forum, lalu memutuskan berdasarkan analisis mana yang paling meyakinkan seluruh peserta rapat hari itu."
+    },
+    {
+     "skor": 75,
+     "teks": "Menunda investasi sampai keadaan pasar lebih jelas, sebab memilih di antara dua analisis yang saling bertentangan pada akhirnya hanya akan menjadi tebakan."
+    },
+    {
+     "skor": 100,
+     "teks": "Meminta keduanya menuliskan asumsi apa yang harus benar agar modelnya berlaku, lalu menguji asumsi mana yang paling cepat bisa dibuktikan keliru."
+    }
+   ]
+  },
+  {
+   "no": 19,
+   "bagian": 2,
+   "judul": "Celah dalam Draf Aturan Pengadaan",
+   "jenis": "berjangkar",
+   "skenario": "Divisi kepatuhan menyodorkan draf aturan pengadaan darurat yang tampak efisien, namun Anda mendeteksi celah yang bisa dipakai meloloskan vendor tanpa tender ketat. Apa tindakan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menyetujuinya karena kecepatan pengadaan memang sedang dibutuhkan, dan mencurigai niat buruk dari draf yang bahkan belum pernah dijalankan terasa berlebihan."
+    },
+    {
+     "skor": 50,
+     "teks": "Menyetujuinya sambil meminta agar penggunaan jalur darurat itu dilaporkan kepada Anda lebih dulu, supaya penyalahgunaannya bisa Anda cegah sejak awal."
+    },
+    {
+     "skor": 75,
+     "teks": "Menandatanganinya karena penyusunan aturan adalah kewenangan divisi kepatuhan, lalu menyampaikan keberatan Anda secara lisan agar setidaknya tercatat pernah disampaikan."
+    },
+    {
+     "skor": 100,
+     "teks": "Mengembalikannya dengan menandai celahnya, mengusulkan ambang nilai dan pemeriksaan berlapis yang berlaku juga untuk pengadaan di divisi Anda sendiri."
+    }
+   ]
+  },
+  {
+   "no": 20,
+   "bagian": 2,
+   "judul": "Bantuan yang Kurang Tiga Puluh Persen",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anda membagikan paket bantuan pangan, tetapi jumlahnya kurang tiga puluh persen dari kepala keluarga terdaftar. Suasana memanas dan warga menuntut keadilan. Bagaimana Anda memprosesnya?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Membagikan yang ada kepada yang paling membutuhkan menurut penilaian Anda di lapangan, sebab menunda pembagian hanya akan memperbesar kemarahan warga."
+    },
+    {
+     "skor": 50,
+     "teks": "Menghentikan pembagian sampai daftar penerima diverifikasi ulang, dan menjelaskan bahwa kekurangan ini berasal dari data yang disusun sebelum Anda bertugas."
+    },
+    {
+     "skor": 75,
+     "teks": "Menyerahkan pembagiannya kepada perangkat desa yang lebih tahu kondisi warga, dan membatasi peran Anda pada penyerahan serta pencatatan administratif."
+    },
+    {
+     "skor": 100,
+     "teks": "Mengumumkan terus terang berapa yang kurang, meminta warga sendiri menyepakati urutan penerimanya, dan mencatat siapa yang tertunda untuk tahap berikutnya."
+    }
+   ]
+  },
+  {
+   "no": 21,
+   "bagian": 2,
+   "judul": "Kampanye Hitam Pemilihan Ketua",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Tim sukses Anda menyarankan menyebarkan kegagalan bisnis keluarga calon lawan untuk menjatuhkan citranya sebagai pemimpin sukses. Bagaimana sikap Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menyetujuinya sebatas menyampaikan fakta apa adanya tanpa dilebih-lebihkan, sebab pemilih memang berhak mengetahui rekam jejak lengkap orang yang akan memimpin mereka."
+    },
+    {
+     "skor": 50,
+     "teks": "Menolaknya, tetapi meminta tim tetap menyiapkan bahan itu untuk berjaga-jaga bila kubu lawan lebih dulu menyerang dengan cara yang serupa."
+    },
+    {
+     "skor": 75,
+     "teks": "Menolaknya dan meminta tim fokus pada program saja, sebab kampanye yang menjatuhkan orang lain tidak sesuai dengan cara Anda berpolitik selama ini."
+    },
+    {
+     "skor": 100,
+     "teks": "Menolaknya, menyampaikan kepada tim bahwa bahan itu dimusnahkan, dan meminta mereka menagih Anda bila suatu saat Anda tergoda memakainya."
+    }
+   ]
+  },
+  {
+   "no": 22,
+   "bagian": 2,
+   "judul": "Pengurangan Karyawan",
+   "jenis": "berjangkar",
+   "skenario": "Perusahaan Anda akan bangkrut dalam tiga bulan kecuali dilakukan pengurangan dua puluh persen karyawan. Sebagai direktur, bagaimana Anda mengeksekusi data ini?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menjalankan pengurangan secepat mungkin sesuai data, sebab menunda keputusan yang sudah jelas hanya akan membuat seluruh karyawan kehilangan pekerjaan tiga bulan lagi."
+    },
+    {
+     "skor": 50,
+     "teks": "Menjalankannya sambil menyiapkan penjelasan yang matang untuk publik dan karyawan, supaya keputusan ini tidak merusak nama perusahaan di mata calon pelamar."
+    },
+    {
+     "skor": 75,
+     "teks": "Menyerahkan penyusunan daftarnya kepada tiap kepala divisi, sebab merekalah yang paling tahu kinerja timnya dan Anda tidak berhak menilai orang yang tidak dikenal."
+    },
+    {
+     "skor": 100,
+     "teks": "Membuka angkanya kepada karyawan lebih dulu, menawarkan pemotongan jam atau gaji berjenjang dimulai dari direksi, baru menyusun daftar beserta hak yang sudah diatur."
+    }
+   ]
+  },
+  {
+   "no": 23,
+   "bagian": 2,
+   "judul": "Tuntutan Kenaikan Upah",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Serikat buruh mogok menuntut kenaikan upah tiga puluh persen, sementara margin pabrik sangat tipis dan kenaikan sebesar itu akan menutup pabrik. Apa tindakan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menjelaskan kepada serikat bahwa tuntutan itu akan menutup pabrik, dan meminta mereka menghentikan mogok lebih dulu sebelum pembicaraan apa pun bisa dimulai."
+    },
+    {
+     "skor": 50,
+     "teks": "Membuka sebagian data keuangan yang menunjukkan tipisnya margin, agar serikat sendiri yang menyimpulkan bahwa tuntutan mereka memang tidak mungkin dipenuhi."
+    },
+    {
+     "skor": 75,
+     "teks": "Menyerahkan perundingannya kepada mediator ketenagakerjaan, sebab pertemuan langsung dalam suasana sepanas ini jarang menghasilkan kesepakatan yang bertahan lama."
+    },
+    {
+     "skor": 100,
+     "teks": "Membuka seluruh pembukuan kepada perwakilan serikat termasuk gaji jajaran atas, lalu menyusun bersama kenaikan bertahap yang terikat pada pemulihan pesanan."
+    }
+   ]
+  },
+  {
+   "no": 24,
+   "bagian": 2,
+   "judul": "Kuitansi dari Toko yang Tidak Ada",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Saat mengaudit laporan kepanitiaan festival, Anda menemukan kuitansi lima puluh juta rupiah dari sebuah toko yang alamatnya ternyata lahan kosong. Apa tindakan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Melaporkannya kepada ketua panitia dan meminta penjelasan terbuka, sebab temuan sebesar ini tidak boleh diselesaikan diam-diam di antara beberapa orang saja."
+    },
+    {
+     "skor": 50,
+     "teks": "Menelusuri lebih dulu siapa yang menandatangani kuitansi itu dan mengumpulkan bukti tambahan, agar temuan Anda tidak bisa dibantah ketika nanti disampaikan."
+    },
+    {
+     "skor": 75,
+     "teks": "Mencatat temuan itu dalam laporan audit apa adanya tanpa menyimpulkan apa pun, sebab menilai niat orang bukan bagian dari kewenangan seorang auditor."
+    },
+    {
+     "skor": 100,
+     "teks": "Menanyakan langsung kepada bendahara bagaimana pembelian itu dilakukan, mencatat jawabannya, lalu memuat keterangan dan temuan lapangan itu berdampingan dalam laporan."
+    }
+   ]
+  },
+  {
+   "no": 25,
+   "bagian": 2,
+   "judul": "Kurikulum Digital di Wilayah Pelosok",
+   "jenis": "jangkar-palsu",
+   "skenario": "Kurikulum baru mewajibkan pembelajaran berbasis aplikasi, sementara sekolah Anda berada di wilayah bersinyal buruk dan sebagian besar orang tua murid tidak memiliki ponsel pintar. Bagaimana Anda bersikap?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menjalankannya semampunya dan melaporkan bahwa sekolah sudah menerapkannya, sebab menolak kebijakan pusat hanya akan merugikan posisi sekolah Anda ke depannya."
+    },
+    {
+     "skor": 50,
+     "teks": "Mengajukan permohonan pengecualian resmi karena sekolah di wilayah bersinyal buruk berhak dikecualikan, lalu menunggu sampai persetujuannya turun dari dinas."
+    },
+    {
+     "skor": 75,
+     "teks": "Menjalankan bagian yang bisa dijalankan dan membiarkan sisanya, sebab memaksakan sistem yang tidak cocok justru akan membebani murid dan orang tua mereka."
+    },
+    {
+     "skor": 100,
+     "teks": "Mendata berapa murid yang benar-benar bisa mengaksesnya, menjalankan bagian itu, lalu mengirimkan angkanya ke dinas sebagai keterangan tentang keadaan sebenarnya."
+    }
+   ]
+  },
+  {
+   "no": 26,
+   "bagian": 2,
+   "judul": "Klaim Keberhasilan Anggota Pasif",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Dalam rapat evaluasi, anggota tim yang selama pengerjaan selalu mangkir tiba-tiba mempresentasikan hasil proyek seolah itu kerja kerasnya sendiri. Bagaimana sikap Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Meluruskannya saat itu juga di depan direksi, sebab membiarkan klaim seperti ini berarti mengambil pengakuan dari rekan yang benar-benar mengerjakannya."
+    },
+    {
+     "skor": 50,
+     "teks": "Menunggu presentasinya selesai, lalu menambahkan penjelasan rinci tentang pembagian kerja tim sehingga direksi bisa menilai sendiri siapa mengerjakan apa."
+    },
+    {
+     "skor": 75,
+     "teks": "Membiarkannya saja, sebab yang mengerjakan sudah tahu siapa yang bekerja, dan pengakuan dari direksi bukan ukuran yang perlu diperebutkan siapa pun."
+    },
+    {
+     "skor": 100,
+     "teks": "Menyebut nama pengerja tiap bagian saat sesi tanya jawab tanpa mengomentari siapa yang presentasi, lalu membicarakannya berdua dengan orang itu sesudahnya."
+    }
+   ]
+  },
+  {
+   "no": 27,
+   "bagian": 2,
+   "judul": "Tawaran Uang Pelicin Tender",
+   "jenis": "berjangkar",
+   "skenario": "Seorang oknum panitia tender menjanjikan perusahaan Anda pasti menang bila bersedia menaikkan penawaran sepuluh persen sebagai uang pelicin. Bagaimana tanggapan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menolaknya dengan tegas dan menyampaikan kekesalan Anda kepada rekan-rekan seprofesi, agar semua orang tahu panitia tender itu tidak bisa dipercaya."
+    },
+    {
+     "skor": 50,
+     "teks": "Menolaknya secara lisan tetapi tidak melaporkannya, sebab tanpa bukti rekaman laporan Anda justru akan berbalik merugikan posisi perusahaan pada tender berikutnya."
+    },
+    {
+     "skor": 75,
+     "teks": "Menolaknya dan menarik perusahaan dari tender itu, sebab ikut dalam proses yang sudah jelas tidak bersih hanya akan mengotori nama perusahaan Anda."
+    },
+    {
+     "skor": 100,
+     "teks": "Menolaknya, mencatat waktu dan isi percakapannya, tetap memasukkan penawaran apa adanya, lalu menyampaikan catatan itu ke saluran pengaduan resmi pengadaan."
+    }
+   ]
+  },
+  {
+   "no": 28,
+   "bagian": 2,
+   "judul": "Kelayakan Kredit Pedagang Kecil",
+   "jenis": "berjangkar",
+   "skenario": "Seorang pedagang kecil mengajukan kredit usaha. Ia tidak punya jaminan aset formal, tetapi usahanya ramai, dikelola jujur, dan prospeknya cerah. Apa keputusan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menolaknya sesuai ketentuan agunan, sebab memberi kelonggaran untuk satu orang akan membuat Anda tidak bisa menolak permintaan serupa berikutnya."
+    },
+    {
+     "skor": 50,
+     "teks": "Menolaknya secara resmi tetapi menyarankan dia mencari penjamin, supaya berkasnya memenuhi syarat tanpa Anda perlu melanggar satu pun ketentuan bank."
+    },
+    {
+     "skor": 75,
+     "teks": "Meneruskan berkasnya apa adanya ke atasan disertai catatan kondisi lapangan, lalu menyerahkan keputusannya sepenuhnya kepada yang berwenang menilai."
+    },
+    {
+     "skor": 100,
+     "teks": "Mendokumentasikan arus kas hariannya selama sebulan sebagai dasar penilaian pengganti agunan, lalu mengajukannya lewat skema yang memang disediakan untuk usaha mikro."
+    }
+   ]
+  },
+  {
+   "no": 29,
+   "bagian": 2,
+   "judul": "Kebisingan Pengeras Suara Tempat Ibadah",
+   "jenis": "berjangkar",
+   "skenario": "Beberapa warga mengeluhkan volume pengeras suara tempat ibadah pada malam hari karena mengganggu tidur anak-anak, sementara pengurus merasa volume itu sudah sesuai tradisi. Sebagai ketua RT, bagaimana Anda menyelesaikannya?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menenangkan warga bahwa suara ibadah sudah menjadi bagian lingkungan ini sejak puluhan tahun, dan mengajak mereka melapangkan hati agar kerukunan tidak retak."
+    },
+    {
+     "skor": 50,
+     "teks": "Mengukur sendiri kebisingannya memakai aplikasi ponsel selama seminggu, menyusun catatan angkanya, lalu menyerahkan hasil itu kepada pengurus sebagai dasar agar volumenya diturunkan."
+    },
+    {
+     "skor": 75,
+     "teks": "Menyarankan warga berbicara langsung dari hati ke hati dengan pengurus, sebab persoalan seperti ini paling baik selesai lewat kesadaran masing-masing pihak."
+    },
+    {
+     "skor": 100,
+     "teks": "Mempertemukan keduanya di satu meja, membaca bersama ketentuan yang sudah berlaku untuk pengeras suara, lalu menuliskan kesepakatannya agar bisa ditagih siapa pun."
+    }
+   ]
+  },
+  {
+   "no": 30,
+   "bagian": 2,
+   "judul": "Fasilitas CSR yang Mangkrak",
+   "jenis": "jangkar-palsu",
+   "skenario": "Sumur bor senilai ratusan juta yang dibangun perusahaan Anda mangkrak setelah setahun karena pompanya rusak dan tidak ada warga yang tahu cara memperbaikinya. Apa tindakan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menghentikan program di desa itu dan memindahkannya ke desa yang lebih siap, sebab bantuan hanya bermakna bila penerimanya ikut merawat apa yang diberikan."
+    },
+    {
+     "skor": 50,
+     "teks": "Mengirim teknisi memperbaikinya karena perawatan fasilitas bantuan memang sudah diwajibkan, lalu mendokumentasikan hasilnya untuk laporan tahunan direksi."
+    },
+    {
+     "skor": 75,
+     "teks": "Menganggap tanggung jawab perusahaan sudah selesai pada penyerahan, dan menyampaikan kepada desa bahwa perawatan kini sepenuhnya menjadi kewenangan mereka."
+    },
+    {
+     "skor": 100,
+     "teks": "Melatih beberapa pemuda desa memperbaikinya sendiri, mendampingi pembentukan iuran perawatan, dan menunda serah terima sampai mereka pernah memperbaikinya sekali."
+    }
+   ]
+  },
+  {
+   "no": 61,
+   "bagian": 2,
+   "judul": "Pemasok Menaikkan Harga Sepihak",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anda pemilik warung. Pemasok tetap menaikkan harga dua puluh persen dengan alasan biaya kirim, padahal warung sebelah mendapat harga lama dari pemasok yang sama. Apa yang Anda kerjakan?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Berhenti mengambil dari pemasok itu dan mencari yang lain, sebab pemasok yang membedakan harga jelas tidak bisa dipercaya lagi ke depannya."
+    },
+    {
+     "skor": 50,
+     "teks": "Menyampaikan bahwa Anda tahu warung sebelah mendapat harga lama, agar dia sadar Anda tidak bisa dibohongi dan menurunkan harganya kembali."
+    },
+    {
+     "skor": 75,
+     "teks": "Menerima harga baru itu dan menaikkan harga jual Anda, sebab menawar dengan pemasok besar tidak pernah mengubah apa pun bagi warung kecil."
+    },
+    {
+     "skor": 100,
+     "teks": "Menanyakan dasar perhitungan ongkos kirimnya, membandingkan dengan dua pemasok lain, lalu memutuskan berdasarkan angka yang bisa Anda tunjukkan."
+    }
+   ]
+  },
+  {
+   "no": 62,
+   "bagian": 2,
+   "judul": "Kas Koperasi yang Tidak Pernah Dibuka",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anda anggota koperasi kampung. Sudah dua tahun laporan kas tidak pernah dibacakan dalam rapat, dan pengurus selalu menjawab bahwa semuanya aman. Apa tindakan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menuntut laporan itu dibuka dalam rapat berikutnya di depan semua anggota, sebab pengurus yang tidak transparan hampir selalu menyembunyikan sesuatu."
+    },
+    {
+     "skor": 50,
+     "teks": "Menanyakannya kepada pengurus secara pribadi lebih dulu, agar Anda tahu duduk perkaranya sebelum mempersoalkannya di forum dan menjadi salah paham."
+    },
+    {
+     "skor": 75,
+     "teks": "Membiarkannya dan tidak lagi menyetor simpanan, sebab menuntut keterbukaan di koperasi kampung hanya akan membuat Anda dianggap mencari masalah."
+    },
+    {
+     "skor": 100,
+     "teks": "Mengusulkan dalam rapat agar laporan kas dibacakan tiap tahun sebagai aturan tetap, berlaku juga untuk pengurus mana pun sesudahnya."
+    }
+   ]
+  },
+  {
+   "no": 63,
+   "bagian": 2,
+   "judul": "Tetangga Ditawari Pinjaman Cepat",
+   "jenis": "jangkar-palsu",
+   "skenario": "Tetangga Anda hendak mengambil pinjaman dari aplikasi yang menjanjikan dana cair dalam sepuluh menit tanpa jaminan. Ia belum membaca ketentuannya sama sekali. Apa yang Anda lakukan?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Melarangnya keras-keras dan menceritakan orang-orang yang hancur karena pinjaman semacam itu, sebab peringatan setengah-setengah tidak akan ia dengarkan."
+    },
+    {
+     "skor": 50,
+     "teks": "Menyampaikan bahwa bunga setinggi itu memang sudah dilarang peraturan, jadi aplikasi tersebut hampir pasti tidak resmi dan sebaiknya dihindari."
+    },
+    {
+     "skor": 75,
+     "teks": "Tidak ikut campur, sebab keputusan berutang adalah urusan masing-masing orang dan menasihati soal uang hampir selalu berakhir merusak hubungan."
+    },
+    {
+     "skor": 100,
+     "teks": "Duduk bersamanya membaca ketentuannya sampai habis, menghitung total yang harus dikembalikan, lalu membiarkannya memutuskan sendiri dengan angka itu."
+    }
+   ]
+  },
+  {
+   "no": 64,
+   "bagian": 2,
+   "judul": "Permintaan Menaikkan Nilai",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anda guru. Kepala sekolah meminta Anda menaikkan nilai beberapa murid agar angka kelulusan sekolah terlihat baik dalam laporan tahun ini. Apa tindakan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menolaknya dan menyampaikan di ruang guru bahwa permintaan seperti ini tidak pantas, sebab dibiarkan sekali saja akan terus diminta tiap tahun."
+    },
+    {
+     "skor": 50,
+     "teks": "Menolaknya secara pribadi tetapi tidak melaporkannya ke mana pun, sebab tanpa bukti tertulis Anda hanya akan berhadapan sendirian dengan atasan."
+    },
+    {
+     "skor": 75,
+     "teks": "Menolaknya dan meminta dipindahkan dari tugas penilaian, sebab bertahan di posisi itu hanya akan membuat Anda ditekan berulang kali."
+    },
+    {
+     "skor": 100,
+     "teks": "Menolaknya, meminta permintaan itu disampaikan tertulis bila memang resmi, lalu mengusulkan program perbaikan nilai yang terbuka bagi semua murid."
+    }
+   ]
+  },
+  {
+   "no": 65,
+   "bagian": 2,
+   "judul": "Aplikasi Meminta Akses Kontak",
+   "jenis": "berjangkar",
+   "skenario": "Sebuah aplikasi yang Anda butuhkan untuk bekerja meminta izin mengakses seluruh daftar kontak dan lokasi Anda sepanjang waktu. Tanpa izin itu aplikasinya tidak bisa dipakai. Apa tindakan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menolak memasangnya sama sekali dan mencari cara lain, sebab aplikasi yang meminta seluruh kontak jelas hendak menjual data penggunanya."
+    },
+    {
+     "skor": 50,
+     "teks": "Memberikan izin itu lalu mencabutnya kembali lewat pengaturan setelah aplikasinya berjalan, supaya Anda tetap bisa bekerja tanpa menyerahkan data."
+    },
+    {
+     "skor": 75,
+     "teks": "Memberikan izinnya karena aplikasi ini memang dibutuhkan untuk bekerja, dan menganggap data seperti itu toh sudah tersebar di banyak tempat."
+    },
+    {
+     "skor": 100,
+     "teks": "Membaca keterangan pemakaian datanya, memberikan hanya izin yang memang dipakai fiturnya, lalu menanyakan kepada penyedianya untuk apa kontak Anda diperlukan."
+    }
+   ]
+  },
+  {
+   "no": 66,
+   "bagian": 2,
+   "judul": "Lowongan yang Meminta Bayar di Muka",
+   "jenis": "jangkar-palsu",
+   "skenario": "Anda menemukan lowongan kerja yang menjanjikan penghasilan besar, tetapi pelamar diminta membayar biaya pelatihan dan seragam di muka. Anda sedang sangat membutuhkan pekerjaan. Apa yang Anda kerjakan?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Membayarnya karena kesempatan seperti ini jarang datang, dan biaya di muka masih lebih ringan daripada terus menganggur tanpa penghasilan."
+    },
+    {
+     "skor": 50,
+     "teks": "Menyampaikan kepada mereka bahwa memungut biaya dari pelamar itu dilarang aturan ketenagakerjaan, lalu menunggu tanggapan mereka sebelum memutuskan."
+    },
+    {
+     "skor": 75,
+     "teks": "Tidak melamar dan tidak melakukan apa pun, sebab lowongan mencurigakan seperti ini terlalu banyak untuk dilawan satu per satu."
+    },
+    {
+     "skor": 100,
+     "teks": "Menanyakan alamat kantornya, mendatanginya, dan mencari nama perusahaannya di daftar resmi sebelum menyerahkan uang apa pun."
+    }
+   ]
+  },
+  {
+   "no": 67,
+   "bagian": 2,
+   "judul": "Bantuan yang Tidak Sampai",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anda mengetahui bantuan yang seharusnya diterima beberapa keluarga di kampung tidak pernah sampai, sementara daftar penerimanya ditandatangani lengkap. Apa yang Anda kerjakan?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Memotret daftar itu dan mengunggahnya ke media sosial, sebab hal seperti ini hanya bergerak kalau sudah menjadi perhatian orang banyak."
+    },
+    {
+     "skor": 50,
+     "teks": "Mengumpulkan keterangan dari sebanyak mungkin keluarga lebih dulu, agar laporan Anda nanti tidak bisa dibantah oleh siapa pun di kampung."
+    },
+    {
+     "skor": 75,
+     "teks": "Menyampaikannya kepada keluarga yang bersangkutan dan menyarankan mereka mengurusnya sendiri, sebab merekalah yang paling berhak mempersoalkannya."
+    },
+    {
+     "skor": 100,
+     "teks": "Menemani satu keluarga menanyakannya langsung ke perangkat desa, mencatat jawabannya, lalu meneruskannya ke saluran pengaduan bila jawabannya tidak masuk akal."
+    }
+   ]
+  },
+  {
+   "no": 68,
+   "bagian": 2,
+   "judul": "Ulasan Buruk yang Mencurigakan",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Dagangan daring Anda tiba-tiba menerima belasan ulasan bintang satu dalam satu malam, semuanya dengan kalimat yang mirip, dari akun yang baru dibuat. Apa tindakan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Membalas satu per satu ulasan itu dengan menyebut bahwa mereka akun palsu suruhan pesaing, supaya calon pembeli tidak ikut terkecoh."
+    },
+    {
+     "skor": 50,
+     "teks": "Meminta pelanggan lama Anda menuliskan ulasan baik dalam jumlah banyak, agar rata-rata nilainya kembali naik dan ulasan buruk itu tenggelam."
+    },
+    {
+     "skor": 75,
+     "teks": "Membiarkannya dan tetap berjualan seperti biasa, sebab pembeli yang jeli akan melihat sendiri bahwa ulasan seperti itu tidak wajar."
+    },
+    {
+     "skor": 100,
+     "teks": "Melaporkan pola kemunculannya ke pengelola lapak dengan menyebut waktu dan kemiripan kalimatnya, lalu membalas ulasan itu satu kali dengan sopan."
+    }
+   ]
+  },
+  {
+   "no": 69,
+   "bagian": 2,
+   "judul": "Obat yang Diganti Merek Lain",
+   "jenis": "berjangkar",
+   "skenario": "Anda petugas apotek. Obat yang diresepkan dokter sedang kosong, dan pemasok menawarkan merek lain dengan kandungan sama tetapi harga jauh lebih mahal. Pasien sedang terburu-buru. Apa yang Anda kerjakan?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Memberikan merek yang tersedia saja tanpa banyak penjelasan, sebab kandungannya sama dan pasien sedang tidak punya waktu untuk mendengarkan."
+    },
+    {
+     "skor": 50,
+     "teks": "Menjelaskan panjang bahwa kandungannya identik dan harga bukan penentu mutu, supaya pasien tidak mempersoalkan selisih harganya nanti."
+    },
+    {
+     "skor": 75,
+     "teks": "Menyampaikan bahwa obatnya kosong dan menyarankan pasien mencarinya di apotek lain, sebab mengganti resep bukan kewenangan Anda sendiri."
+    },
+    {
+     "skor": 100,
+     "teks": "Menyebut pilihan yang ada beserta selisih harganya, menghubungi dokter penulis resep untuk persetujuan penggantian, lalu menyerahkan keputusannya kepada pasien."
+    }
+   ]
+  },
+  {
+   "no": 70,
+   "bagian": 2,
+   "judul": "Bibit Bantuan yang Tidak Cocok",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Kelompok tani Anda menerima bibit bantuan yang menurut pengalaman warga tidak cocok dengan tanah di daerah itu. Penyuluh menyatakan bibit tersebut sudah lolos uji nasional. Apa tindakan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menolak menanamnya dan meminta bantuan diganti, sebab pengalaman puluhan tahun bertani di tanah sendiri lebih bisa dipegang daripada uji di tempat lain."
+    },
+    {
+     "skor": 50,
+     "teks": "Menanamnya sambil menyampaikan keberatan Anda kepada penyuluh, agar bila nanti gagal jelas bahwa kesalahannya bukan pada petani."
+    },
+    {
+     "skor": 75,
+     "teks": "Menanamnya seperti yang dianjurkan tanpa mempersoalkan, sebab menolak bantuan pemerintah hanya akan membuat kelompok Anda tidak diberi lagi."
+    },
+    {
+     "skor": 100,
+     "teks": "Menanamnya di sebagian lahan saja sebagai percobaan, mencatat hasilnya bersama penyuluh, lalu menyampaikan angkanya untuk menentukan musim berikutnya."
+    }
+   ]
+  },
+  {
+   "no": 71,
+   "bagian": 2,
+   "judul": "Mesin yang Menggantikan Pekerjaan",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Tempat Anda bekerja memasang mesin baru yang mengerjakan sebagian besar tugas Anda. Belum ada pengumuman resmi, tetapi semua orang tahu jumlah pekerja akan dikurangi. Apa langkah pertama Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Mengajak rekan-rekan menolak pemasangan mesin itu, sebab membiarkannya berjalan sama saja menyerahkan pekerjaan kalian tanpa perlawanan apa pun."
+    },
+    {
+     "skor": 50,
+     "teks": "Mempelajari diam-diam cara mengoperasikan mesin itu lebih dulu daripada rekan lain, supaya Anda menjadi orang yang paling sulit digantikan."
+    },
+    {
+     "skor": 75,
+     "teks": "Menerima keadaan dan mulai mencari pekerjaan lain, sebab melawan perubahan seperti ini tidak pernah berhasil di mana pun juga."
+    },
+    {
+     "skor": 100,
+     "teks": "Menanyakan kepada atasan pekerjaan apa yang tetap dibutuhkan setelah mesin berjalan, lalu mengusulkan pelatihan yang terbuka untuk semua rekan."
+    }
+   ]
+  },
+  {
+   "no": 72,
+   "bagian": 2,
+   "judul": "Arisan yang Mulai Macet",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Arisan yang Anda ikuti mulai macet: dua orang yang sudah menerima berhenti menyetor. Ketua arisan meminta anggota lain menutupi kekurangannya lebih dulu. Apa sikap Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menolak menutupi dan menuntut kedua orang itu dihadirkan dalam pertemuan, sebab menutupi kesalahan orang lain hanya akan mengundang yang berikutnya."
+    },
+    {
+     "skor": 50,
+     "teks": "Bersedia menutupi kali ini sambil meminta pengakuan tertulis dari ketua, supaya uang Anda punya dasar untuk ditagih kembali nanti."
+    },
+    {
+     "skor": 75,
+     "teks": "Menutupi bagian Anda tanpa banyak bicara dan berhenti ikut arisan setelah putaran ini selesai, sebab mempersoalkannya hanya akan memecah kelompok."
+    },
+    {
+     "skor": 100,
+     "teks": "Mengusulkan pertemuan yang mengundang keduanya, menyusun jadwal cicilan yang mereka sanggupi, dan mencatat kesepakatannya untuk dipegang semua anggota."
+    }
+   ]
+  },
+  {
+   "no": 73,
+   "bagian": 2,
+   "judul": "Iuran Sekolah yang Naik Mendadak",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Sekolah anak Anda mengumumkan kenaikan iuran secara mendadak di tengah tahun ajaran, tanpa rincian penggunaannya. Beberapa orang tua mengeluh di grup tetapi tidak ada yang bertanya. Apa tindakan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menulis di grup bahwa kenaikan seperti ini tidak boleh dibiarkan, dan mengajak orang tua lain menahan pembayaran sampai ada penjelasan."
+    },
+    {
+     "skor": 50,
+     "teks": "Menanyakannya kepada wali kelas secara pribadi lebih dulu, agar Anda tahu dasarnya sebelum ikut bersuara dan salah menuduh pihak sekolah."
+    },
+    {
+     "skor": 75,
+     "teks": "Membayarnya saja dan tidak mempersoalkan, sebab mempermasalahkan iuran berisiko membuat anak Anda diperlakukan berbeda di sekolah."
+    },
+    {
+     "skor": 100,
+     "teks": "Meminta rincian penggunaannya secara tertulis dalam pertemuan orang tua, dan mengusulkan rinciannya dibagikan tiap kali ada kenaikan berikutnya."
+    }
+   ]
+  },
+  {
+   "no": 74,
+   "bagian": 2,
+   "judul": "Kontrak yang Tidak Sempat Dibaca",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anda diminta menandatangani kontrak kerja hari itu juga karena pekerjaannya mulai besok pagi. Dokumennya belasan halaman dan Anda hanya diberi waktu beberapa menit. Apa yang Anda lakukan?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menolak menandatangani sebelum dibaca seluruhnya, sebab orang yang memburu tanda tangan seperti ini biasanya menyembunyikan sesuatu di dalamnya."
+    },
+    {
+     "skor": 50,
+     "teks": "Menandatanganinya lalu memotret seluruh halamannya untuk dibaca di rumah, supaya Anda punya salinan bila nanti ada yang dipersoalkan."
+    },
+    {
+     "skor": 75,
+     "teks": "Menandatanganinya saja, sebab menolak akan membuat pekerjaan itu diberikan kepada orang lain dan Anda sedang membutuhkannya."
+    },
+    {
+     "skor": 100,
+     "teks": "Membaca lebih dulu bagian upah, jam kerja, dan pemutusan, menanyakan yang tidak jelas, lalu menandatangani setelah keduanya sepakat tertulis."
+    }
+   ]
+  },
+  {
+   "no": 75,
+   "bagian": 2,
+   "judul": "Sedekah yang Direkam",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Seorang rekan mengajak Anda ikut membagikan bantuan kepada warga sambil merekamnya untuk diunggah, dengan alasan agar orang lain terdorong ikut menyumbang. Apa sikap Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menolak ikut dan menyampaikan bahwa merekam orang yang sedang menerima bantuan itu merendahkan mereka, sebab hal seperti ini perlu dikatakan terang-terangan."
+    },
+    {
+     "skor": 50,
+     "teks": "Ikut membantu tetapi meminta wajah penerimanya disamarkan, supaya niat baiknya tetap jalan tanpa Anda ikut menanggung buruknya."
+    },
+    {
+     "skor": 75,
+     "teks": "Menolak ikut tanpa menjelaskan alasannya, sebab menilai niat orang dalam beramal bukan urusan Anda dan hanya akan menimbulkan perdebatan."
+    },
+    {
+     "skor": 100,
+     "teks": "Ikut membantu, meminta izin penerimanya lebih dulu sebelum ada yang direkam, dan menerima bila mereka menolak direkam sama sekali."
+    }
+   ]
+  },
+  {
+   "no": 31,
+   "bagian": 3,
+   "judul": "Klaim Nama atas Karya Bersama",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anda bertahun-tahun membangun sistem pengolahan sampah yang menyelamatkan ekologi desa. Saat bupati berkunjung, kepala desa mengklaim seluruh sistem itu sebagai ide dan karyanya sendiri. Bagaimana tindakan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Meluruskannya di depan bupati saat itu juga, sebab membiarkan klaim ini berarti membiarkan warga percaya pada sejarah yang keliru tentang desanya sendiri."
+    },
+    {
+     "skor": 50,
+     "teks": "Diam saat itu, lalu memastikan bupati mengetahui duduk perkaranya lewat orang lain, agar kebenarannya sampai tanpa Anda terlihat mempermasalahkan kepala desa."
+    },
+    {
+     "skor": 75,
+     "teks": "Membiarkannya sepenuhnya, sebab sistem itu sudah berjalan dan menyelamatkan desa, sementara nama siapa yang tercatat tidak menambah atau mengurangi apa pun."
+    },
+    {
+     "skor": 100,
+     "teks": "Membiarkannya saat itu, lalu meminta kepala desa menuliskan siapa yang mengerjakan tiap bagian, supaya orang berikutnya tahu kepada siapa harus bertanya."
+    }
+   ]
+  },
+  {
+   "no": 32,
+   "bagian": 3,
+   "judul": "Sahabat Meminta Bukti Dihapus",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Sahabat yang pernah menyelamatkan hidup Anda memohon agar Anda menghapus satu berkas log yang merupakan satu-satunya bukti kelalaian prosedurnya, supaya ia tidak dipecat. Bagaimana Anda memutuskan?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menolaknya dan menyampaikan bahwa Anda tidak bisa terlibat, lalu menjauhi urusan itu sepenuhnya agar persahabatan kalian tidak ikut hancur di tengah prosesnya."
+    },
+    {
+     "skor": 50,
+     "teks": "Menolak menghapusnya, tetapi tidak menyerahkan berkas itu kecuali diminta resmi, sebab Anda tidak berkewajiban mempercepat proses yang akan merugikan sahabat sendiri."
+    },
+    {
+     "skor": 75,
+     "teks": "Menolaknya dan menyarankan sahabat Anda mengakui sendiri kelalaiannya, sebab beban menyembunyikan hal seperti ini akan jauh lebih berat daripada akibatnya."
+    },
+    {
+     "skor": 100,
+     "teks": "Menolaknya, memberi tahu bahwa berkas itu akan Anda serahkan bila ditanya, lalu menemaninya menghadap atasan dan ikut menjelaskan bahwa kerugiannya kecil."
+    }
+   ]
+  },
+  {
+   "no": 33,
+   "bagian": 3,
+   "judul": "Nasihat untuk Fokus pada Kedamaian Batin",
+   "jenis": "berjangkar",
+   "skenario": "Anda mendeteksi praktik korupsi sistemik di jajaran direksi. Guru spiritual Anda menyarankan agar Anda fokus pada kedamaian batin sendiri dan membiarkan hukum karma bekerja. Bagaimana sikap Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menerima nasihat itu dan berhenti memikirkannya, sebab guru Anda sudah jauh lebih lama menempuh jalan ini dan pasti melihat yang belum Anda lihat."
+    },
+    {
+     "skor": 50,
+     "teks": "Menerima nasihat itu tetapi diam-diam mengumpulkan bukti untuk berjaga-jaga, agar Anda punya perlindungan bila suatu saat ikut terseret ke dalam perkaranya."
+    },
+    {
+     "skor": 75,
+     "teks": "Menerima nasihat itu dan mengundurkan diri dari perusahaan, sebab bertahan di tempat yang sudah rusak akan ikut merusak ketenangan yang telah Anda bangun."
+    },
+    {
+     "skor": 100,
+     "teks": "Menyampaikan temuan itu lewat saluran pelaporan yang tersedia, menerima akibatnya, dan tetap melanjutkan latihan batin Anda tanpa menuntut guru Anda berubah."
+    }
+   ]
+  },
+  {
+   "no": 34,
+   "bagian": 3,
+   "judul": "Karya yang Gagal dan Dihujat Publik",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Aplikasi layanan publik gratis yang Anda biayai sendiri mengalami eror server saat diluncurkan. Warga menghujatnya sebagai proyek sampah yang dikerjakan tim amatir. Bagaimana keadaan batin Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menjelaskan di media sosial bahwa erornya karena lonjakan pengguna dan aplikasi ini dibiayai uang pribadi, agar warga tahu duduk perkara yang sebenarnya."
+    },
+    {
+     "skor": 50,
+     "teks": "Diam sampai perbaikannya selesai lalu mengumumkan keberhasilannya dengan angka, sehingga hujatan tadi terbantah oleh hasil dan bukan oleh penjelasan apa pun."
+    },
+    {
+     "skor": 75,
+     "teks": "Menerima hujatan itu tanpa membalas, mengingatkan diri bahwa penilaian orang tentang karya bukan penilaian tentang Anda, lalu memperbaiki sistemnya dalam diam."
+    },
+    {
+     "skor": 100,
+     "teks": "Memuat penyebab erornya dan perkiraan waktu perbaikannya hari itu juga, lalu meminta warga melaporkan bagian mana yang paling mengganggu mereka."
+    }
+   ]
+  },
+  {
+   "no": 35,
+   "bagian": 3,
+   "judul": "Pembagian Warisan yang Timpang",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Menurut hukum adat setempat, Anda sebagai anak laki-laki tertua berhak atas tujuh puluh persen aset keluarga, sementara adik perempuan yang merawat orang tua sakit hanya sepuluh persen. Bagaimana Anda menyikapinya?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menerima pembagian itu dan menjalankan kewajiban adat sebagaimana mestinya, sebab mempersoalkan aturan yang sudah berlaku turun-temurun akan memecah keluarga besar."
+    },
+    {
+     "skor": 50,
+     "teks": "Menerima bagian itu lalu memberikan sebagian kepada adik Anda sebagai tanda terima kasih, supaya keadilan tercapai tanpa perlu mempersoalkan hukum adatnya."
+    },
+    {
+     "skor": 75,
+     "teks": "Menerima pembagian itu tetapi tidak mengambil manfaat apa pun dari tanahnya, sebab menikmati bagian yang tidak adil akan mengganggu ketenangan batin Anda."
+    },
+    {
+     "skor": 100,
+     "teks": "Meminta musyawarah keluarga menghitung ulang berdasarkan siapa yang menanggung perawatan orang tua, lalu menerima hasilnya meski bagian Anda berkurang."
+    }
+   ]
+  },
+  {
+   "no": 36,
+   "bagian": 3,
+   "judul": "Sumber Air Komunitas yang Tercemar",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anda menemukan bukti bahwa sumur yang dikeramatkan dan diminum seluruh anggota komunitas Anda tercemar logam berat. Sesepuh melarang Anda menyebarkannya agar ketenangan jemaat tidak terganggu. Apa tindakan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menuruti sesepuh dan menyimpan temuan itu, sebab merusak keyakinan yang menjadi pegangan hidup banyak orang bisa lebih berbahaya daripada kandungan logamnya."
+    },
+    {
+     "skor": 50,
+     "teks": "Menuruti larangan itu di depan komunitas, tetapi diam-diam menyarankan beberapa keluarga terdekat Anda mengganti sumber air minum mereka mulai sekarang."
+    },
+    {
+     "skor": 75,
+     "teks": "Mengundurkan diri dari komunitas dengan membawa datanya, sebab bertahan di tempat yang menolak kebenaran hanya akan membuat Anda ikut menanggung akibatnya."
+    },
+    {
+     "skor": 100,
+     "teks": "Memuat hasil ujinya kepada seluruh jemaat termasuk sesepuh, menanggung penolakannya, lalu mengusulkan penyaringan air yang tidak menyentuh tata cara mereka."
+    }
+   ]
+  },
+  {
+   "no": 37,
+   "bagian": 3,
+   "judul": "Musuh Lama Meminta Pertolongan",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Orang yang bertahun-tahun memfitnah dan menghancurkan karier Anda datang menangis malam hari: anaknya kritis dan membutuhkan golongan darah langka yang hanya Anda miliki di kota itu. Apa yang bergolak di batin Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menolaknya, sebab menolong orang yang menghancurkan keluarga Anda bukan kemuliaan melainkan mengingkari luka yang sampai sekarang belum pernah dia akui."
+    },
+    {
+     "skor": 50,
+     "teks": "Bersedia mendonorkan darah dengan syarat dia lebih dulu mencabut fitnahnya secara terbuka, supaya kebaikan ini sekaligus memulihkan nama Anda di mata orang."
+    },
+    {
+     "skor": 75,
+     "teks": "Mendonorkan darahnya tanpa menemuinya dan tanpa memberi tahu siapa pun, sebab pertolongan yang benar tidak perlu disertai pembicaraan apa pun tentang masa lalu."
+    },
+    {
+     "skor": 100,
+     "teks": "Berangkat ke rumah sakit malam itu juga, mendonorkan darahnya, lalu menyimpan urusan fitnah itu untuk waktu yang tidak menyandera siapa pun."
+    }
+   ]
+  },
+  {
+   "no": 38,
+   "bagian": 3,
+   "judul": "Filantropi dan Penghindaran Pajak",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Seorang dermawan terkenal yang menyumbang miliaran untuk panti asuhan terbukti melakukan penghindaran pajak sistemik yang merugikan negara triliunan. Bagaimana Anda memetakan penilaian moral Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menilai bahwa sumbangannya tidak ada artinya dibanding kerugian negara, dan menyampaikan penilaian itu kepada rekan agar tidak ikut terkecoh oleh citranya."
+    },
+    {
+     "skor": 50,
+     "teks": "Menimbang keduanya sebagai hal terpisah — kebaikannya tetap kebaikan, kesalahannya tetap kesalahan — lalu menyimpan penilaian itu untuk diri sendiri."
+    },
+    {
+     "skor": 75,
+     "teks": "Menahan penilaian apa pun sampai investigasinya tuntas, sebab menghakimi orang berdasarkan draf yang belum final bukan sikap yang bisa dipertanggungjawabkan."
+    },
+    {
+     "skor": 100,
+     "teks": "Memastikan temuan itu sampai ke pihak yang berwenang menanganinya, dan tetap mencatat sumbangannya sebagai fakta yang berdiri sendiri dalam laporan Anda."
+    }
+   ]
+  },
+  {
+   "no": 39,
+   "bagian": 3,
+   "judul": "Pengikut yang Memuja Berlebihan",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Setelah Anda menyelesaikan konflik besar di komunitas, sebagian pengikut mulai mencium tangan Anda dan menganggap setiap ucapan santai Anda sebagai petunjuk yang mutlak benar. Bagaimana tindakan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menerima penghormatan itu seadanya tanpa menolak terang-terangan, sebab menolak sikap hormat orang justru bisa melukai ketulusan mereka yang tidak bermaksud berlebihan."
+    },
+    {
+     "skor": 50,
+     "teks": "Menegur mereka dengan lembut bahwa Anda bukan siapa-siapa, lalu tetap membiarkan kebiasaan itu berjalan karena mereka merasa tenang dengan cara demikian."
+    },
+    {
+     "skor": 75,
+     "teks": "Menjauh dari komunitas untuk sementara sampai pemujaan itu mereda, sebab kehadiran Anda sendiri yang sedang membuat mereka berhenti berpikir sendiri."
+    },
+    {
+     "skor": 100,
+     "teks": "Meminta mereka menuliskan alasan di balik setiap keputusan yang Anda usulkan, dan menolak menjawab pertanyaan yang seharusnya mereka putuskan sendiri."
+    }
+   ]
+  },
+  {
+   "no": 40,
+   "bagian": 3,
+   "judul": "Pelanggaran yang Dilakukan Guru Anda",
+   "jenis": "berjangkar",
+   "skenario": "Guru spiritual yang puluhan tahun membimbing Anda terbukti secara sah melakukan pelecehan terhadap murid baru. Ia memohon Anda ikut menyembunyikannya demi menjaga nama baik ajaran. Bagaimana Anda bertindak?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menolak permintaan itu dan memutuskan hubungan dengan guru serta ashram sepenuhnya, sebab tidak ada ajaran yang pantas dipertahankan setelah hal seperti ini terjadi."
+    },
+    {
+     "skor": 50,
+     "teks": "Menolak menyembunyikannya, tetapi meminta penyelesaiannya dilakukan secara internal lebih dulu, supaya korban tidak ikut terpapar keramaian di luar."
+    },
+    {
+     "skor": 75,
+     "teks": "Menolak terlibat di kedua sisi, mengundurkan diri diam-diam, lalu membiarkan urusan ini diselesaikan oleh mereka yang memang lebih berkepentingan."
+    },
+    {
+     "skor": 100,
+     "teks": "Menemani korban menyampaikannya kepada pihak yang berwenang menanganinya, dan tetap memberi tahu jemaat apa yang terjadi tanpa membubarkan ajarannya."
+    }
+   ]
+  },
+  {
+   "no": 41,
+   "bagian": 3,
+   "judul": "Memilih Pemimpin",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Calon pertama ramai, pandai beretorika, rajin membagikan bantuan tunai, dan didukung seluruh tokoh setempat. Calon kedua kaku, menolak membagikan bantuan, tetapi punya rekam jejak membangun birokrasi bersih di daerah lain. Bagaimana Anda memakai hak pilih Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Memilih calon kedua dan mengajak orang terdekat ikut, sebab membiarkan calon yang membagikan uang menang berarti ikut memelihara cara berpolitik seperti itu."
+    },
+    {
+     "skor": 50,
+     "teks": "Memilih calon kedua setelah membaca liputan keberhasilannya di daerah lain, dan menganggap dukungan tokoh kepada calon pertama justru menandakan ada yang disembunyikan."
+    },
+    {
+     "skor": 75,
+     "teks": "Memilih calon kedua tanpa mengajak siapa pun, sebab pilihan politik adalah urusan kesadaran masing-masing dan mengajak orang lain sudah mendekati memaksa."
+    },
+    {
+     "skor": 100,
+     "teks": "Memeriksa sendiri klaim rekam jejak keduanya ke sumber yang bisa ditelusuri, memilih berdasarkan temuan itu, lalu membagikan cara memeriksanya, bukan kesimpulannya."
+    }
+   ]
+  },
+  {
+   "no": 42,
+   "bagian": 3,
+   "judul": "Lahan Adat dan Izin Perusahaan",
+   "jenis": "berjangkar",
+   "skenario": "Perusahaan perkebunan memegang izin sah atas sebidang hutan yang bagi masyarakat adat setempat adalah tanah leluhur yang tidak boleh dirusak. Bentrokan mulai pecah. Sebagai mediator, bagaimana Anda merumuskan penyelesaiannya?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menghentikan kegiatan perusahaan lebih dulu demi meredakan bentrokan, sebab keselamatan orang harus didahulukan sebelum urusan sertifikat siapa pun dibicarakan."
+    },
+    {
+     "skor": 50,
+     "teks": "Menyusun peta tumpang tindih antara sertifikat dan wilayah adat, lalu menyodorkannya kepada kedua pihak sebagai bukti bahwa persoalan ini murni administratif."
+    },
+    {
+     "skor": 75,
+     "teks": "Menyarankan kedua pihak menempuh jalur pengadilan dan membatasi peran Anda pada menjaga agar bentrokan tidak berlanjut selama prosesnya berjalan."
+    },
+    {
+     "skor": 100,
+     "teks": "Menghentikan kegiatan sementara, mempertemukan keduanya dengan pengakuan wilayah adat yang memang sudah diatur, lalu menuliskan batas yang keduanya tanda tangani."
+    }
+   ]
+  },
+  {
+   "no": 43,
+   "bagian": 3,
+   "judul": "Pasangan yang Berselingkuh",
+   "jenis": "jangkar-palsu",
+   "skenario": "Anda menemukan bukti yang tidak terbantahkan bahwa pasangan yang telah menemani hidup Anda belasan tahun berselingkuh di belakang Anda. Apa reaksi pertama yang menguasai ruang kesadaran Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menghadapinya saat itu juga dengan bukti di tangan, sebab menunda pembicaraan hanya akan memberi waktu untuk menyusun cerita yang tidak sesuai kenyataan."
+    },
+    {
+     "skor": 50,
+     "teks": "Mengumpulkan buktinya lebih lengkap lebih dulu, sebab bukti digital baru bisa dipakai bila sudah utuh, dan Anda tidak ingin salah menuduh."
+    },
+    {
+     "skor": 75,
+     "teks": "Menerima kenyataan itu tanpa gejolak dan memutuskan sendiri arah hidup Anda, sebab menuntut penjelasan tidak akan mengubah apa pun yang sudah terjadi."
+    },
+    {
+     "skor": 100,
+     "teks": "Menyampaikan bahwa Anda sudah tahu, mengatakan apa yang Anda rasakan tanpa menuduh, lalu menanyakan apa yang sebenarnya dia inginkan dari hubungan ini."
+    }
+   ]
+  },
+  {
+   "no": 44,
+   "bagian": 3,
+   "judul": "Pemaparan yang Mengguncang Keyakinan",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Seorang akademisi memaparkan analisis sejarah yang menyimpulkan bahwa tokoh atau tradisi yang Anda yakini suci sebenarnya biasa saja dan penuh kesalahan. Audiens mulai menuntut ia ditangkap. Bagaimana sikap Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menyampaikan keberatan Anda di forum bahwa pemaparan seperti ini menyakiti banyak orang, dan meminta panitia lebih berhati-hati memilih pembicara berikutnya."
+    },
+    {
+     "skor": 50,
+     "teks": "Menanyakan sumber rujukannya satu per satu di depan forum sampai terlihat mana yang sebenarnya tidak bisa dia pertanggungjawabkan secara akademis."
+    },
+    {
+     "skor": 75,
+     "teks": "Keluar dari ruangan tanpa membuat keributan, sebab mendengarkan hal yang mengguncang pegangan batin tidak wajib dilakukan oleh siapa pun juga."
+    },
+    {
+     "skor": 100,
+     "teks": "Mencatat rujukannya, memeriksanya sendiri sesudah forum, lalu menyampaikan hasil pemeriksaan itu kepadanya — termasuk bagian yang ternyata memang benar."
+    }
+   ]
+  },
+  {
+   "no": 45,
+   "bagian": 3,
+   "judul": "Temuan yang Bisa Menyelamatkan atau Memusnahkan",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anda menemukan sumber energi bersih tanpa batas yang bisa mengakhiri krisis energi dunia, lalu menyadari formulanya mudah dimodifikasi menjadi senjata pemusnah. Apa keputusan akhir Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menjualnya kepada pihak yang paling mampu mengamankannya, sebab teknologi ini akan ditemukan orang lain juga dan lebih baik berada di tangan yang kuat."
+    },
+    {
+     "skor": 50,
+     "teks": "Memublikasikannya secara terbuka, sebab keterbukaan penuh selama ini terbukti menjadi pengaman terbaik dan komunitas ilmiah dunia akan mengawasi penyalahgunaannya sendiri."
+    },
+    {
+     "skor": 75,
+     "teks": "Memusnahkan seluruh datanya dan berhenti meneliti, sebab tanggung jawab terbesar seorang ilmuwan adalah tidak menambah satu pun risiko baru ke dunia."
+    },
+    {
+     "skor": 100,
+     "teks": "Merilis varian berdaya rendah yang tidak bisa dipersenjatai untuk krisis sekarang, lalu menyerahkan versi penuhnya pada pengawasan bersama lintas negara."
+    }
+   ]
+  },
+  {
+   "no": 76,
+   "bagian": 3,
+   "judul": "Kesaksian yang Menguntungkan Saudara",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anda satu-satunya orang yang melihat kejadian yang kini dipersoalkan. Keterangan yang jujur akan merugikan saudara kandung Anda, dan keluarga besar berharap Anda mengingat versi yang lain. Apa yang Anda kerjakan?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Memberikan keterangan sesuai yang Anda lihat dan menyampaikan kepada keluarga bahwa Anda tidak bisa diminta berbohong untuk siapa pun."
+    },
+    {
+     "skor": 50,
+     "teks": "Memberikan keterangan yang benar tetapi hanya sebatas yang ditanyakan, tanpa menambahkan hal yang tidak diminta, agar saudara Anda tidak lebih terbebani."
+    },
+    {
+     "skor": 75,
+     "teks": "Menolak memberikan keterangan sama sekali dengan alasan tidak ingat, sebab ikut campur dalam perkara keluarga hanya akan menghancurkan hubungan."
+    },
+    {
+     "skor": 100,
+     "teks": "Memberikan keterangan lengkap apa adanya, memberi tahu saudara Anda lebih dulu apa yang akan Anda sampaikan, lalu tetap mendampinginya sesudahnya."
+    }
+   ]
+  },
+  {
+   "no": 77,
+   "bagian": 3,
+   "judul": "Kembalian yang Berlebih",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Seorang pedagang kecil memberi kembalian jauh lebih besar dari seharusnya. Anda baru menyadarinya setelah berjalan cukup jauh, dan pedagang itu tampak tidak mengetahuinya. Apa yang Anda kerjakan?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Kembali dan mengembalikannya sambil mengingatkan agar ia lebih teliti, sebab kelalaian seperti ini bisa membuat dagangannya habis tanpa ia sadari."
+    },
+    {
+     "skor": 50,
+     "teks": "Menyimpannya dan berniat membelanjakan lebih banyak di tempatnya lain waktu, sehingga kerugiannya tergantikan tanpa perlu percakapan yang canggung."
+    },
+    {
+     "skor": 75,
+     "teks": "Menyimpannya dan menganggapnya rezeki yang datang tanpa diminta, sebab kesalahan itu bukan Anda yang membuat dan mengembalikannya sudah terlambat."
+    },
+    {
+     "skor": 100,
+     "teks": "Kembali dan menyerahkannya tanpa berkomentar apa pun tentang ketelitiannya, lalu melanjutkan perjalanan Anda seperti tidak terjadi apa-apa."
+    }
+   ]
+  },
+  {
+   "no": 78,
+   "bagian": 3,
+   "judul": "Orang yang Anda Dukung Ternyata Keliru",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Tokoh yang bertahun-tahun Anda bela di depan banyak orang terbukti melakukan hal yang selama ini Anda tuduhkan kepada lawannya. Buktinya jelas dan tidak terbantahkan. Apa tindakan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menyampaikan kekecewaan Anda secara terbuka dan menarik dukungan sepenuhnya, sebab membela orang seperti ini lebih lama hanya akan mempermalukan diri sendiri."
+    },
+    {
+     "skor": 50,
+     "teks": "Menyampaikan bahwa perbuatannya keliru sambil mengingatkan bahwa pihak lawan melakukan hal yang jauh lebih buruk dan tidak pernah dipersoalkan."
+    },
+    {
+     "skor": 75,
+     "teks": "Berhenti membicarakannya sama sekali dan menarik diri dari urusan itu, sebab mengomentari orang yang sedang jatuh bukan sesuatu yang pantas."
+    },
+    {
+     "skor": 100,
+     "teks": "Menyampaikan sendiri bahwa Anda keliru menilainya selama ini, menyebut di bagian mana pembelaan Anda dulu tidak berdasar, lalu berhenti di situ."
+    }
+   ]
+  },
+  {
+   "no": 79,
+   "bagian": 3,
+   "judul": "Bantuan yang Bukan Hak Anda",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Nama Anda tercantum sebagai penerima bantuan yang sebenarnya ditujukan bagi keluarga berpenghasilan jauh lebih rendah. Petugas menyerahkannya tanpa bertanya apa pun. Apa yang Anda kerjakan?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menolaknya di tempat dan menyampaikan kepada petugas bahwa pendataannya kacau, sebab kesalahan seperti ini pasti terjadi juga pada nama lain."
+    },
+    {
+     "skor": 50,
+     "teks": "Menerimanya lalu menyerahkannya kepada keluarga yang menurut Anda lebih berhak, supaya bantuan itu sampai ke tujuannya tanpa merepotkan petugas."
+    },
+    {
+     "skor": 75,
+     "teks": "Menerimanya saja, sebab yang menyusun daftar bukan Anda dan menolak bantuan resmi justru akan menyulitkan petugas yang sudah terlanjur mencatat."
+    },
+    {
+     "skor": 100,
+     "teks": "Menolaknya, meminta nama Anda dicoret dari daftar secara tertulis, lalu menanyakan bagaimana keluarga yang terlewat bisa diusulkan."
+    }
+   ]
+  },
+  {
+   "no": 80,
+   "bagian": 3,
+   "judul": "Anak Anda Mengambil yang Bukan Miliknya",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anda menemukan barang di tas anak Anda yang jelas bukan miliknya, dan ia mengakuinya kepada Anda. Tidak ada seorang pun yang mengetahuinya, dan pemiliknya belum menyadari kehilangan. Apa tindakan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Memarahinya keras dan mengantarnya mengembalikan barang itu hari itu juga, sebab anak hanya akan berhenti bila akibatnya benar-benar terasa."
+    },
+    {
+     "skor": 50,
+     "teks": "Mengembalikan barang itu sendiri diam-diam tanpa menyebut nama anak Anda, supaya persoalannya selesai tanpa ia menanggung malu di sekolah."
+    },
+    {
+     "skor": 75,
+     "teks": "Membicarakannya berdua di rumah dan meminta ia berjanji tidak mengulangi, sebab membawa persoalan ini keluar hanya akan melukainya lebih dalam."
+    },
+    {
+     "skor": 100,
+     "teks": "Menemani anak Anda mengembalikannya sendiri kepada pemiliknya, ikut berdiri di sampingnya saat ia menjelaskan, lalu tidak mengungkitnya lagi sesudahnya."
+    }
+   ]
+  },
+  {
+   "no": 81,
+   "bagian": 3,
+   "judul": "Diminta Memimpin Padahal Ada yang Lebih Layak",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anda diminta memimpin sebuah kegiatan besar, padahal Anda tahu ada orang lain yang lebih menguasai persoalannya tetapi tidak dikenal para pengurus. Apa tindakan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menolaknya dan menyebutkan nama orang itu, sebab menerima jabatan yang bukan hak Anda hanya akan merugikan kegiatan itu sendiri nanti."
+    },
+    {
+     "skor": 50,
+     "teks": "Menerimanya dan mengangkat orang itu sebagai wakil Anda, sehingga keahliannya tetap terpakai tanpa mengubah keputusan yang sudah dibuat pengurus."
+    },
+    {
+     "skor": 75,
+     "teks": "Menerimanya dengan berat hati dan menjalankannya sebisanya, sebab menolak permintaan pengurus akan dianggap tidak mau berkorban untuk kepentingan bersama."
+    },
+    {
+     "skor": 100,
+     "teks": "Meminta pengurus bertemu orang itu lebih dulu sebelum memutuskan, dan bersedia menerima keputusan mereka apa pun hasilnya."
+    }
+   ]
+  },
+  {
+   "no": 82,
+   "bagian": 3,
+   "judul": "Permintaan Orang Tua yang Anda Anggap Keliru",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Orang tua Anda meminta sesuatu yang menurut Anda akan merugikan mereka sendiri, dan mereka menyebut penolakan Anda sebagai tanda anak yang tidak berbakti. Apa yang Anda kerjakan?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menuruti permintaan itu meski Anda tidak setuju, sebab berdebat dengan orang tua tentang keputusan mereka sendiri bukan tempat seorang anak."
+    },
+    {
+     "skor": 50,
+     "teks": "Menuruti permintaannya sambil menyiapkan jalan keluar diam-diam untuk saat rencana itu gagal, supaya mereka tidak perlu mengakui kekeliruannya."
+    },
+    {
+     "skor": 75,
+     "teks": "Menolak dengan tenang lalu tidak membahasnya lagi, sebab memaksakan pendapat kepada orang tua tidak akan mengubah apa pun selain menambah luka."
+    },
+    {
+     "skor": 100,
+     "teks": "Menyampaikan keberatan Anda beserta alasannya sekali dengan jelas, menawarkan menemani mereka memeriksanya, lalu menghormati keputusan yang mereka ambil."
+    }
+   ]
+  },
+  {
+   "no": 83,
+   "bagian": 3,
+   "judul": "Orang yang Tidak Anda Sukai Ternyata Benar",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Dalam rapat, orang yang selama ini paling sering berseberangan dengan Anda menyampaikan usulan yang setelah Anda pikirkan ternyata lebih tepat daripada usulan Anda sendiri. Apa yang Anda lakukan?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Tetap mempertahankan usulan Anda dengan argumen tambahan, sebab mundur di depan orang itu akan melemahkan posisi Anda dalam rapat-rapat berikutnya."
+    },
+    {
+     "skor": 50,
+     "teks": "Menerima usulannya sambil menambahkan beberapa penyempurnaan dari Anda, sehingga keputusannya terlihat sebagai hasil pemikiran kalian berdua."
+    },
+    {
+     "skor": 75,
+     "teks": "Diam dan tidak menanggapi apa pun, membiarkan forum memutuskan sendiri, sebab memuji orang yang berseberangan tidak wajib dilakukan siapa pun."
+    },
+    {
+     "skor": 100,
+     "teks": "Menyatakan di forum bahwa usulannya lebih tepat daripada usulan Anda, menyebut di bagian mana, lalu mendukung pelaksanaannya."
+    }
+   ]
+  },
+  {
+   "no": 84,
+   "bagian": 3,
+   "judul": "Pujian atas Kerja Orang Lain",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Dalam sebuah pertemuan, pimpinan memuji Anda atas hasil kerja yang sebenarnya sebagian besar dikerjakan rekan Anda yang tidak hadir. Semua orang bertepuk tangan. Apa yang Anda kerjakan?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menyanggahnya saat itu juga dan menyebut nama rekan Anda, sebab menerima pujian yang salah alamat sama saja mengambil milik orang lain."
+    },
+    {
+     "skor": 50,
+     "teks": "Menerima pujian itu dengan sopan lalu menyampaikan kepada pimpinan sesudah acara siapa yang sebenarnya mengerjakannya, agar catatannya tetap benar."
+    },
+    {
+     "skor": 75,
+     "teks": "Menerimanya seadanya tanpa menanggapi, sebab rekan Anda sendiri tahu siapa yang bekerja dan pujian dalam pertemuan tidak mengubah apa pun."
+    },
+    {
+     "skor": 100,
+     "teks": "Menyebut nama rekan Anda saat itu juga, menyampaikan bagian mana yang ia kerjakan, lalu mengabarinya sendiri bahwa namanya sudah disebut."
+    }
+   ]
+  },
+  {
+   "no": 85,
+   "bagian": 3,
+   "judul": "Kesalahan Orang yang Sedang Terpuruk",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anda menemukan kekeliruan serius dalam pekerjaan seorang rekan yang sedang menghadapi musibah keluarga. Kekeliruan itu akan segera terlihat orang lain bila dibiarkan. Apa tindakan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Memperbaikinya sendiri tanpa memberi tahu siapa pun termasuk rekan itu, sebab menambah beban orang yang sedang berduka bukan perbuatan yang pantas."
+    },
+    {
+     "skor": 50,
+     "teks": "Memperbaikinya lalu memberi tahu atasan bahwa Anda sudah menanganinya, supaya kekeliruan itu tercatat sudah selesai tanpa menyebut siapa penyebabnya."
+    },
+    {
+     "skor": 75,
+     "teks": "Membiarkannya dan tidak ikut campur, sebab pekerjaan itu tanggung jawab rekan tersebut dan ia berhak menyelesaikannya dengan caranya sendiri."
+    },
+    {
+     "skor": 100,
+     "teks": "Memberi tahu rekan itu lebih dulu, menawarkan mengerjakan perbaikannya bersama, lalu membiarkan dia yang menyampaikannya kepada atasan."
+    }
+   ]
+  },
+  {
+   "no": 86,
+   "bagian": 3,
+   "judul": "Ajaran yang Bertentangan dengan Bukti",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Sebuah keterangan yang selama ini Anda pegang sebagai kebenaran ternyata bertentangan dengan bukti yang tidak bisa Anda bantah. Belum ada seorang pun yang mengetahui temuan Anda. Apa yang Anda kerjakan?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menyimpan temuan itu dan tetap memegang keterangan lama, sebab satu bukti belum cukup untuk membatalkan sesuatu yang sudah lama diyakini banyak orang."
+    },
+    {
+     "skor": 50,
+     "teks": "Memeriksanya berulang kali sampai Anda menemukan celah dalam buktinya, agar keterangan yang selama ini Anda pegang tetap bisa dipertahankan."
+    },
+    {
+     "skor": 75,
+     "teks": "Menyimpannya untuk diri sendiri dan berhenti membicarakan keterangan lama itu, sebab mengguncang pegangan orang lain bukan tanggung jawab Anda."
+    },
+    {
+     "skor": 100,
+     "teks": "Menyampaikan temuan itu apa adanya kepada mereka yang selama ini mendengar keterangan lama dari Anda, lalu menunjukkan cara memeriksanya sendiri."
+    }
+   ]
+  },
+  {
+   "no": 87,
+   "bagian": 3,
+   "judul": "Kesempatan Membalas",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Orang yang pernah merugikan Anda kini berada dalam keadaan yang membuat satu kalimat Anda cukup untuk menjatuhkannya, dan tidak ada yang akan tahu itu berasal dari Anda. Apa yang bergolak dalam batin Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menyampaikannya karena orang seperti dia perlu merasakan akibat perbuatannya, dan kesempatan seadil ini mungkin tidak akan datang dua kali."
+    },
+    {
+     "skor": 50,
+     "teks": "Tidak menyampaikannya sekarang tetapi menyimpannya, sebab keterangan itu bisa berguna bila suatu saat dia mengganggu Anda lagi."
+    },
+    {
+     "skor": 75,
+     "teks": "Membiarkannya berlalu dan tidak melakukan apa pun, sebab membalas hanya akan menyeret Anda kembali ke persoalan yang sudah selesai."
+    },
+    {
+     "skor": 100,
+     "teks": "Memeriksa lebih dulu apakah orang lain memang dirugikan bila Anda diam, lalu memutuskan berdasarkan itu — bukan berdasarkan apa yang pernah menimpa Anda."
+    }
+   ]
+  },
+  {
+   "no": 88,
+   "bagian": 3,
+   "judul": "Keadaan Keluarga yang Diminta Disembunyikan",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Keluarga besar meminta Anda ikut menutupi keadaan sebenarnya seorang anggota keluarga demi menjaga nama baik, padahal keadaan itu membuat orang lain di luar keluarga terus dirugikan. Apa tindakan Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menolak ikut menutupinya dan menyampaikan kepada keluarga bahwa nama baik yang dijaga dengan cara begini tidak akan bertahan lama juga."
+    },
+    {
+     "skor": 50,
+     "teks": "Ikut menutupinya di depan keluarga tetapi memberi tahu pihak yang dirugikan secara diam-diam, supaya keduanya sama-sama tidak terlanjur jauh."
+    },
+    {
+     "skor": 75,
+     "teks": "Ikut menutupinya dan menjauh dari urusan itu, sebab membuka keadaan keluarga sendiri kepada orang luar bukan tempat Anda untuk memutuskan."
+    },
+    {
+     "skor": 100,
+     "teks": "Menyampaikan kepada keluarga bahwa Anda tidak bisa ikut, mengusulkan mereka sendiri yang menyelesaikannya dengan pihak yang dirugikan, dan bersedia menemani."
+    }
+   ]
+  },
+  {
+   "no": 89,
+   "bagian": 3,
+   "judul": "Kelompok Anda Melakukan Hal yang Anda Tolak",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Kelompok yang selama ini Anda banggakan melakukan sesuatu yang menurut Anda keliru, dan seluruh anggota lain menganggapnya wajar. Menyuarakan keberatan akan membuat Anda dianggap tidak setia. Apa sikap Anda?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Keluar dari kelompok itu dan menyampaikan alasannya kepada orang di luar, sebab bertahan di dalam berarti ikut menanggung perbuatan mereka."
+    },
+    {
+     "skor": 50,
+     "teks": "Menyampaikan keberatan Anda hanya kepada beberapa anggota yang mungkin sependapat, agar suaranya lebih kuat sebelum dibawa ke forum kelompok."
+    },
+    {
+     "skor": 75,
+     "teks": "Tetap di dalam tanpa ikut serta dan tanpa bersuara, sebab menjaga kejernihan sikap sendiri sudah cukup tanpa perlu mengubah orang lain."
+    },
+    {
+     "skor": 100,
+     "teks": "Menyampaikan keberatan Anda di forum kelompok sekali dengan alasannya, tetap tinggal untuk menanggung akibatnya, dan menerima bila mereka tidak berubah."
+    }
+   ]
+  },
+  {
+   "no": 90,
+   "bagian": 3,
+   "judul": "Antara Jujur dan Pekerjaan",
+   "jenis": "tanpa-jangkar",
+   "skenario": "Anda diminta menyatakan sesuatu yang tidak benar dalam sebuah laporan. Menolaknya hampir pasti membuat Anda kehilangan pekerjaan, sementara keluarga Anda sepenuhnya bergantung pada penghasilan itu. Apa yang Anda kerjakan?",
+   "pilihan": [
+    {
+     "skor": 25,
+     "teks": "Menolaknya dan mengundurkan diri saat itu juga, sebab bertahan di tempat yang meminta hal seperti ini hanya soal waktu sebelum diminta lagi."
+    },
+    {
+     "skor": 50,
+     "teks": "Menuliskannya seperti diminta tetapi menyimpan bukti bahwa Anda diperintahkan, supaya Anda punya perlindungan bila suatu saat perkaranya terbuka."
+    },
+    {
+     "skor": 75,
+     "teks": "Menuliskannya dan menerima keadaan, sebab menolak tidak akan mengubah apa pun selain memindahkan pekerjaan itu ke orang lain yang bersedia."
+    },
+    {
+     "skor": 100,
+     "teks": "Menolak menandatanganinya, menyampaikan alasannya tertulis kepada atasan, dan mulai menyiapkan diri untuk kemungkinan terburuk tanpa mendahului keputusannya."
+    }
+   ]
+  }
+ ]
 }

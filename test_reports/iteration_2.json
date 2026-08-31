@@ -1,0 +1,36 @@
+{
+  "summary": "Re-validated Candradimuka (UPKT) after /app/data/bank-soal.json was replaced with the full 90-item bank (verified: 90 items, exactly 30 per bagian, every item has 4 options with scores {25,50,75,100}, all 'no' unique, no duplicate option text across the bank). Updated /app/backend/tests/backend_test.py from the small-seed assumptions to the real bank and added 4 new cases; 34/34 pytest cases pass. Backend verified: dasar draws EXACTLY 15 items all from bagian 1; lengkap draws EXACTLY 45 items with EXACTLY 15 per bagian (1,2,3), no duplicates; a participant's 2nd dasar session has ZERO overlap with the 1st (and a lengkap session after a dasar session also has zero overlap with the seen dasar items); a 3rd dasar session (pool of 30 exhausted) still returns 15 unique items using oldest-seen fill; question order AND option order shuffle across sessions; GET /api/sesi/{id} never leaks option skor (only {token,teks}); hasil.jumlah_soal=45 and disk[] has 45 non-null entries. Frontend E2E at 1920px: Home -> dasar (counter 1/15..15/15, 1 Tritangtu corner) -> hasil -> 'Lanjutkan ke uji lengkap' -> 45-question flow with correct 'n / 45' counter at every step, 4 options each, Tritangtu filling all THREE corners as bagian progress (aria-label '45 dari 45 pertanyaan terjawab') -> hasil shows kategori 'Nyaring Sela' 68% -> ProfileDisk now renders 45 visible coloured threads (canvas pixel probe: 19,939 non-transparent pixels, 3,063 unique colours; small-n degeneracy from iteration_1 no longer applies) -> unlocked with a real unused 'bacaan' code -> paid section shows per-bagian (68/75/60 with levels), 4-segment sebaran bar with counts 7/14/9/15 (=45), menonjol, 3 tangga, latihan mapped to weakest bagian 3 (Audit Empati Radikal), and the used code. No page errors.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "Sertifikat.jsx (sertifikat-preview)", "issue": "Still hardcodes 'sebanyak 45 soal' instead of h.jumlah_soal. Now numerically correct for a fully answered lengkap session, but POST /api/sesi/{id}/selesai accepts a partially answered lengkap session, so the printed preview can still overstate the question count. Low priority now.", "selector": "[data-testid='sertifikat-preview']", "priority": "LOW"}
+    ],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "/hasil/{id} ProfileDisk (n=45)", "issues": ["Threads are visible but render as a near-radial starburst rather than a woven mesh: b = (i + floor(n/2) - 1) % n makes every chord an almost-diameter, so all 45 lines converge on the centre. Consider a smaller/coprime step (e.g. b = (i*k) % n with k ~ n/3) if a 'woven' look is intended.", "Canvas2D console warning: 'getImageData ... willReadFrequently=true' (cosmetic/perf only)."]}
+    ]
+  },
+  "test_report_links": ["/app/backend/tests/backend_test.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [
+    "Optional: use h.jumlah_soal in Sertifikat.jsx preview instead of the hardcoded 45.",
+    "Optional: reject POST /api/sesi/{id}/selesai when not all questions are answered (currently stores skor=0 / kategori Cicing, outside the documented 25-100 floor).",
+    "Optional cosmetic: ProfileDisk chord step + willReadFrequently on getContext('2d')."
+  ],
+  "critical_code_review_comments": [
+    "server.py still uses deprecated @app.on_event startup/shutdown; migrate to lifespan handlers.",
+    "seen_soal_ids() and the JEDA lookup now scan every sesi document of a peserta in Python and /api/papan does an N+1 peserta lookup per row; with 45-item sessions the payloads are 15x bigger than before. Add indexes on {peserta_id} and {jenis, selesai_at} and consider projections/aggregation.",
+    "GET /api/sesi/{id} now returns 45 questions x 4 options in one payload including all tokens; fine, but the stored soal_detail duplicates bank text per session (DB growth) — consider storing only no+token->skor mapping.",
+    "PesertaCreate/MinatCreate/SertifikatCreate still lack min_length constraints (empty strings accepted by the API)."
+  ],
+  "updated_files": ["/app/backend/tests/backend_test.py"],
+  "success_rate": {"backend": "100% (34/34 pytest cases)", "frontend": "100% of tested flows functional"},
+  "seed_data_creation": "pytest created throwaway TEST_* peserta/sesi plus 2 sertifikat orders; UI run created peserta 'QA Bank90' with 1 dasar + 1 lengkap session. Consumed 3 'bacaan' access codes this run (2 pytest + 1 UI); 24 of 30 unused bacaan codes remain.",
+  "should_call_test_agent_after_fix": false,
+  "should_main_agent_self_test": true,
+  "test_credentials": "No login. Admin key CANDRA2026 via ?kunci= query string (verified working; wrong/absent key -> 403).",
+  "context_for_next_testing_agent": "backend_test.py (34 cases) is now aligned with the full 90-item bank and asserts exact counts 15/45 and zero-overlap exclusion. It consumes 2 unused 'bacaan' codes per run; 24 remain, so drop db.kode_akses and restart backend to re-seed when they run out. Everything in the review request for iteration_2 is verified green; only cosmetic items (Sertifikat hardcoded 45, ProfileDisk starburst geometry, canvas willReadFrequently) remain open.",
+  "rca_of_the_issue": "No defects found this iteration. The iteration_1 ProfileDisk blank-canvas defect was purely a small-n artifact of the 3-item seed bank and is resolved by the real bank (n=45); the Sertifikat '45 soal' hardcode is now coincidentally correct for complete lengkap sessions but remains wrong for a lengkap session finished with missing answers."
+}

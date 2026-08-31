@@ -103,14 +103,40 @@ class TestDraw:
         sesi = client.get(f"{API}/sesi/{sid}").json()
         bagians = {sesi["soal_detail"][str(no)]["bagian"] for no in sesi["soal_ids"]}
         assert bagians == {1}, bagians
+        assert len(sesi["soal_ids"]) == 15, len(sesi["soal_ids"])
         assert len(sesi["soal_ids"]) == len(set(sesi["soal_ids"]))
 
-    def test_lengkap_covers_all_bagian(self, client):
+    def test_lengkap_45_items_15_per_bagian(self, client):
         pid = new_peserta(client, "TEST_Draw2")
         sid = mulai(client, pid, "lengkap")["sesi_id"]
         sesi = client.get(f"{API}/sesi/{sid}").json()
-        bagians = sorted(sesi["soal_detail"][str(no)]["bagian"] for no in sesi["soal_ids"])
-        assert bagians == [1, 2, 3], bagians
+        ids = sesi["soal_ids"]
+        assert len(ids) == 45, len(ids)
+        assert len(set(ids)) == 45
+        counts = {1: 0, 2: 0, 3: 0}
+        for no in ids:
+            counts[sesi["soal_detail"][str(no)]["bagian"]] += 1
+        assert counts == {1: 15, 2: 15, 3: 15}, counts
+
+    def test_bank_has_90_items_30_per_bagian(self):
+        import json
+        with open("/app/data/bank-soal.json", encoding="utf-8") as f:
+            bank = json.load(f)["soal"]
+        assert len(bank) == 90, len(bank)
+        counts = {1: 0, 2: 0, 3: 0}
+        for it in bank:
+            counts[it["bagian"]] += 1
+            assert sorted(p["skor"] for p in it["pilihan"]) == [25, 50, 75, 100], it["no"]
+        assert counts == {1: 30, 2: 30, 3: 30}, counts
+        assert len({it["no"] for it in bank}) == 90
+
+    def test_question_order_shuffled_between_sessions(self, client):
+        orders = set()
+        for _ in range(4):
+            pid = new_peserta(client, "TEST_QOrder")
+            sid = mulai(client, pid, "dasar")["sesi_id"]
+            orders.add(tuple(client.get(f"{API}/sesi/{sid}").json()["soal_ids"]))
+        assert len(orders) > 1, "question order not shuffled"
 
     def test_no_score_leak_in_sesi_payload(self, client):
         pid = new_peserta(client, "TEST_Leak")
@@ -159,15 +185,27 @@ class TestDraw:
         assert len({it["no"] for it in drawn2}) == 15
 
     def test_second_session_excludes_seen_via_api(self, client):
-        """With only 1 item per bagian, unseen pool is empty; API must still return a session."""
+        """Bagian 1 has 30 items; 2nd dasar session must have ZERO overlap with the 1st."""
         pid = new_peserta(client, "TEST_Excl")
         s1 = mulai(client, pid, "dasar")["sesi_id"]
-        ids1 = client.get(f"{API}/sesi/{s1}").json()["soal_ids"]
+        ids1 = set(client.get(f"{API}/sesi/{s1}").json()["soal_ids"])
         s2 = mulai(client, pid, "dasar")["sesi_id"]
-        ids2 = client.get(f"{API}/sesi/{s2}").json()["soal_ids"]
-        assert len(ids2) >= 1
-        # seed bank has only one bagian-1 item so reuse is expected
-        assert set(ids1) == set(ids2)
+        ids2 = set(client.get(f"{API}/sesi/{s2}").json()["soal_ids"])
+        assert len(ids1) == 15 and len(ids2) == 15
+        assert ids1 & ids2 == set(), f"overlap: {ids1 & ids2}"
+        # 3rd session: pool exhausted (30 seen), must still return 15 unique items
+        s3 = mulai(client, pid, "dasar")["sesi_id"]
+        ids3 = client.get(f"{API}/sesi/{s3}").json()["soal_ids"]
+        assert len(ids3) == 15 and len(set(ids3)) == 15
+
+    def test_lengkap_after_dasar_excludes_seen_bagian1(self, client):
+        pid = new_peserta(client, "TEST_ExclMix")
+        s1 = mulai(client, pid, "dasar")["sesi_id"]
+        ids1 = set(client.get(f"{API}/sesi/{s1}").json()["soal_ids"])
+        s2 = mulai(client, pid, "lengkap")["sesi_id"]
+        ids2 = set(client.get(f"{API}/sesi/{s2}").json()["soal_ids"])
+        assert len(ids2) == 45
+        assert ids1 & ids2 == set(), f"overlap: {ids1 & ids2}"
 
 
 # ---- Answering & scoring ----
@@ -248,10 +286,10 @@ class TestUnlockPaid:
         b = h["berbayar"]
         assert [x["bagian"] for x in b["per_bagian"]] == [1, 2, 3]
         assert all(x["skor"] == 75 and x["level"] == "Nyaring Jati" for x in b["per_bagian"])
-        assert b["sebaran"] == {"25": 0, "50": 0, "75": 3, "100": 0}
+        assert b["sebaran"] == {"25": 0, "50": 0, "75": 45, "100": 0}
         assert b["menonjol"]["skor"] == 75 and b["menonjol"]["level"] == "Nyaring Jati"
         assert b["menonjol"]["bacaan"]
-        assert 1 <= len(b["tangga"]) <= 3
+        assert len(b["tangga"]) == 3
         for t in b["tangga"]:
             assert t["skenario"] and t["pilihan_dipilih"] and t["pilihan_seratus"] and t["beda"]
         assert b["latihan"]["bagian"] in (1, 2, 3)
@@ -284,9 +322,13 @@ class TestUnlockPaid:
         client.post(f"{API}/sesi/{sid}/selesai", json={})
         kode = self.get_unused_code(client)
         assert client.post(f"{API}/sesi/{sid}/buka", json={"kode": kode}).status_code == 200
-        b = client.get(f"{API}/sesi/{sid}/hasil").json()["berbayar"]
+        h = client.get(f"{API}/sesi/{sid}/hasil").json()
+        assert h["jumlah_soal"] == 45
+        assert len(h["disk"]) == 45 and all(x is not None for x in h["disk"])
+        b = h["berbayar"]
         assert b["latihan"] == {"bagian": 3, "nama": "Audit Empati Radikal"}
-        assert b["sebaran"] == {"25": 1, "50": 0, "75": 0, "100": 2}
+        assert [x["skor"] for x in b["per_bagian"]] == [100, 100, 25]
+        assert b["sebaran"] == {"25": 15, "50": 0, "75": 0, "100": 30}
 
 
 # ---- JEDA ----
