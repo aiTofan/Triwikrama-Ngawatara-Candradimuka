@@ -1,6 +1,13 @@
 import { Link } from "react-router-dom";
 import { Layout } from "../components/Layout";
 
+const PRICES = [
+  ["Melanjutkan ke 120 soal berikutnya, termasuk pembacaan lengkap", "Rp17.000"],
+  ["Pelatihan Candradimuka, sekali bayar untuk enam modul", "Rp90.000"],
+  ["Sertifikat cetak bertanda tangan, di luar ongkos kirim", "Rp137.000"],
+  ["Peta Kesadaran digital, bisa dicetak sendiri", "Rp36.000"],
+];
+
 export default function Harga() {
   return (
     <Layout>
@@ -10,17 +17,16 @@ export default function Harga() {
       </div>
       <h1 className="cd-h1" style={{ fontSize: 40 }}>Harga</h1>
 
-      <div className="cd-block">
-        <p className="cd-label">Pembacaan lengkap</p>
-        <p className="cd-muted">Rp15.000, sekali bayar per hasil uji. Bisa dipotongkan dari bulan pertama
-          pelatihan bila mendaftar dalam 30 hari.</p>
-      </div>
+      {PRICES.map(([label, price]) => (
+        <div className="cd-block" key={label} style={{ display: "flex", justifyContent: "space-between", gap: 16, alignItems: "baseline" }}>
+          <p className="cd-muted" style={{ margin: 0 }}>{label}</p>
+          <p className="mono" style={{ margin: 0, color: "var(--ink)", whiteSpace: "nowrap" }}>{price}</p>
+        </div>
+      ))}
 
-      <div className="cd-block">
-        <p className="cd-label">Pelatihan Candradimuka</p>
-        <p className="cd-muted">Mandiri Rp15.000 per bulan. Kohor per orang per bulan: 5-9 orang Rp12.000,
-          10-14 orang Rp10.000, 15-20 orang Rp9.000.</p>
-      </div>
+      <p className="cd-faint" style={{ fontSize: 14, marginTop: 12 }} data-testid="harga-potongan">
+        Rp17.000 dipotongkan dari biaya pelatihan bila kamu mendaftar dalam 30 hari.
+      </p>
 
       <p className="cd-muted" style={{ marginTop: 18 }}>
         Pembayaran lewat transfer atau QRIS di luar aplikasi. Setelah pembayaran diterima kamu menerima kode akses.

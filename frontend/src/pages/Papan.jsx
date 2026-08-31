@@ -5,7 +5,7 @@ import { api } from "../api";
 import { fmtTanggal, getPeserta } from "../peserta";
 
 export default function Papan() {
-  const [tab, setTab] = useState("dasar");
+  const [tab, setTab] = useState("bhurloka");
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -24,20 +24,18 @@ export default function Papan() {
       <h1 className="cd-h1" style={{ fontSize: 40 }}>Papan Skor</h1>
 
       <div className="cd-tabs">
-        <button className={"cd-tab" + (tab === "dasar" ? " active" : "")} data-testid="tab-dasar" onClick={() => setTab("dasar")}>Tingkat Dasar</button>
-        <button className={"cd-tab" + (tab === "lengkap" ? " active" : "")} data-testid="tab-lengkap" onClick={() => setTab("lengkap")}>Uji Lengkap</button>
+        <button className={"cd-tab" + (tab === "bhurloka" ? " active" : "")} data-testid="tab-bhurloka" onClick={() => setTab("bhurloka")}>Bhurloka</button>
+        <button className={"cd-tab" + (tab === "paramartha" ? " active" : "")} data-testid="tab-paramartha" onClick={() => setTab("paramartha")}>Paramārtha</button>
       </div>
 
       <p className="cd-faint" style={{ fontSize: 13, marginBottom: 12 }}>
-        Skor 15 soal dan 45 soal tidak sebanding, karena itu papan dipisah.
+        Skor tingkat Bhurloka dan Paramārtha tidak sebanding, karena itu papan dipisah.
       </p>
 
       {!data ? <p className="cd-muted">Memuat…</p> : (
         <>
           <table className="cd-table" data-testid="papan-table">
-            <thead>
-              <tr><th>#</th><th>Nama</th><th>Skor</th><th>Tanggal</th></tr>
-            </thead>
+            <thead><tr><th>#</th><th>Nama</th><th>Skor</th><th>Tanggal</th></tr></thead>
             <tbody>
               {data.top.length === 0 && <tr><td colSpan={4} className="cd-muted">Belum ada hasil.</td></tr>}
               {data.top.map((r) => (

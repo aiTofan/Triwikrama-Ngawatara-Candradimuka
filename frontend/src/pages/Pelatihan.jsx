@@ -58,8 +58,8 @@ export default function Pelatihan() {
 
       <div className="cd-block" style={{ marginTop: 20 }}>
         <p className="cd-label">Harga</p>
-        <p className="cd-muted">Mandiri Rp15.000 per bulan. Kohor per orang per bulan: 5-9 orang
-          Rp12.000, 10-14 orang Rp10.000, 15-20 orang Rp9.000. <Link to="/harga">Lihat halaman harga →</Link></p>
+        <p className="cd-muted">Pelatihan Candradimuka Rp90.000, sekali bayar untuk enam modul.
+          Rp17.000 dari pembacaanmu dipotongkan bila mendaftar dalam 30 hari. <Link to="/harga">Lihat halaman harga →</Link></p>
       </div>
 
       <hr className="cd-divider" />

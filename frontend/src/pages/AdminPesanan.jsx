@@ -47,7 +47,7 @@ export default function AdminPesanan() {
                 <td>{o.alamat}</td>
                 <td>{o.status}</td>
                 <td>
-                  <select className="cd-select" data-testid={`status-${o.id}`} value={o.status} onChange={(e) => ubah(o.id, e.target.value)}>
+                  <select className="cd-select" style={{ minWidth: 120 }} data-testid={`status-${o.id}`} value={o.status} onChange={(e) => ubah(o.id, e.target.value)}>
                     {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
                   </select>
                 </td>

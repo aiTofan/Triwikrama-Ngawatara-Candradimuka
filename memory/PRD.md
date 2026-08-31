@@ -41,6 +41,20 @@ Printed certificates ARE ordered through the app.
   verbatim per spec.
 
 ## Backlog (not requested / future)
-- Replace bank-soal.json with the full 90-item bank.
+- Replace bank-soal.json with the full 150-item tiered bank (with `tingkat`).
 - Build the six Candradimuka training worksheets/modules.
 - CSV export for orders/leaderboard.
+
+## Update 2026-06 — Triwikramā three-tier + Google auth + serials
+- Front page retitled "Triwikramā · Ngawatāra Candradimuka"; button "Mulai"; "gratis" removed.
+- Three tiers Bhurloka(17)/Ākāśa(30)/Paramārtha(90) drawn by `tingkat` (falls back to
+  `bagian` until the tiered bank lands: today 17/30/30). Paramārtha in blocks of 15 with checkpoints.
+- Journey model (`perjalanan`) + payment gate via access code (Rp17.000 unlocks Ākāśa→Paramārtha
+  and includes the written reading; no gateway). Pause/resume on Ākāśa & Paramārtha.
+- Google login (Emergent-managed) requested only at the result screen; peserta gains
+  google_sub/nama_lengkap/foto_url; `user_sessions` for session tokens.
+- Result map = three tier % bars (floor 25, no rescale). New /harga (4 prices).
+- Certificate serial TRW-YY-XXXXXXX-C (Crockford base32 check char) + public /validasi
+  (pre-DB check-char rejection, 10/IP/min rate limit, returns only name/date/tier %).
+- Privacy: /sesi and /hasil no longer expose email/google_sub; address/phone only on /admin/pesanan.
+- Verified: 22/22 backend pytest + 13 frontend flows (iteration_3).

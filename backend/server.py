@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, HTTPException, Query
+from fastapi import FastAPI, APIRouter, HTTPException, Query, Request, Response
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -6,17 +6,22 @@ import os
 import json
 import random
 import string
+import secrets
 import logging
+import httpx
 from pathlib import Path
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
 import uuid
 from datetime import datetime, timezone, timedelta
+from collections import defaultdict, Counter
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-# MongoDB connection
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
@@ -26,24 +31,37 @@ api_router = APIRouter(prefix="/api")
 
 ADMIN_KEY = "CANDRA2026"
 DATA_FILE = ROOT_DIR.parent / "data" / "bank-soal.json"
+EMERGENT_AUTH = "https://demobackend.emergentagent.com/auth/v1/env/oauth/session-data"
 
-# ---- Category definitions ----
+# ---- Tier config ----
+# jenis: 'bhurloka' | 'akasa' | 'paramartha'
+TIERS = [
+    {"key": "bhurloka", "nama": "Bhurloka", "match": "Bhurloka", "target": 17, "bagian": 1},
+    {"key": "akasa", "nama": "Ākāśa", "match": "Ākāśa", "target": 30, "bagian": 2},
+    {"key": "paramartha", "nama": "Paramārtha", "match": "Paramārtha", "target": 90, "bagian": 3},
+]
+TIER_BY_KEY = {t["key"]: t for t in TIERS}
+TIER_ORDER = ["bhurloka", "akasa", "paramartha"]
+
+EXERCISE_BY_TIER = {
+    "bhurloka": "Cek Diri Dasa Kreta",
+    "akasa": "Lembar Kerja Panca Niti",
+    "paramartha": "Audit Empati Radikal",
+}
+
 KATEGORI_TABLE = [
     (25, 49, "Cicing", "Kesadaran tertidur dan reaktif"),
     (50, 74, "Nyaring Sela", "Pengamat yang masih ber-ego"),
     (75, 89, "Nyaring Jati", "Pengamat terjaga tetapi steril"),
     (90, 100, "Eling", "Berdaulat dan melahirkan karya nyata"),
 ]
-
 KATEGORI_PARAGRAF = {
     "Cicing": "Pada kesempatan ini kesadaran terbaca masih tertidur dan reaktif; situasi ditanggapi lebih dulu oleh dorongan dan reaksi ketimbang pengamatan. Bacaan ini menggambarkan cara membaca keadaan pada satu momen, bukan sifat tetap dirimu.",
     "Nyaring Sela": "Pada kesempatan ini terbaca seorang pengamat yang mulai jernih namun masih ber-ego; ada jarak terhadap dorongan, tetapi kepentingan diri masih ikut mewarnai tanggapan. Bacaan ini menggambarkan cara membaca keadaan pada satu momen, bukan sifat tetap dirimu.",
     "Nyaring Jati": "Pada kesempatan ini terbaca pengamat yang terjaga tetapi cenderung steril; kesadaran hadir dan tenang, namun belum sepenuhnya bergerak menjadi tindakan yang melahirkan sesuatu. Bacaan ini menggambarkan cara membaca keadaan pada satu momen, bukan sifat tetap dirimu.",
     "Eling": "Pada kesempatan ini terbaca kesadaran yang berdaulat dan melahirkan karya nyata; keadaan dibaca jernih lalu diteruskan menjadi langkah yang berpijak dan bermanfaat. Bacaan ini menggambarkan cara membaca keadaan pada satu momen, bukan sifat tetap dirimu.",
 }
-
 LEVEL_NAMA = {25: "Cicing", 50: "Nyaring Sela", 75: "Nyaring Jati", 100: "Eling"}
-
 MENONJOL_BACAAN = {
     25: "Pada banyak situasi tanggapan muncul secara reaktif; latihan menahan jeda sebelum bertindak akan paling terasa dampaknya.",
     50: "Sebagian besar tanggapan berjarak namun masih diwarnai kepentingan diri; melatih kejujuran pada niat akan menajamkan bacaan berikutnya.",
@@ -51,11 +69,7 @@ MENONJOL_BACAAN = {
     100: "Kebanyakan tanggapan sudah berdaulat dan melahirkan tindakan; pola ini menandai kesadaran yang bekerja, bukan sekadar mengamati.",
 }
 
-EXERCISE_BY_BAGIAN = {
-    1: "Cek Diri Dasa Kreta",
-    2: "Lembar Kerja Panca Niti",
-    3: "Audit Empati Radikal",
-}
+SERIAL_ALPHABET = "0123456789ABCDEFGHJKMNPQRSTVWXYZ"  # Crockford base32, no I L O U
 
 
 def kategori_for(skor: int):
@@ -73,10 +87,38 @@ def gen_code(n=8):
     return ''.join(random.choices(string.ascii_uppercase + string.digits, k=n))
 
 
+def item_tingkat(it: Dict) -> Optional[str]:
+    """Prefer the item's own 'tingkat'; fall back to a bagian->tingkat mapping."""
+    t = it.get("tingkat")
+    if t:
+        return t
+    return {1: "Bhurloka", 2: "Ākāśa", 3: "Paramārtha"}.get(it.get("bagian"))
+
+
 def load_bank() -> List[Dict[str, Any]]:
     with open(DATA_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)
     return data.get("soal", [])
+
+
+def gen_serial(yy: str) -> str:
+    seven = ''.join(secrets.choice(SERIAL_ALPHABET) for _ in range(7))
+    chk = SERIAL_ALPHABET[sum(SERIAL_ALPHABET.index(c) for c in seven) % 32]
+    return f"TRW-{yy}-{seven}-{chk}"
+
+
+def valid_serial(s: str) -> bool:
+    parts = s.strip().upper().split("-")
+    if len(parts) != 4 or parts[0] != "TRW":
+        return False
+    yy, seven, chk = parts[1], parts[2], parts[3]
+    if len(yy) != 2 or not yy.isdigit():
+        return False
+    if len(seven) != 7 or any(c not in SERIAL_ALPHABET for c in seven):
+        return False
+    if len(chk) != 1 or chk not in SERIAL_ALPHABET:
+        return False
+    return SERIAL_ALPHABET[sum(SERIAL_ALPHABET.index(c) for c in seven) % 32] == chk
 
 
 # ---- Models ----
@@ -85,28 +127,32 @@ class PesertaCreate(BaseModel):
     email: Optional[str] = None
 
 
-class MulaiSesi(BaseModel):
+class MulaiPerjalanan(BaseModel):
     peserta_id: str
-    jenis: str  # "dasar" or "lengkap"
 
 
 class Jawab(BaseModel):
     soal_no: int
     token: str
+    posisi: Optional[int] = None
 
 
-class SelesaiSesi(BaseModel):
-    tampil_di_papan: Optional[bool] = None
+class PosisiBody(BaseModel):
+    posisi: int
 
 
-class BukaBody(BaseModel):
+class BayarBody(BaseModel):
     kode: str
+
+
+class TampilBody(BaseModel):
+    tampil_di_papan: bool
 
 
 class MinatCreate(BaseModel):
     nama: str
     kontak: str
-    jalur: str  # "Mandiri" or "Kohor"
+    jalur: str
     jumlah_orang: Optional[int] = None
     catatan: Optional[str] = None
     kode_pembacaan: Optional[str] = None
@@ -117,16 +163,25 @@ class SertifikatCreate(BaseModel):
     telepon: str
     alamat: str
     catatan: Optional[str] = None
+    bentuk: Optional[str] = "cetak"
 
 
 class StatusUpdate(BaseModel):
     status: str
 
 
+class SessionBody(BaseModel):
+    session_id: str
+    peserta_id: Optional[str] = None
+
+
+class ValidasiBody(BaseModel):
+    nomor_seri: str
+
+
 # ---- Seeding ----
 async def seed_codes():
-    count = await db.kode_akses.count_documents({})
-    if count > 0:
+    if await db.kode_akses.count_documents({}) > 0:
         return
     docs = []
     seen = set()
@@ -153,9 +208,86 @@ async def on_startup():
     await seed_codes()
 
 
+# ---- Auth ----
+async def current_peserta(request: Request) -> Optional[Dict]:
+    token = request.cookies.get("session_token")
+    if not token:
+        auth = request.headers.get("Authorization", "")
+        if auth.startswith("Bearer "):
+            token = auth[7:]
+    if not token:
+        return None
+    sess = await db.user_sessions.find_one({"session_token": token})
+    if not sess:
+        return None
+    exp = sess.get("expires_at")
+    if isinstance(exp, str):
+        exp = datetime.fromisoformat(exp)
+    if exp and exp.tzinfo is None:
+        exp = exp.replace(tzinfo=timezone.utc)
+    if exp and exp < datetime.now(timezone.utc):
+        return None
+    return await db.peserta.find_one({"id": sess["peserta_id"]}, {"_id": 0})
+
+
+@api_router.post("/auth/session")
+async def auth_session(body: SessionBody, response: Response):
+    # REMINDER: DO NOT HARDCODE THE URL, OR ADD ANY FALLBACKS OR REDIRECT URLS, THIS BREAKS THE AUTH
+    async with httpx.AsyncClient() as hc:
+        r = await hc.get(EMERGENT_AUTH, headers={"X-Session-ID": body.session_id})
+    if r.status_code != 200:
+        raise HTTPException(401, "Sesi Google tidak sah.")
+    data = r.json()
+    google_sub = data["id"]
+    email = data.get("email")
+    nama = data.get("name")
+    foto = data.get("picture")
+    session_token = data["session_token"]
+
+    # Find existing peserta by google_sub, else attach to provided peserta_id, else create.
+    peserta = await db.peserta.find_one({"google_sub": google_sub})
+    if peserta:
+        pid = peserta["id"]
+        await db.peserta.update_one({"id": pid}, {"$set": {"nama_lengkap": nama, "foto_url": foto, "email": email}})
+    elif body.peserta_id:
+        pid = body.peserta_id
+        await db.peserta.update_one({"id": pid}, {"$set": {"google_sub": google_sub, "nama_lengkap": nama, "foto_url": foto, "email": email}})
+    else:
+        pid = str(uuid.uuid4())
+        await db.peserta.insert_one({"id": pid, "nama_tampilan": nama or "Peserta", "email": email,
+                                     "google_sub": google_sub, "nama_lengkap": nama, "foto_url": foto, "created_at": now_iso()})
+
+    expires = datetime.now(timezone.utc) + timedelta(days=7)
+    await db.user_sessions.insert_one({"peserta_id": pid, "session_token": session_token,
+                                       "expires_at": expires.isoformat(), "created_at": now_iso()})
+    response.set_cookie("session_token", session_token, httponly=True, secure=True, samesite="none", path="/", max_age=7 * 24 * 3600)
+    p = await db.peserta.find_one({"id": pid}, {"_id": 0})
+    return {"peserta": p, "session_token": session_token}
+
+
+@api_router.get("/auth/me")
+async def auth_me(request: Request):
+    p = await current_peserta(request)
+    if not p:
+        raise HTTPException(401, "Belum masuk.")
+    return p
+
+
+@api_router.post("/auth/logout")
+async def auth_logout(request: Request, response: Response):
+    token = request.cookies.get("session_token")
+    if not token:
+        auth = request.headers.get("Authorization", "")
+        if auth.startswith("Bearer "):
+            token = auth[7:]
+    if token:
+        await db.user_sessions.delete_many({"session_token": token})
+    response.delete_cookie("session_token", path="/")
+    return {"ok": True}
+
+
 # ---- Draw logic ----
 async def seen_soal_ids(peserta_id: str) -> Dict[int, str]:
-    """Return map of soal_no -> earliest created_at (ISO) this peserta has seen."""
     seen: Dict[int, str] = {}
     async for s in db.sesi.find({"peserta_id": peserta_id}):
         created = s.get("created_at", "")
@@ -165,151 +297,134 @@ async def seen_soal_ids(peserta_id: str) -> Dict[int, str]:
     return seen
 
 
-def draw_from_bagian(items: List[Dict], seen: Dict[int, str], need: int) -> List[Dict]:
-    """Draw `need` items preferring unseen; fill remainder with items seen longest ago."""
-    unseen = [it for it in items if it["no"] not in seen]
-    seen_items = [it for it in items if it["no"] in seen]
+def draw_tier(pool: List[Dict], seen: Dict[int, str], target: int) -> List[Dict]:
+    """Random sample of `target` items, preferring unseen; fill remainder oldest-seen first."""
+    unseen = [it for it in pool if it["no"] not in seen]
+    seen_items = [it for it in pool if it["no"] in seen]
     random.shuffle(unseen)
-    drawn = unseen[:need]
-    if len(drawn) < need:
-        # fill with items seen longest ago (earliest created_at first)
+    take = min(target, len(unseen))
+    drawn = random.sample(unseen, take) if unseen else []
+    if len(drawn) < target and seen_items:
         seen_items.sort(key=lambda it: seen.get(it["no"], ""))
-        drawn += seen_items[: (need - len(drawn))]
+        drawn += seen_items[: (target - len(drawn))]
     return drawn
 
 
 def build_sesi_soal(items: List[Dict]) -> Dict:
-    """Shuffle question order and options; return soal_ids, soal_detail (with skor+token)."""
     order = items[:]
     random.shuffle(order)
     soal_ids = [it["no"] for it in order]
     detail = {}
     for it in order:
-        pilihan = []
-        for p in it["pilihan"]:
-            pilihan.append({"token": uuid.uuid4().hex[:8], "teks": p["teks"], "skor": p["skor"]})
+        pilihan = [{"token": uuid.uuid4().hex[:8], "teks": p["teks"], "skor": p["skor"]} for p in it["pilihan"]]
         random.shuffle(pilihan)
         detail[str(it["no"])] = {
-            "no": it["no"],
-            "bagian": it["bagian"],
-            "judul": it.get("judul", ""),
-            "jenis": it.get("jenis", ""),
-            "skenario": it.get("skenario", ""),
-            "pilihan": pilihan,
+            "no": it["no"], "bagian": it.get("bagian"), "tingkat": item_tingkat(it),
+            "judul": it.get("judul", ""), "jenis": it.get("jenis", ""),
+            "skenario": it.get("skenario", ""), "pilihan": pilihan,
         }
     return {"soal_ids": soal_ids, "soal_detail": detail}
 
 
-def public_sesi(sesi: Dict) -> Dict:
-    """Strip option scores before sending to the client."""
+async def create_tier_sesi(peserta_id: str, perjalanan_id: str, tier_key: str) -> str:
+    tier = TIER_BY_KEY[tier_key]
+    bank = load_bank()
+    pool = [it for it in bank if item_tingkat(it) == tier["match"]]
+    seen = await seen_soal_ids(peserta_id)
+    drawn = draw_tier(pool, seen, tier["target"])
+    built = build_sesi_soal(drawn)
+    sid = str(uuid.uuid4())
+    await db.sesi.insert_one({
+        "id": sid, "peserta_id": peserta_id, "perjalanan_id": perjalanan_id, "jenis": tier_key,
+        "soal_ids": built["soal_ids"], "soal_detail": built["soal_detail"], "jawaban": {},
+        "posisi": 0, "status": "berjalan", "skor": None, "kategori": None,
+        "tampil_di_papan": False, "created_at": now_iso(), "selesai_at": None,
+    })
+    return sid
+
+
+def public_pilihan(d):
+    return [{"token": p["token"], "teks": p["teks"]} for p in d["pilihan"]]  # TEXT ONLY, no skor
+
+
+def public_sesi(sesi: Dict, terbuka: bool) -> Dict:
     detail = {}
     for no, d in sesi.get("soal_detail", {}).items():
-        detail[no] = {
-            "no": d["no"],
-            "bagian": d["bagian"],
-            "judul": d["judul"],
-            "jenis": d["jenis"],
-            "skenario": d["skenario"],
-            "pilihan": [{"token": p["token"], "teks": p["teks"]} for p in d["pilihan"]],
-        }
+        detail[no] = {"no": d["no"], "tingkat": d.get("tingkat"), "judul": d["judul"],
+                      "jenis": d["jenis"], "skenario": d["skenario"], "pilihan": public_pilihan(d)}
+    tier = TIER_BY_KEY[sesi["jenis"]]
     return {
-        "id": sesi["id"],
-        "peserta_id": sesi["peserta_id"],
-        "jenis": sesi["jenis"],
-        "soal_ids": sesi["soal_ids"],
-        "soal_detail": detail,
-        "jawaban": sesi.get("jawaban", {}),
-        "skor": sesi.get("skor"),
-        "kategori": sesi.get("kategori"),
-        "tampil_di_papan": sesi.get("tampil_di_papan", False),
-        "terbuka": sesi.get("terbuka", False),
-        "created_at": sesi.get("created_at"),
-        "selesai_at": sesi.get("selesai_at"),
+        "id": sesi["id"], "peserta_id": sesi["peserta_id"], "perjalanan_id": sesi.get("perjalanan_id"),
+        "jenis": sesi["jenis"], "tier_nama": tier["nama"], "total": len(sesi["soal_ids"]),
+        "soal_ids": sesi["soal_ids"], "soal_detail": detail, "jawaban": sesi.get("jawaban", {}),
+        "posisi": sesi.get("posisi", 0), "status": sesi.get("status"),
+        "terbuka": terbuka, "created_at": sesi.get("created_at"), "selesai_at": sesi.get("selesai_at"),
     }
 
 
-# ---- Routes ----
-@api_router.get("/")
-async def root():
-    return {"message": "Candradimuka API"}
+def score_sesi(s: Dict):
+    detail = s["soal_detail"]; jawaban = s.get("jawaban", {})
+    total = 0; n = 0
+    dist = {25: 0, 50: 0, 75: 0, 100: 0}
+    chosen = []
+    for no in s["soal_ids"]:
+        d = detail[str(no)]
+        tok = jawaban.get(str(no))
+        if not tok:
+            continue
+        sc = next((p["skor"] for p in d["pilihan"] if p["token"] == tok), None)
+        if sc is None:
+            continue
+        ct = next((p["teks"] for p in d["pilihan"] if p["token"] == tok), "")
+        bt = next((p["teks"] for p in d["pilihan"] if p["skor"] == 100), "")
+        total += sc; n += 1; dist[sc] = dist.get(sc, 0) + 1
+        chosen.append({"no": no, "skenario": d["skenario"], "chosen_teks": ct, "chosen_skor": sc, "best_teks": bt})
+    skor = round(total / n) if n else 0
+    return skor, dist, chosen, n
 
 
+# ---- Peserta ----
 @api_router.post("/peserta")
 async def create_peserta(body: PesertaCreate):
     pid = str(uuid.uuid4())
-    doc = {
-        "id": pid,
-        "nama_tampilan": body.nama_tampilan.strip(),
-        "email": (body.email or None),
-        "created_at": now_iso(),
-    }
+    doc = {"id": pid, "nama_tampilan": body.nama_tampilan.strip(), "email": (body.email or None),
+           "google_sub": None, "nama_lengkap": None, "foto_url": None, "created_at": now_iso()}
     await db.peserta.insert_one(doc)
     return {"id": pid, "nama_tampilan": doc["nama_tampilan"], "email": doc["email"]}
 
 
-@api_router.get("/peserta/{peserta_id}")
-async def get_peserta(peserta_id: str):
-    p = await db.peserta.find_one({"id": peserta_id}, {"_id": 0})
-    if not p:
-        raise HTTPException(404, "Peserta tidak ditemukan")
-    return p
+@api_router.get("/peserta/{peserta_id}/lanjutan")
+async def lanjutan(peserta_id: str):
+    s = await db.sesi.find_one({"peserta_id": peserta_id, "status": "berjalan"}, sort=[("created_at", -1)])
+    if not s:
+        return {"ada": False}
+    tier = TIER_BY_KEY[s["jenis"]]
+    return {"ada": True, "sesi_id": s["id"], "tier_nama": tier["nama"], "jenis": s["jenis"],
+            "posisi": s.get("posisi", 0), "total": len(s["soal_ids"])}
 
 
-@api_router.post("/sesi/mulai")
-async def mulai_sesi(body: MulaiSesi):
+# ---- Journey ----
+@api_router.post("/perjalanan/mulai")
+async def mulai_perjalanan(body: MulaiPerjalanan):
     peserta = await db.peserta.find_one({"id": body.peserta_id})
     if not peserta:
         raise HTTPException(404, "Peserta tidak ditemukan")
-    if body.jenis not in ("dasar", "lengkap"):
-        raise HTTPException(400, "Jenis uji tidak sah")
-
-    # JEDA: 14 day pause for lengkap
-    if body.jenis == "lengkap":
-        last = None
-        async for s in db.sesi.find({"peserta_id": body.peserta_id, "jenis": "lengkap", "selesai_at": {"$ne": None}}):
-            sa = s.get("selesai_at")
-            if sa and (last is None or sa > last):
-                last = sa
-        if last:
-            last_dt = datetime.fromisoformat(last)
-            boleh = last_dt + timedelta(days=14)
-            if datetime.now(timezone.utc) < boleh:
-                return {
-                    "jeda": True,
-                    "boleh_pada": boleh.isoformat(),
-                    "pesan": "Jeda ini ada supaya pembacaan berikutnya mengukur hasil latihan, bukan pengulangan.",
-                }
-
-    bank = load_bank()
-    seen = await seen_soal_ids(body.peserta_id)
-
-    if body.jenis == "dasar":
-        b1 = [it for it in bank if it["bagian"] == 1]
-        drawn = draw_from_bagian(b1, seen, 15)
-    else:
-        drawn = []
-        for bg in (1, 2, 3):
-            items = [it for it in bank if it["bagian"] == bg]
-            drawn += draw_from_bagian(items, seen, 15)
-
-    built = build_sesi_soal(drawn)
-    sid = str(uuid.uuid4())
-    doc = {
-        "id": sid,
-        "peserta_id": body.peserta_id,
-        "jenis": body.jenis,
-        "soal_ids": built["soal_ids"],
-        "soal_detail": built["soal_detail"],
-        "jawaban": {},
-        "skor": None,
-        "kategori": None,
-        "tampil_di_papan": False,
-        "terbuka": False,
-        "created_at": now_iso(),
-        "selesai_at": None,
-    }
-    await db.sesi.insert_one(doc)
-    return {"jeda": False, "sesi_id": sid}
+    # 14-day pause between finished journeys
+    last = None
+    async for pj in db.perjalanan.find({"peserta_id": body.peserta_id, "selesai_at": {"$ne": None}}):
+        sa = pj.get("selesai_at")
+        if sa and (last is None or sa > last):
+            last = sa
+    if last:
+        boleh = datetime.fromisoformat(last) + timedelta(days=14)
+        if datetime.now(timezone.utc) < boleh:
+            return {"jeda": True, "boleh_pada": boleh.isoformat(),
+                    "pesan": "Jeda ini ada supaya perjalanan berikutnya mengukur hasil latihan, bukan pengulangan."}
+    pjid = str(uuid.uuid4())
+    await db.perjalanan.insert_one({"id": pjid, "peserta_id": body.peserta_id, "terbuka": False,
+                                    "dibayar_pada": None, "selesai_at": None, "created_at": now_iso()})
+    sid = await create_tier_sesi(body.peserta_id, pjid, "bhurloka")
+    return {"jeda": False, "perjalanan_id": pjid, "sesi_id": sid}
 
 
 @api_router.get("/sesi/{sesi_id}")
@@ -317,8 +432,9 @@ async def get_sesi(sesi_id: str):
     s = await db.sesi.find_one({"id": sesi_id})
     if not s:
         raise HTTPException(404, "Sesi tidak ditemukan")
-    peserta = await db.peserta.find_one({"id": s["peserta_id"]}, {"_id": 0})
-    out = public_sesi(s)
+    pj = await db.perjalanan.find_one({"id": s.get("perjalanan_id")})
+    peserta = await db.peserta.find_one({"id": s["peserta_id"]}, {"_id": 0, "email": 0, "google_sub": 0})
+    out = public_sesi(s, bool(pj and pj.get("terbuka")))
     out["peserta"] = peserta
     return out
 
@@ -328,163 +444,48 @@ async def jawab(sesi_id: str, body: Jawab):
     s = await db.sesi.find_one({"id": sesi_id})
     if not s:
         raise HTTPException(404, "Sesi tidak ditemukan")
-    detail = s.get("soal_detail", {}).get(str(body.soal_no))
-    if not detail:
+    d = s.get("soal_detail", {}).get(str(body.soal_no))
+    if not d:
         raise HTTPException(400, "Soal tidak ada di sesi ini")
-    valid = any(p["token"] == body.token for p in detail["pilihan"])
-    if not valid:
+    if not any(p["token"] == body.token for p in d["pilihan"]):
         raise HTTPException(400, "Pilihan tidak sah")
-    jawaban = s.get("jawaban", {})
-    jawaban[str(body.soal_no)] = body.token
-    await db.sesi.update_one({"id": sesi_id}, {"$set": {"jawaban": jawaban}})
+    jawaban = s.get("jawaban", {}); jawaban[str(body.soal_no)] = body.token
+    upd = {"jawaban": jawaban}
+    if body.posisi is not None:
+        upd["posisi"] = body.posisi
+    await db.sesi.update_one({"id": sesi_id}, {"$set": upd})
     return {"ok": True}
 
 
-def compute_scores(s: Dict):
-    """Return (skor overall, per-bagian dict, distribution dict, chosen list)."""
-    detail = s["soal_detail"]
-    jawaban = s.get("jawaban", {})
-    total = 0
-    n = 0
-    per_bagian: Dict[int, List[int]] = {}
-    dist = {25: 0, 50: 0, 75: 0, 100: 0}
-    chosen = []  # list of dicts: no, bagian, skenario, chosen_teks, chosen_skor, best_teks
-    for no in s["soal_ids"]:
-        d = detail[str(no)]
-        tok = jawaban.get(str(no))
-        if not tok:
-            continue
-        sc = next((p["skor"] for p in d["pilihan"] if p["token"] == tok), None)
-        if sc is None:
-            continue
-        chosen_teks = next((p["teks"] for p in d["pilihan"] if p["token"] == tok), "")
-        best_teks = next((p["teks"] for p in d["pilihan"] if p["skor"] == 100), "")
-        total += sc
-        n += 1
-        per_bagian.setdefault(d["bagian"], []).append(sc)
-        dist[sc] = dist.get(sc, 0) + 1
-        chosen.append({
-            "no": no, "bagian": d["bagian"], "skenario": d["skenario"],
-            "chosen_teks": chosen_teks, "chosen_skor": sc, "best_teks": best_teks,
-        })
-    skor = round(total / n) if n else 0
-    return skor, per_bagian, dist, chosen, n
+@api_router.post("/sesi/{sesi_id}/posisi")
+async def set_posisi(sesi_id: str, body: PosisiBody):
+    await db.sesi.update_one({"id": sesi_id}, {"$set": {"posisi": body.posisi}})
+    return {"ok": True}
 
 
 @api_router.post("/sesi/{sesi_id}/selesai")
-async def selesai(sesi_id: str, body: SelesaiSesi):
+async def selesai(sesi_id: str):
     s = await db.sesi.find_one({"id": sesi_id})
     if not s:
         raise HTTPException(404, "Sesi tidak ditemukan")
-    skor, per_bagian, dist, chosen, n = compute_scores(s)
+    skor, dist, chosen, n = score_sesi(s)
     nama, _ = kategori_for(skor)
-    update = {
-        "skor": skor,
-        "kategori": nama,
-        "selesai_at": now_iso(),
-    }
-    if s["jenis"] == "dasar":
-        update["tampil_di_papan"] = True  # free test always on board
-    else:
-        if body.tampil_di_papan is not None:
-            update["tampil_di_papan"] = bool(body.tampil_di_papan)
-    await db.sesi.update_one({"id": sesi_id}, {"$set": update})
+    await db.sesi.update_one({"id": sesi_id}, {"$set": {"skor": skor, "kategori": nama, "status": "selesai", "selesai_at": now_iso()}})
+    # If this is paramartha, mark journey finished
+    if s["jenis"] == "paramartha":
+        await db.perjalanan.update_one({"id": s["perjalanan_id"]}, {"$set": {"selesai_at": now_iso()}})
     return {"ok": True, "skor": skor, "kategori": nama}
 
 
-@api_router.patch("/sesi/{sesi_id}/papan")
-async def set_papan(sesi_id: str, body: SelesaiSesi):
-    s = await db.sesi.find_one({"id": sesi_id})
-    if not s:
-        raise HTTPException(404, "Sesi tidak ditemukan")
-    await db.sesi.update_one({"id": sesi_id}, {"$set": {"tampil_di_papan": bool(body.tampil_di_papan)}})
-    return {"ok": True}
-
-
-@api_router.get("/sesi/{sesi_id}/hasil")
-async def hasil(sesi_id: str):
-    s = await db.sesi.find_one({"id": sesi_id})
-    if not s:
-        raise HTTPException(404, "Sesi tidak ditemukan")
-    peserta = await db.peserta.find_one({"id": s["peserta_id"]}, {"_id": 0})
-    skor, per_bagian, dist, chosen, n = compute_scores(s)
-    nama, desc = kategori_for(skor)
-
-    out = {
-        "sesi_id": sesi_id,
-        "jenis": s["jenis"],
-        "peserta": peserta,
-        "skor": skor,
-        "kategori": nama,
-        "kategori_desc": desc,
-        "kategori_paragraf": KATEGORI_PARAGRAF.get(nama, ""),
-        "terbuka": s.get("terbuka", False),
-        "tampil_di_papan": s.get("tampil_di_papan", False),
-        "selesai_at": s.get("selesai_at"),
-        "created_at": s.get("created_at"),
-        "jumlah_soal": n,
-        # disk data: ordered list of chosen skor by question order (for the woven figure)
-        "disk": [
-            next((p["skor"] for p in s["soal_detail"][str(no)]["pilihan"]
-                  if p["token"] == s.get("jawaban", {}).get(str(no))), None)
-            for no in s["soal_ids"]
-        ],
-    }
-
-    # Paid section only when unlocked
-    if s.get("terbuka"):
-        per_bagian_out = []
-        for bg in sorted(per_bagian.keys()):
-            avg = round(sum(per_bagian[bg]) / len(per_bagian[bg]))
-            bnama, _ = kategori_for(avg)
-            per_bagian_out.append({"bagian": bg, "skor": avg, "level": bnama})
-
-        # most prominent level
-        menonjol_skor = max(dist.items(), key=lambda kv: (kv[1], kv[0]))[0] if any(dist.values()) else None
-
-        # three ladders: items chosen at 75 (or 50 if fewer than three)
-        c75 = [c for c in chosen if c["chosen_skor"] == 75]
-        pick = c75
-        if len(c75) < 3:
-            pick = c75 + [c for c in chosen if c["chosen_skor"] == 50]
-        tangga = []
-        for c in pick[:3]:
-            tangga.append({
-                "skenario": c["skenario"],
-                "pilihan_dipilih": c["chosen_teks"],
-                "pilihan_seratus": c["best_teks"],
-                "beda": "Bedanya terletak pada meneruskan kesadaran menjadi tindakan nyata, bukan berhenti pada pengamatan.",
-            })
-
-        # weakest bagian
-        latihan = None
-        if per_bagian:
-            weakest = min(per_bagian.keys(), key=lambda bg: sum(per_bagian[bg]) / len(per_bagian[bg]))
-            latihan = {"bagian": weakest, "nama": EXERCISE_BY_BAGIAN.get(weakest, "")}
-
-        kode_dipakai = s.get("kode_dipakai")
-
-        out["berbayar"] = {
-            "per_bagian": per_bagian_out,
-            "sebaran": {"25": dist[25], "50": dist[50], "75": dist[75], "100": dist[100]},
-            "menonjol": {
-                "skor": menonjol_skor,
-                "level": LEVEL_NAMA.get(menonjol_skor, ""),
-                "bacaan": MENONJOL_BACAAN.get(menonjol_skor, ""),
-            },
-            "tangga": tangga,
-            "latihan": latihan,
-            "kode_dipakai": kode_dipakai,
-        }
-    return out
-
-
-@api_router.post("/sesi/{sesi_id}/buka")
-async def buka(sesi_id: str, body: BukaBody):
-    s = await db.sesi.find_one({"id": sesi_id})
-    if not s:
-        raise HTTPException(404, "Sesi tidak ditemukan")
-    if s.get("terbuka"):
+@api_router.post("/perjalanan/{pj_id}/bayar")
+async def bayar(pj_id: str, body: BayarBody, request: Request):
+    peserta = await current_peserta(request)
+    if not peserta:
+        raise HTTPException(401, "Masuk dengan Google untuk melanjutkan pembayaran.")
+    pj = await db.perjalanan.find_one({"id": pj_id})
+    if not pj:
+        raise HTTPException(404, "Perjalanan tidak ditemukan")
+    if pj.get("terbuka"):
         return {"ok": True, "terbuka": True}
     kode = body.kode.strip().upper()
     k = await db.kode_akses.find_one({"kode": kode, "jenis": "bacaan"})
@@ -492,101 +493,225 @@ async def buka(sesi_id: str, body: BukaBody):
         raise HTTPException(400, "Kode tidak ditemukan.")
     if k.get("dipakai_oleh"):
         raise HTTPException(400, "Kode ini sudah dipakai.")
-    await db.kode_akses.update_one(
-        {"kode": kode},
-        {"$set": {"dipakai_oleh": s["peserta_id"], "dipakai_pada": now_iso()}},
-    )
-    await db.sesi.update_one({"id": sesi_id}, {"$set": {"terbuka": True, "kode_dipakai": kode}})
-    return {"ok": True, "terbuka": True}
+    await db.kode_akses.update_one({"kode": kode}, {"$set": {"dipakai_oleh": pj["peserta_id"], "dipakai_pada": now_iso()}})
+    await db.perjalanan.update_one({"id": pj_id}, {"$set": {"terbuka": True, "dibayar_pada": now_iso(), "kode_dipakai": kode}})
+    # unlock Akasa: create its sesi
+    sid = await create_tier_sesi(pj["peserta_id"], pj_id, "akasa")
+    return {"ok": True, "terbuka": True, "sesi_id": sid}
 
 
+@api_router.post("/perjalanan/{pj_id}/lanjut")
+async def lanjut_tier(pj_id: str, request: Request):
+    """Create the next tier sesi after finishing akasa (-> paramartha)."""
+    peserta = await current_peserta(request)
+    if not peserta:
+        raise HTTPException(401, "Masuk dengan Google untuk melanjutkan.")
+    pj = await db.perjalanan.find_one({"id": pj_id})
+    if not pj:
+        raise HTTPException(404, "Perjalanan tidak ditemukan")
+    if not pj.get("terbuka"):
+        raise HTTPException(403, "Perjalanan belum dibuka.")
+    existing = set()
+    async for s in db.sesi.find({"perjalanan_id": pj_id}):
+        existing.add(s["jenis"])
+    for key in TIER_ORDER:
+        if key not in existing:
+            sid = await create_tier_sesi(pj["peserta_id"], pj_id, key)
+            return {"sesi_id": sid, "jenis": key}
+    return {"sesi_id": None}
+
+
+async def journey_sesis(pj_id: str) -> Dict[str, Dict]:
+    out = {}
+    async for s in db.sesi.find({"perjalanan_id": pj_id}):
+        out[s["jenis"]] = s
+    return out
+
+
+@api_router.get("/sesi/{sesi_id}/hasil")
+async def hasil(sesi_id: str):
+    s = await db.sesi.find_one({"id": sesi_id})
+    if not s:
+        raise HTTPException(404, "Sesi tidak ditemukan")
+    pj = await db.perjalanan.find_one({"id": s.get("perjalanan_id")})
+    peserta = await db.peserta.find_one({"id": s["peserta_id"]}, {"_id": 0, "email": 0, "google_sub": 0})
+    skor, dist, chosen, n = score_sesi(s)
+    nama, desc = kategori_for(skor)
+
+    # Result map: tier percentages across the journey
+    js = await journey_sesis(s["perjalanan_id"]) if s.get("perjalanan_id") else {s["jenis"]: s}
+    peta = []
+    for key in TIER_ORDER:
+        tier = TIER_BY_KEY[key]
+        ts = js.get(key)
+        pct = None
+        if ts and ts.get("status") == "selesai":
+            pct = ts.get("skor")
+            if pct is None:
+                pct = score_sesi(ts)[0]
+        peta.append({"key": key, "nama": tier["nama"], "persen": pct})
+
+    terbuka = bool(pj and pj.get("terbuka"))
+    out = {
+        "sesi_id": sesi_id, "jenis": s["jenis"], "tier_nama": TIER_BY_KEY[s["jenis"]]["nama"],
+        "peserta": peserta, "skor": skor, "kategori": nama, "kategori_desc": desc,
+        "kategori_paragraf": KATEGORI_PARAGRAF.get(nama, ""),
+        "terbuka": terbuka, "selesai_at": s.get("selesai_at"), "created_at": s.get("created_at"),
+        "jumlah_soal": n, "tampil_di_papan": s.get("tampil_di_papan", False),
+        "perjalanan_id": s.get("perjalanan_id"),
+        "perjalanan_selesai": bool(pj and pj.get("selesai_at")),
+        "peta": peta,
+        "disk": [next((p["skor"] for p in s["soal_detail"][str(no)]["pilihan"]
+                       if p["token"] == s.get("jawaban", {}).get(str(no))), None) for no in s["soal_ids"]],
+    }
+
+    # Written reading (included with Rp17.000): shown when journey is paid (terbuka)
+    if terbuka:
+        allchosen = []
+        alldist = {25: 0, 50: 0, 75: 0, 100: 0}
+        tier_scores = {}
+        for key, ts in js.items():
+            if ts.get("status") != "selesai":
+                continue
+            sk, di, ch, nn = score_sesi(ts)
+            tier_scores[key] = sk
+            for kk in alldist:
+                alldist[kk] += di[kk]
+            allchosen += ch
+        menonjol_skor = max(alldist.items(), key=lambda kv: (kv[1], kv[0]))[0] if any(alldist.values()) else None
+        c75 = [c for c in allchosen if c["chosen_skor"] == 75]
+        pick = c75 if len(c75) >= 3 else c75 + [c for c in allchosen if c["chosen_skor"] == 50]
+        tangga = [{"skenario": c["skenario"], "pilihan_dipilih": c["chosen_teks"], "pilihan_seratus": c["best_teks"],
+                   "beda": "Bedanya terletak pada meneruskan kesadaran menjadi tindakan nyata, bukan berhenti pada pengamatan."} for c in pick[:3]]
+        latihan = None
+        if tier_scores:
+            weakest = min(tier_scores.keys(), key=lambda k: tier_scores[k])
+            latihan = {"tier": TIER_BY_KEY[weakest]["nama"], "nama": EXERCISE_BY_TIER[weakest]}
+        out["bacaan"] = {
+            "sebaran": {str(k): alldist[k] for k in (25, 50, 75, 100)},
+            "menonjol": {"skor": menonjol_skor, "level": LEVEL_NAMA.get(menonjol_skor, ""), "bacaan": MENONJOL_BACAAN.get(menonjol_skor, "")},
+            "tangga": tangga,
+            "latihan": latihan,
+            "kode_dipakai": pj.get("kode_dipakai") if pj else None,
+        }
+    return out
+
+
+@api_router.patch("/sesi/{sesi_id}/papan")
+async def set_papan(sesi_id: str, body: TampilBody, request: Request):
+    peserta = await current_peserta(request)
+    if not peserta:
+        raise HTTPException(401, "Masuk dengan Google untuk tampil di papan.")
+    await db.sesi.update_one({"id": sesi_id}, {"$set": {"tampil_di_papan": bool(body.tampil_di_papan)}})
+    return {"ok": True}
+
+
+# ---- Board ----
 @api_router.get("/papan")
 async def papan(jenis: str = Query(...), peserta_id: Optional[str] = None):
-    if jenis not in ("dasar", "lengkap"):
+    if jenis not in ("bhurloka", "paramartha"):
         raise HTTPException(400, "Jenis tidak sah")
-    q = {"jenis": jenis, "selesai_at": {"$ne": None}}
-    if jenis == "lengkap":
+    q = {"jenis": jenis, "status": "selesai"}
+    if jenis == "paramartha":
         q["tampil_di_papan"] = True
-    all_sesi = []
+    rows = []
     async for s in db.sesi.find(q):
-        all_sesi.append(s)
-    # sort by skor desc, then selesai_at asc
-    all_sesi.sort(key=lambda s: (-(s.get("skor") or 0), s.get("selesai_at") or ""))
-    total = len(all_sesi)
+        rows.append(s)
+    rows.sort(key=lambda s: (-(s.get("skor") or 0), s.get("selesai_at") or ""))
+    total = len(rows)
     top = []
-    for i, s in enumerate(all_sesi[:100]):
-        peserta = await db.peserta.find_one({"id": s["peserta_id"]}, {"_id": 0})
-        top.append({
-            "rank": i + 1,
-            "nama_tampilan": peserta["nama_tampilan"] if peserta else "-",
-            "skor": s.get("skor"),
-            "tanggal": s.get("selesai_at"),
-        })
+    for i, s in enumerate(rows[:100]):
+        p = await db.peserta.find_one({"id": s["peserta_id"]}, {"_id": 0})
+        nama = (p.get("nama_lengkap") or p.get("nama_tampilan")) if p else "-"
+        top.append({"rank": i + 1, "nama_tampilan": nama, "skor": s.get("skor"), "tanggal": s.get("selesai_at")})
     my_rank = None
     if peserta_id:
-        for i, s in enumerate(all_sesi):
+        for i, s in enumerate(rows):
             if s["peserta_id"] == peserta_id:
                 my_rank = {"rank": i + 1, "total": total}
                 break
     return {"top": top, "total": total, "my_rank": my_rank}
 
 
+# ---- Minat ----
 @api_router.post("/minat")
 async def create_minat(body: MinatCreate):
-    doc = {
-        "id": str(uuid.uuid4()),
-        "nama": body.nama.strip(),
-        "kontak": body.kontak.strip(),
-        "jalur": body.jalur,
-        "jumlah_orang": body.jumlah_orang if body.jalur == "Kohor" else None,
-        "catatan": body.catatan,
-        "kode_pembacaan": body.kode_pembacaan,
-        "created_at": now_iso(),
-    }
-    await db.minat.insert_one(doc)
+    await db.minat.insert_one({"id": str(uuid.uuid4()), "nama": body.nama.strip(), "kontak": body.kontak.strip(),
+                               "jalur": body.jalur, "jumlah_orang": body.jumlah_orang if body.jalur == "Kohor" else None,
+                               "catatan": body.catatan, "kode_pembacaan": body.kode_pembacaan, "created_at": now_iso()})
     return {"ok": True}
 
 
+# ---- Certificate ----
 @api_router.post("/sertifikat/{sesi_id}")
-async def create_sertifikat(sesi_id: str, body: SertifikatCreate):
+async def create_sertifikat(sesi_id: str, body: SertifikatCreate, request: Request):
+    peserta = await current_peserta(request)
+    if not peserta:
+        raise HTTPException(401, "Masuk dengan Google untuk memesan sertifikat.")
     s = await db.sesi.find_one({"id": sesi_id})
     if not s:
         raise HTTPException(404, "Sesi tidak ditemukan")
-    if s["jenis"] != "lengkap" or not s.get("selesai_at"):
-        raise HTTPException(400, "Sertifikat hanya untuk uji lengkap yang telah selesai.")
-    kode_verifikasi = ''.join(random.choices(string.ascii_uppercase, k=10))
+    pj = await db.perjalanan.find_one({"id": s.get("perjalanan_id")})
+    if not pj or not pj.get("selesai_at"):
+        raise HTTPException(400, "Sertifikat hanya untuk perjalanan yang telah menyelesaikan ketiga tingkat.")
+    js = await journey_sesis(pj["id"])
+    tscore = {}
+    for key in TIER_ORDER:
+        ts = js.get(key)
+        tscore[key] = ts.get("skor") if ts else None
+    yy = datetime.fromisoformat(pj["selesai_at"]).strftime("%y")
+    # unique serial
+    nomor = gen_serial(yy)
+    while await db.sertifikat.find_one({"nomor_seri": nomor}):
+        nomor = gen_serial(yy)
+    sert_id = str(uuid.uuid4())
+    await db.sertifikat.insert_one({
+        "id": sert_id, "perjalanan_id": pj["id"], "nomor_seri": nomor,
+        "nama_lengkap": body.nama_cetak.strip(), "tanggal_selesai": pj["selesai_at"][:10],
+        "skor_bhurloka": tscore["bhurloka"], "skor_akasa": tscore["akasa"], "skor_paramartha": tscore["paramartha"],
+        "bentuk": body.bentuk or "cetak", "created_at": now_iso(),
+    })
     order_id = str(uuid.uuid4())
-    doc = {
-        "id": order_id,
-        "sesi_id": sesi_id,
-        "nama_cetak": body.nama_cetak.strip(),
-        "telepon": body.telepon.strip(),
-        "alamat": body.alamat.strip(),
-        "catatan": body.catatan,
-        "kode_verifikasi": kode_verifikasi,
-        "status": "baru",
-        "created_at": now_iso(),
-    }
-    await db.pesanan_sertifikat.insert_one(doc)
-    return {
-        "ok": True,
-        "order_id": order_id,
-        "kode_verifikasi": kode_verifikasi,
-        "total": "Rp150.000 ditambah ongkos kirim yang dikabarkan kemudian",
-    }
+    await db.pesanan_sertifikat.insert_one({
+        "id": order_id, "sesi_id": sesi_id, "perjalanan_id": pj["id"], "nomor_seri": nomor,
+        "nama_cetak": body.nama_cetak.strip(), "telepon": body.telepon.strip(), "alamat": body.alamat.strip(),
+        "catatan": body.catatan, "status": "baru", "created_at": now_iso(),
+    })
+    return {"ok": True, "order_id": order_id, "nomor_seri": nomor,
+            "total": "Rp137.000 di luar ongkos kirim yang dikabarkan kemudian"}
 
 
-@api_router.get("/periksa/{kode}")
-async def periksa(kode: str):
-    order = await db.pesanan_sertifikat.find_one({"kode_verifikasi": kode.strip().upper()})
-    if not order:
-        raise HTTPException(404, "Kode verifikasi tidak ditemukan.")
-    s = await db.sesi.find_one({"id": order["sesi_id"]})
+# ---- Public serial validation ----
+_rate: Dict[str, List[float]] = defaultdict(list)
+
+
+@api_router.post("/validasi")
+async def validasi(body: ValidasiBody, request: Request):
+    ip = request.headers.get("x-forwarded-for", "").split(",")[0].strip() or (request.client.host if request.client else "?")
+    now = datetime.now(timezone.utc).timestamp()
+    _rate[ip] = [t for t in _rate[ip] if now - t < 60]
+    # evict stale IP keys to keep the map bounded
+    for k in [k for k, v in list(_rate.items()) if not v and k != ip]:
+        _rate.pop(k, None)
+    if len(_rate[ip]) >= 10:
+        raise HTTPException(429, "Terlalu banyak permintaan.")
+    _rate[ip].append(now)
+
+    nomor = body.nomor_seri.strip().upper()
+    # reject before any DB lookup if check character does not match
+    if not valid_serial(nomor):
+        raise HTTPException(404, "Nomor seri tidak ditemukan.")
+    sert = await db.sertifikat.find_one({"nomor_seri": nomor})
+    if not sert:
+        raise HTTPException(404, "Nomor seri tidak ditemukan.")
     return {
-        "nama_cetak": order["nama_cetak"],
-        "tanggal_uji": s.get("selesai_at") if s else None,
-        "kategori": s.get("kategori") if s else None,
-        "skor": s.get("skor") if s else None,
+        "nama_lengkap": sert["nama_lengkap"],
+        "tanggal_selesai": sert["tanggal_selesai"],
+        "peta": [
+            {"nama": "Bhurloka", "persen": sert.get("skor_bhurloka")},
+            {"nama": "Ākāśa", "persen": sert.get("skor_akasa")},
+            {"nama": "Paramārtha", "persen": sert.get("skor_paramartha")},
+        ],
     }
 
 
@@ -608,18 +733,11 @@ async def admin_pesanan(kunci: str = ""):
         raise HTTPException(403, "Kunci tidak sesuai.")
     out = []
     async for o in db.pesanan_sertifikat.find({}, {"_id": 0}):
-        s = await db.sesi.find_one({"id": o["sesi_id"]})
-        out.append({
-            "id": o["id"],
-            "tanggal": o["created_at"],
-            "nama_cetak": o["nama_cetak"],
-            "kategori": s.get("kategori") if s else None,
-            "skor": s.get("skor") if s else None,
-            "telepon": o["telepon"],
-            "alamat": o["alamat"],
-            "status": o["status"],
-            "kode_verifikasi": o["kode_verifikasi"],
-        })
+        s = await db.sesi.find_one({"id": o.get("sesi_id")})
+        out.append({"id": o["id"], "tanggal": o["created_at"], "nama_cetak": o["nama_cetak"],
+                    "kategori": s.get("kategori") if s else None, "skor": s.get("skor") if s else None,
+                    "telepon": o["telepon"], "alamat": o["alamat"], "status": o["status"],
+                    "nomor_seri": o.get("nomor_seri")})
     out.sort(key=lambda o: o["tanggal"], reverse=True)
     return {"pesanan": out}
 
@@ -634,6 +752,11 @@ async def admin_pesanan_status(order_id: str, body: StatusUpdate, kunci: str = "
     return {"ok": True}
 
 
+@api_router.get("/")
+async def root():
+    return {"message": "Triwikramā API"}
+
+
 app.include_router(api_router)
 
 app.add_middleware(
@@ -643,9 +766,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
 
 
 @app.on_event("shutdown")

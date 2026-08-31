@@ -1,0 +1,42 @@
+{
+  "summary": "Full re-verification of the Triwikramā multi-part change. Backend: rewrote /app/backend/tests/backend_test.py as a pytest suite (22 tests, 100% pass) covering tier draws (Bhurloka exactly 17, Ākāśa 30, Paramārtha pool-limited 30), no-score-leak in /api/sesi/{id}, shuffling, cross-session exclusion, payment gate (401 without session, 400 bad/reused code), full authed journey 17->30->30 with perjalanan.selesai_at, peta percentages (all-25 => 25, all-100 => 100, no rescale), bacaan (sebaran/menonjol/tangga<=3/latihan mapped to weakest tier), 14-day jeda, certificate serial TRW-YY-XXXXXXX-C (non-sequential, unique, requires session + finished journey), pesanan_sertifikat telepon+alamat via admin, admin kunci 403 gating, public /validasi (bad check-char rejected pre-DB, only nama/tanggal/peta returned, 10/IP/min 429). Frontend (Playwright, desktop+390px, dark+light): Home heading/intro/'Mulai'/footer validasi link, no 'gratis' on any page, /harga exactly the four new prices, full 17-question Bhurloka run one-per-screen with 'Bhurloka · n / 17' counter, result screen (kategori/persen, Profile Disk threads, result-map with Bhurloka filled and 2 dashed 'belum' tiers, floor-line, login-prompt, pay button label exact), Ākāśa pause/resume with persistence and 'Lanjutkan ujianmu' box, Paramārtha checkpoint 'Blok 1 dari 2 selesai' after Q15 then Q16, paid reading section, board opt-in checkbox, certificate order returning a valid serial that validates on /validasi, /papan both tabs (Paramārtha shows only opted-in sessions), /pelatihan minat form + thank-you, /admin/kode + /admin/pesanan kunci gate. No blocking defects found.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "GET /api/sesi/{id}/hasil and GET /api/sesi/{id}", "issue": "Unauthenticated and returns the full peserta document (email, google_sub, foto_url, created_at). The 'Bagikan hasil' button shares this public /hasil/{sesiId} URL, so anyone with the link can read the participant's email — conflicts with the privacy goal of this change. Suggest returning only nama_tampilan/nama_lengkap."},
+      {"endpoint": "POST /api/perjalanan/{id}/lanjut", "issue": "No session check (unlike /bayar) — any caller who knows a paid perjalanan_id can create the next tier sesi. Also the local variable 'done' is computed and never used."},
+      {"endpoint": "POST /api/validasi", "issue": "Rate limit keys off the client-supplied X-Forwarded-For first value, so it is trivially bypassable by spoofing the header; the in-process _rate defaultdict also never evicts IP keys (unbounded growth) and resets on every backend restart."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "/admin/pesanan (status column)", "issues": ["Native <select> is ~30px wide so the status option text is clipped to a single character ('b', 'd'); widen the control or use the shadcn Select"]},
+      {"screen": "Home / global faint text in dark mode", "issues": ["--ink-3 faint copy rgb(99,117,108) on rgb(7,11,10) at 13px is ~3.8:1 contrast, below WCAG AA 4.5:1 for small text (e.g. papan-notice, floor-line)"]}
+    ]
+  },
+  "test_report_links": ["/app/backend/tests/backend_test.py", "/app/backend/tests/prep_fe.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [
+    "Strip email/google_sub from the peserta object returned by /api/sesi/{id} and /api/sesi/{id}/hasil (public share link privacy)",
+    "Require a session (current_peserta) on POST /api/perjalanan/{id}/lanjut and drop the unused 'done' variable",
+    "Harden /api/validasi rate limiting (trusted proxy hop / periodic eviction of the _rate map)",
+    "Widen the status select on /admin/pesanan and raise --ink-3 luminance for 13px text in dark mode",
+    "Optional: one Paramārtha scenario text in /app/data/bank-soal.json contains the word 'gratis' ('layanan publik gratis'). Not a pricing claim, but it is the only occurrence of the word in the product and can show up in a literal 'no gratis' scan.",
+    "Optional: server.py is 771 lines — consider splitting routers (journey / certificate / admin / auth) into modules"
+  ],
+  "critical_code_review_comments": [
+    "public_sesi/public_pilihan correctly strip 'skor'; verified by string search on the raw response — keep this invariant covered by the regression test.",
+    "score_sesi is recomputed on every /hasil call for every tier of the journey (up to 137 items) — acceptable now, but cache tier scores on the sesi doc when the 90-item Paramārtha bank lands.",
+    "draw_tier prefers unseen items and then oldest-seen; with the current 30-item Paramārtha pool a repeat journey necessarily reuses items — expected, documented data limitation.",
+    "Uji.jsx checkpoint math (nextIdx % 15 === 0 && nextIdx < total) is correct and will yield 6 blocks at 90 items."
+  ],
+  "updated_files": ["/app/backend/tests/backend_test.py", "/app/backend/tests/prep_fe.py"],
+  "success_rate": {"backend": "100% (22/22 pytest)", "frontend": "100% of the 13 requested frontend flows verified; 2 cosmetic design issues"},
+  "seed_data_creation": "Created TEST_ peserta, journeys, sessions (simulated Google via user_sessions), 4 'bacaan' access codes consumed, 3 certificates/orders. All TEST_-prefixed peserta/sesi/perjalanan/sertifikat/pesanan/minat/user_sessions rows were deleted after testing (boards are clean again); the consumed access codes remain marked used.",
+  "should_call_test_agent_after_fix": false,
+  "should_main_agent_self_test": true,
+  "test_credentials": "No real Google login in automation. Simulated session: insert peserta.google_sub + user_sessions {peserta_id, session_token, expires_at} and send Authorization: Bearer <token> (helper simulate_google_session() in /app/backend/tests/backend_test.py). Admin key CANDRA2026 via ?kunci=.",
+  "context_for_next_testing_agent": "backend_test.py now targets the new API (perjalanan/tier endpoints); the old /sesi/mulai tests were removed. Reusable helpers: simulate_google_session, answer_all(level=25/50/75/100), unused_bacaan_code. /app/backend/tests/prep_fe.py prints ready-made ids/tokens (akasa sesi, paramartha sesi, latest serial) for Playwright runs — run it before frontend tests and set localStorage candra_peserta/candra_token. Playwright gotcha: '[data-testid^=\"opsi-\"]' also matches the 'opsi-list' container — use '[data-testid=\"opsi-list\"] .opsi-card'. Only ~26 unused 'bacaan' codes remain; /api/validasi is rate limited to 10/IP/min and both xdist workers share the ingress IP, so keep validasi calls in a single class.",
+  "rca_of_the_issue": "No functional defect reproduced. The only failed run during this session was a test-script selector bug (prefix selector matched the options container instead of an option card), fixed in the script; the app's option selection and Lanjut enabling work correctly."
+}
