@@ -1,0 +1,39 @@
+{
+  "summary": "Full backend + frontend E2E test of Candradimuka (UPKT). Backend: created /app/backend/tests/backend_test.py with 31 pytest cases covering peserta CRUD, draw logic (dasar=bagian 1 only, lengkap=all 3 bagian), score-leak protection in GET /api/sesi/{id}, option shuffling, exclusion rule (unit test on draw_from_bagian with a synthetic 20-item bagian), answering/scoring for all 4 categories, floor=25, unlock via bacaan code + reuse refusal, paid 'berbayar' payload (per_bagian, sebaran, menonjol, tangga, latihan-to-weakest-bagian), 14-day JEDA for lengkap (none for dasar), sertifikat order (status baru, 10 uppercase kode), /api/periksa privacy, admin 403 gating, 55 seeded codes, papan opt-in rules. 31/31 passed. Frontend: full UI journey at 1920px and 390px, dark + light themes — home -> dasar test -> result -> lanjut lengkap -> lengkap result -> unlock with real bacaan code -> paid section -> sertifikat order -> periksa -> papan tabs -> pelatihan -> harga -> admin/kode + admin/pesanan. All flows work; no console/page errors other than expected 400/403/404 API responses for negative tests. No horizontal scroll at 390px on any page.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "Sertifikat.jsx (sertifikat-preview)", "issue": "Preview text hardcodes 'sebanyak 45 soal' instead of using h.jumlah_soal from /api/sesi/{id}/hasil. With the 3-item seed bank the printed preview claims 45 soal for a 3-question session; it will also be wrong for any partially answered session.", "selector": "[data-testid='sertifikat-preview']", "priority": "MEDIUM"},
+      {"component": "ProfileDisk.jsx (profile-disk canvas)", "issue": "Geodesic chord formula b = (i + floor(n/2) - 1) % n degenerates to a == b when n = 2 or 3, so NO threads are drawn (only the outer circle). n < 2 also returns early. Result: with the 3-item seed bank both dasar (n=1) and lengkap (n=3) results show an empty circle. Will be fine at n=15/45 but the small-n case renders a blank visual.", "selector": "[data-testid='profile-disk']", "priority": "MEDIUM"}
+    ],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "/harga", "issues": ["Certificate price (Rp150.000) is not listed on the pricing page even though it is a paid product linked from the lengkap result; only Rp15.000 reading + training prices are shown."]},
+      {"screen": "/hasil/{id} (result page)", "issues": ["Canvas2D console warning: 'Multiple readback operations using getImageData are faster with willReadFrequently=true' from the disk/background canvas — cosmetic/perf only."]}
+    ]
+  },
+  "test_report_links": ["/app/backend/tests/backend_test.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [
+    "Sertifikat preview: replace hardcoded '45 soal' with the actual jumlah_soal returned by /api/sesi/{id}/hasil.",
+    "ProfileDisk: handle small n (n<=3) so at least one visible thread/mark is drawn per answered question (current formula makes start==end angle for n=2,3).",
+    "Optional: add the Rp150.000 printed-certificate price to /harga."
+  ],
+  "critical_code_review_comments": [
+    "server.py uses deprecated @app.on_event('startup'/'shutdown'); migrate to lifespan handlers (FastAPI deprecation warning at import).",
+    "seed_codes() logs via `logger` which is defined at the bottom of server.py — works only because startup runs after full module import; move logging config to the top to avoid a future NameError.",
+    "JEDA lookup scans all sesi of a peserta in Python (db.sesi.find loop) instead of a single sorted query; same for seen_soal_ids and /api/papan (which also does an N+1 peserta lookup per row). Fine at current scale, but index {peserta_id, jenis, selesai_at} and aggregate before the bank grows to 90 items / many users.",
+    "POST /api/sesi/{id}/selesai can be called on a session with zero answers and stores skor=0 / kategori Cicing (kategori_for falls back to Cicing) — 0 is outside the documented 25-100 floor. Consider rejecting incomplete sessions server-side (frontend already gates the button).",
+    "PesertaCreate/MinatCreate/SertifikatCreate have no min_length constraints, so empty-string nama_tampilan/telepon/alamat are accepted (frontend validates, API does not)."
+  ],
+  "updated_files": ["/app/backend/tests/backend_test.py"],
+  "success_rate": {"backend": "100% (31/31 pytest cases)", "frontend": "100% of tested flows functional; 2 cosmetic/content defects"},
+  "seed_data_creation": "Created throwaway peserta/sesi via API (names prefixed TEST_ from pytest, plus UI participants 'QA Tester', 'QA Cert', 'QA Mobile', 'QA Jeda', 'QA Resume'), 2 sertifikat orders, 1 minat entry. Consumed 2 'bacaan' access codes in pytest + 1 via UI (28 unused bacaan codes remain of 30).",
+  "should_call_test_agent_after_fix": false,
+  "should_main_agent_self_test": true,
+  "test_credentials": "No login. Admin key CANDRA2026 via ?kunci= query string (verified working; wrong/absent key -> 403 API / 'Kunci tidak sesuai.' UI). /app/memory/test_credentials.md exists but is not needed for this app.",
+  "context_for_next_testing_agent": "Backend suite at /app/backend/tests/backend_test.py is idempotent and consumes one unused 'bacaan' code per run (2 per full run) — only 30 exist, so re-seed db.kode_akses (drop collection + restart backend) if they run out. Exclusion-rule coverage is a unit test on draw_from_bagian because the seed bank has 1 item per bagian; re-run the API-level exclusion assertions once the real 90-item bank lands (then also verify dasar=15 and lengkap=45 counts, and re-check ProfileDisk rendering). Frontend flows verified end-to-end incl. unlock, sertifikat, periksa, papan, admin, 390px, dark/light.",
+  "rca_of_the_issue": "Both frontend defects are hardcoded/edge-case rendering assumptions tied to the full 90-item bank: Sertifikat.jsx line 57 hardcodes '45 soal', and ProfileDisk.jsx line 37 computes the opposite-vertex index as (i + floor(n/2) - 1) % n which equals i when n is 2 or 3, producing zero-length geodesics."
+}

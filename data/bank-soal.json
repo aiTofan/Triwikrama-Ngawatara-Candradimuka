@@ -1,0 +1,43 @@
+{
+  "soal": [
+    {
+      "no": 1,
+      "bagian": 1,
+      "judul": "Membaca Situasi Genting",
+      "jenis": "skenario",
+      "skenario": "Sebuah pesan masuk di tengah malam mengabarkan bahwa rencana kerja yang kamu susun berbulan-bulan dibatalkan sepihak. Apa yang pertama kali terjadi di dalam dirimu sebelum kamu memutuskan bertindak?",
+      "pilihan": [
+        { "skor": 25, "teks": "Amarah langsung menguasai dan aku membalas pesan itu saat itu juga tanpa berpikir." },
+        { "skor": 50, "teks": "Aku kesal, tetapi menahan diri sambil mengingatkan diri bahwa aku sedang kesal." },
+        { "skor": 75, "teks": "Aku mengamati gejolak itu muncul dan reda, lalu menilai kabar itu apa adanya." },
+        { "skor": 100, "teks": "Aku menerima kabar itu, menimbang langkah nyata berikutnya, dan mulai menyusunnya malam itu." }
+      ]
+    },
+    {
+      "no": 2,
+      "bagian": 2,
+      "judul": "Menimbang Niat",
+      "jenis": "skenario",
+      "skenario": "Kamu diminta membantu seseorang yang selama ini kurang menghargaimu. Tidak ada yang akan tahu apakah kamu membantu dengan sungguh-sungguh atau setengah hati. Apa yang menuntun tindakanmu?",
+      "pilihan": [
+        { "skor": 25, "teks": "Aku menolak diam-diam karena ia tidak pantas mendapat bantuanku." },
+        { "skor": 50, "teks": "Aku membantu seadanya supaya terlihat baik, bukan karena benar-benar ingin." },
+        { "skor": 75, "teks": "Aku membantu dengan tulus, meski masih menyimpan sedikit rasa terganggu." },
+        { "skor": 100, "teks": "Aku membantu sepenuhnya karena nilai yang kupegang tidak bergantung pada perlakuannya." }
+      ]
+    },
+    {
+      "no": 3,
+      "bagian": 3,
+      "judul": "Ruang bagi yang Lain",
+      "jenis": "skenario",
+      "skenario": "Dalam sebuah percakapan, lawan bicaramu mengungkapkan pandangan yang berlawanan keras dengan keyakinanmu. Bagaimana kamu menempatkan dirimu?",
+      "pilihan": [
+        { "skor": 25, "teks": "Aku memotong dan meluruskan bahwa ia keliru sebelum ia selesai bicara." },
+        { "skor": 50, "teks": "Aku mendengarkan sambil menyiapkan bantahan di kepalaku." },
+        { "skor": 75, "teks": "Aku mendengarkan penuh, lalu menyampaikan pandanganku dengan tenang." },
+        { "skor": 100, "teks": "Aku benar-benar masuk ke cara ia melihat dunia sebelum menimbang pandanganku sendiri." }
+      ]
+    }
+  ]
+}
