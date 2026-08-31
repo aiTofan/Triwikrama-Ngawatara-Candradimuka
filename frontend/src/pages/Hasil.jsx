@@ -7,7 +7,7 @@ import { api } from "../api";
 import { useAuth, startLogin } from "../auth";
 
 const STATE_COLOR = { 25: "var(--s25)", 50: "var(--s50)", 75: "var(--s75)", 100: "var(--s100)" };
-const STATE_NAMA = { 25: "Cicing", 50: "Nyaring Sela", 75: "Nyaring Jati", 100: "Eling" };
+const STATE_NAMA = { 25: "Cicing", 50: "Lulungu", 75: "Nyaring", 100: "Eling" };
 
 export default function Hasil() {
   const { sesiId } = useParams();
@@ -74,7 +74,7 @@ export default function Hasil() {
 
       <ProfileDisk scores={h.disk} />
 
-      <h2 className="cd-h2" style={{ marginTop: 10 }}>Peta Kesadaran</h2>
+      <h2 className="cd-h2" style={{ marginTop: 10 }}>Peta Kejernihan</h2>
       <ResultMap peta={h.peta} />
 
       <p style={{ color: "var(--ink-2)", lineHeight: 1.6 }} data-testid="hasil-paragraf">{h.kategori_paragraf}</p>
@@ -91,9 +91,17 @@ export default function Hasil() {
 
       {/* Progression controls */}
       {h.jenis === "bhurloka" && !h.terbuka && (
-        <button className="cd-btn" data-testid="lanjut-berbayar" onClick={startPay}>
-          Lanjutkan ke 120 soal berikutnya — Rp17.000
-        </button>
+        <div data-testid="bhurloka-exit">
+          <button className="cd-btn" data-testid="lanjut-berbayar" onClick={startPay}>
+            Lanjutkan ke 120 soal berikutnya — Rp17.000
+          </button>
+          <p style={{ marginTop: 14 }}>
+            <Link to="/" className="quiet-link" data-testid="kembali-candradimuka">Kembali ke Candradimuka</Link>
+          </p>
+          <p className="cd-faint" style={{ fontSize: 13, marginTop: 4 }} data-testid="bhurloka-reassure">
+            Skor Bhurloka-mu sudah tersimpan. Kamu bisa melanjutkan kapan saja.
+          </p>
+        </div>
       )}
       {h.jenis === "akasa" && (
         <button className="cd-btn" data-testid="lanjut-paramartha" disabled={busy} onClick={lanjutTier}>

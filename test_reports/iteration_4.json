@@ -1,0 +1,45 @@
+{
+  "summary": "Full re-test of the iteration-4 surgical rename/layout changes + the CORS fix on the Triwikramā/Candradimuka (UPKT) build. Backend: 36/36 pytest tests pass (existing backend_test.py updated for the now-90-item Paramārtha pool and the 3-tier board, plus a new test_rename_bands.py covering band renames, kategori-derived-from-score, three-tier /papan, admin kategori, diacritics, CORS preflight and Bearer-only auth). Frontend: verified via Playwright on the public preview URL — front-page eyebrow/heading/intro/footer, 390px eyebrow wrapping (no clipping, JetBrains Mono, gold), the shared 'Candradimuka' home-link on all 11 routes plus navigation, Bhurloka result exit controls (pay button + kembali-candradimuka + bhurloka-reassure), all four band names with matching paragraphs, /papan (heading + right label 'Peta Kejernihan', three tabs Bhurloka|Ākāśa|Paramārtha all populated, headers #/Nama/Kejernihan/Waktu, Waktu rendered '31 Agustus 2026 - 05:23PM', Asia/Jakarta 09:14Z -> 04:14PM verified), /harga (Profil Kesadaran digital line, 4 unchanged prices, no 'Peta Kesadaran', footer instrument name intact), diacritics everywhere (result, akasa button, /validasi, certificate preview), and a complete 17-question Bhurloka journey taken in the browser end-to-end. Rp17.000 gate confirmed: unauthenticated click redirects to Google sign-in (panel never opens); with a Bearer session a bad code shows 'Kode tidak ditemukan.' and a valid code unlocks Ākāśa 1/30 with save-&-resume intact. No CORS or net::ERR_FAILED errors from any /api call.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "GET /api/periksa/{kode}", "issue": "Endpoint does not exist (404) but the frontend route /periksa calls it. The page therefore always fails and renders FastAPI's raw English 'Not Found' as the user-facing error. Pre-existing orphan; either implement the endpoint or drop the /periksa page (public verification already lives on /validasi)."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "Periksa.jsx", "issue": "Dead page: submitting any code shows the untranslated error 'Not Found' because /api/periksa/{kode} is missing. Also imports Link without using it.", "selector": "[data-testid=\"periksa-error\"]", "priority": "LOW"}
+    ],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "General", "issues": ["No contrast/spacing/alignment problems found. Eyebrow gold #8E6E22 on light background is readable; 390px layout wraps cleanly with no clipping or horizontal scroll."]}
+    ]
+  },
+  "test_report_links": [
+    "/app/backend/tests/backend_test.py",
+    "/app/backend/tests/test_rename_bands.py",
+    "/app/backend/tests/prep_fe4.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "Decide on /periksa: implement GET /api/periksa/{kode} or remove the route + page so users never see the raw 'Not Found' string.",
+    "Optional cleanup: remove the unused `Link` import in Periksa.jsx and Validasi.jsx; ESLint also flags 8 empty catch blocks (no-empty) in App.js, auth.js, Hasil.jsx, Pelatihan.jsx, Uji.jsx — swallowing errors silently hides API failures from users."
+  ],
+  "critical_code_review_comments": [
+    "server.py migrate_kategori() runs on every startup and scans all scored sesi rows one-by-one; it is idempotent but O(n) per boot. Since /hasil and /admin/pesanan already derive kategori from the score at render time, consider gating it behind a version flag once the data set grows.",
+    "Empty catch blocks in Hasil.jsx (lanjutTier), Uji.jsx (persistPosisi/pick) and Pelatihan.jsx (submit) drop API errors silently — a failed answer save or a failed tier unlock looks like a no-op to the user. Surface an error state.",
+    "api.js relies solely on localStorage 'candra_token'; on logout only the token is removed while the server-side cookie is cleared by the API. This is consistent, but note the cookie is still set with samesite=none/secure in auth_session — harmless now, just dead weight after the withCredentials removal."
+  ],
+  "updated_files": [
+    "/app/backend/tests/backend_test.py",
+    "/app/backend/tests/test_rename_bands.py",
+    "/app/backend/tests/prep_fe4.py"
+  ],
+  "success_rate": {"backend": "100%", "frontend": "100%"},
+  "seed_data_creation": "Created TEST_-prefixed peserta/journeys via /app/backend/tests/prep_fe4.py: an unpaid finished Bhurloka sesi, a fully finished 137-question journey (opted in to the Paramārtha board), a finished Ākāśa sesi, plus a paid-gate fixture. Consumed 4 'bacaan' access codes. One certificate serial TRW-26-SQ8YBBD-S exists for /validasi.",
+  "should_call_test_agent_after_fix": false,
+  "should_main_agent_self_test": true,
+  "test_credentials": "/app/memory/test_credentials.md — Google auth simulated by inserting peserta.google_sub + user_sessions and sending Authorization: Bearer <session_token>; frontend authed flows work by setting localStorage candra_token + candra_peserta. Admin key CANDRA2026. NOTE: the credentials file still says bank-soal.json has 90 items / Paramārtha draws 30 — it now has 150 items and Paramārtha draws 90; please update that file.",
+  "context_for_next_testing_agent": "Backend suite: `cd /app/backend && python -m pytest tests/ -q` (pytest.ini forces -n 2 --dist loadscope). backend_test.py now asserts Paramārtha total == 90 and that /papan accepts all three tiers (only an unknown jenis returns 400). test_rename_bands.py covers band renames, kategori derivation, DB cleanliness (no 'Nyaring Sela'/'Nyaring Jati'), CORS preflight and Bearer-only auth. Use prep_fe4.py to regenerate frontend fixtures; each run consumes 'bacaan' codes (30 seeded total, ~10 used so far) — if they run out, re-seed or reset kode_akses. For authed UI tests set localStorage candra_token + candra_peserta on the app origin BEFORE navigating. Remaining known gap: /periksa page has no backend endpoint.",
+  "rca_of_the_issue": "CORS regression is resolved: with withCredentials dropped from the axios client the ingress-injected Access-Control-Allow-Origin:* is legal, and preflight + simple requests both return an ACAO header. All gated endpoints (/perjalanan/{id}/bayar, PATCH /sesi/{id}/papan, /sertifikat/{id}, /auth/me) authorise from the Bearer token alone with no cookie present — verified both by pytest (test_bearer_only_auth_works_without_cookie) and in the browser. The only console CORS message observed came from Emergent's own auth.emergentagent.com sign-in page fetching demobackend template-section, which is outside this app."
+}

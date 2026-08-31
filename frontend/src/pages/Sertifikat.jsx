@@ -42,7 +42,7 @@ export default function Sertifikat() {
   return (
     <Layout>
       <div className="cd-topbar">
-        <Link to={`/hasil/${sesiId}`} className="cd-brand">Candradimuka</Link>
+        <span />
         <span className="mono" style={{ fontSize: 13, color: "var(--ink-2)" }}>Sertifikat Cetak</span>
       </div>
       <h1 className="cd-h1" style={{ fontSize: 40 }}>Sertifikat Cetak</h1>
@@ -55,7 +55,7 @@ export default function Sertifikat() {
           sebanyak 137 soal pada {tanggal}, dengan profil Bhurloka {persenOf("bhurloka")}%,
           Ākāśa {persenOf("Ākāśa")}%, dan Paramārtha {persenOf("Paramārtha")}%.
         </p>
-        <p className="small">Uji ini memetakan cara seseorang membaca situasi pada satu kesempatan, bukan kadar kemurnian kesadarannya.</p>
+        <p className="small">Uji ini memetakan cara seseorang membaca situasi pada satu kesempatan, bukan kadar kejernihan kesadarannya.</p>
         <p className="kode" data-testid="preview-kode">Nomor seri: {order ? order.nomor_seri : "dibuat saat pemesanan"}</p>
         <p className="small">Dapat diperiksa di candradimuka.id/validasi</p>
         <p className="ttd">Ditandatangani,<br />{AUTHOR}</p>

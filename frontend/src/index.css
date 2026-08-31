@@ -218,6 +218,23 @@ a:hover { text-decoration: underline; }
   font-size: 22px;
   color: var(--ink);
 }
+/* Home link present on every page, top-left, gold monospace (matches the eyebrow) */
+.cd-home {
+  display: inline-block;
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.4px;
+  color: var(--gold);
+  margin-bottom: 22px;
+}
+.cd-home:hover { text-decoration: underline; }
+/* Eyebrow variant: same gold mono, tighter tracking so it wraps instead of clipping at 390px */
+.cd-eyebrow {
+  letter-spacing: 0.4px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
 
 /* ===== Footer ===== */
 .cd-footer {

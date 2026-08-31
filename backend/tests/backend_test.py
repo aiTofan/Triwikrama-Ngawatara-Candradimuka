@@ -118,7 +118,7 @@ class TestHealth:
             by[t] = by.get(t, 0) + 1
         assert by.get("Bhurloka", 0) >= 17, by
         assert by.get("Ākāśa", 0) >= 30, by
-        assert by.get("Paramārtha", 0) >= 1, by
+        assert by.get("Paramārtha", 0) >= 90, by
 
 
 # ================= Draws & no-score-leak =================
@@ -249,7 +249,8 @@ class TestJourneyGate:
         assert r.json()["jenis"] == "paramartha"
         pa = get_sesi(client, para_id)
         assert pa["jenis"] == "paramartha"
-        assert pa["total"] >= 30  # data-limited today (target 90)
+        assert pa["total"] == 90, pa["total"]
+        assert pa["tier_nama"] == "Paramārtha"
         assert all(pa["soal_detail"][str(n)]["tingkat"] == "Paramārtha" for n in pa["soal_ids"])
 
         answer_all(client, para_id, level=75)
@@ -359,7 +360,12 @@ class TestBoardMinatAdmin:
             assert set(row.keys()) == {"rank", "nama_tampilan", "skor", "tanggal"}
         r = client.get(f"{API}/papan", params={"jenis": "paramartha"})
         assert r.status_code == 200
-        assert client.get(f"{API}/papan", params={"jenis": "akasa"}).status_code == 400
+        # three tiers are now all valid board filters
+        ra = client.get(f"{API}/papan", params={"jenis": "akasa"})
+        assert ra.status_code == 200, ra.text
+        for row in ra.json()["top"][:5]:
+            assert set(row.keys()) == {"rank", "nama_tampilan", "skor", "tanggal"}
+        assert client.get(f"{API}/papan", params={"jenis": "nonsense"}).status_code == 400
 
     def test_papan_optin_requires_login(self, client):
         pid = new_peserta(client, "TEST_Optin")

@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { Layout } from "../components/Layout";
 import { api } from "../api";
-import { fmtTanggal, getPeserta } from "../peserta";
+import { fmtWaktu, getPeserta } from "../peserta";
+
+const TABS = [
+  ["bhurloka", "Bhurloka"],
+  ["akasa", "Ākāśa"],
+  ["paramartha", "Paramārtha"],
+];
 
 export default function Papan() {
   const [tab, setTab] = useState("bhurloka");
@@ -18,24 +23,25 @@ export default function Papan() {
   return (
     <Layout>
       <div className="cd-topbar">
-        <Link to="/" className="cd-brand">Candradimuka</Link>
-        <span className="mono" style={{ fontSize: 13, color: "var(--ink-2)" }}>Papan Skor</span>
+        <span />
+        <span className="mono" style={{ fontSize: 13, color: "var(--ink-2)" }}>Peta Kejernihan</span>
       </div>
-      <h1 className="cd-h1" style={{ fontSize: 40 }}>Papan Skor</h1>
+      <h1 className="cd-h1" style={{ fontSize: 40 }}>Peta Kejernihan</h1>
 
       <div className="cd-tabs">
-        <button className={"cd-tab" + (tab === "bhurloka" ? " active" : "")} data-testid="tab-bhurloka" onClick={() => setTab("bhurloka")}>Bhurloka</button>
-        <button className={"cd-tab" + (tab === "paramartha" ? " active" : "")} data-testid="tab-paramartha" onClick={() => setTab("paramartha")}>Paramārtha</button>
+        {TABS.map(([key, label]) => (
+          <button key={key} className={"cd-tab" + (tab === key ? " active" : "")} data-testid={`tab-${key}`} onClick={() => setTab(key)}>{label}</button>
+        ))}
       </div>
 
       <p className="cd-faint" style={{ fontSize: 13, marginBottom: 12 }}>
-        Skor tingkat Bhurloka dan Paramārtha tidak sebanding, karena itu papan dipisah.
+        Skor tiap tingkat tidak sebanding, karena itu Peta Kejernihan dipisah per tingkat.
       </p>
 
       {!data ? <p className="cd-muted">Memuat…</p> : (
         <>
           <table className="cd-table" data-testid="papan-table">
-            <thead><tr><th>#</th><th>Nama</th><th>Skor</th><th>Tanggal</th></tr></thead>
+            <thead><tr><th>#</th><th>Nama</th><th>Kejernihan</th><th>Waktu</th></tr></thead>
             <tbody>
               {data.top.length === 0 && <tr><td colSpan={4} className="cd-muted">Belum ada hasil.</td></tr>}
               {data.top.map((r) => (
@@ -43,7 +49,7 @@ export default function Papan() {
                   <td className="mono">{r.rank}</td>
                   <td>{r.nama_tampilan}</td>
                   <td className="mono">{r.skor}%</td>
-                  <td className="mono">{fmtTanggal(r.tanggal)}</td>
+                  <td className="mono">{fmtWaktu(r.tanggal)}</td>
                 </tr>
               ))}
             </tbody>

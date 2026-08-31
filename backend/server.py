@@ -50,18 +50,18 @@ EXERCISE_BY_TIER = {
 }
 
 KATEGORI_TABLE = [
-    (25, 49, "Cicing", "Kesadaran tertidur dan reaktif"),
-    (50, 74, "Nyaring Sela", "Pengamat yang masih ber-ego"),
-    (75, 89, "Nyaring Jati", "Pengamat terjaga tetapi steril"),
-    (90, 100, "Eling", "Berdaulat dan melahirkan karya nyata"),
+    (25, 49, "Cicing", "diam dan bereaksi dari rasa, emosi atau kebiasaan"),
+    (50, 74, "Lulungu", "setengah sadar, masih linglung seperti baru bangun tidur"),
+    (75, 89, "Nyaring", "sudah bangun dan melihat jernih, tetapi belum tentu bertindak"),
+    (90, 100, "Eling", "sadar, berdaulat, dan menindaklanjuti apa yang dilihatnya"),
 ]
 KATEGORI_PARAGRAF = {
-    "Cicing": "Pada kesempatan ini kesadaran terbaca masih tertidur dan reaktif; situasi ditanggapi lebih dulu oleh dorongan dan reaksi ketimbang pengamatan. Bacaan ini menggambarkan cara membaca keadaan pada satu momen, bukan sifat tetap dirimu.",
-    "Nyaring Sela": "Pada kesempatan ini terbaca seorang pengamat yang mulai jernih namun masih ber-ego; ada jarak terhadap dorongan, tetapi kepentingan diri masih ikut mewarnai tanggapan. Bacaan ini menggambarkan cara membaca keadaan pada satu momen, bukan sifat tetap dirimu.",
-    "Nyaring Jati": "Pada kesempatan ini terbaca pengamat yang terjaga tetapi cenderung steril; kesadaran hadir dan tenang, namun belum sepenuhnya bergerak menjadi tindakan yang melahirkan sesuatu. Bacaan ini menggambarkan cara membaca keadaan pada satu momen, bukan sifat tetap dirimu.",
-    "Eling": "Pada kesempatan ini terbaca kesadaran yang berdaulat dan melahirkan karya nyata; keadaan dibaca jernih lalu diteruskan menjadi langkah yang berpijak dan bermanfaat. Bacaan ini menggambarkan cara membaca keadaan pada satu momen, bukan sifat tetap dirimu.",
+    "Cicing": "Cicing — diam dan bereaksi dari rasa, emosi atau kebiasaan.",
+    "Lulungu": "Lulungu — setengah sadar, masih linglung seperti baru bangun tidur.",
+    "Nyaring": "Nyaring — sudah bangun dan melihat jernih, tetapi belum tentu bertindak.",
+    "Eling": "Eling — sadar, berdaulat, dan menindaklanjuti apa yang dilihatnya.",
 }
-LEVEL_NAMA = {25: "Cicing", 50: "Nyaring Sela", 75: "Nyaring Jati", 100: "Eling"}
+LEVEL_NAMA = {25: "Cicing", 50: "Lulungu", 75: "Nyaring", 100: "Eling"}
 MENONJOL_BACAAN = {
     25: "Pada banyak situasi tanggapan muncul secara reaktif; latihan menahan jeda sebelum bertindak akan paling terasa dampaknya.",
     50: "Sebagian besar tanggapan berjarak namun masih diwarnai kepentingan diri; melatih kejujuran pada niat akan menajamkan bacaan berikutnya.",
@@ -203,9 +203,18 @@ async def seed_codes():
     logger.info("Seeded %d access codes", len(docs))
 
 
+async def migrate_kategori():
+    """One-off: rewrite sesi.kategori from the score so no old band name survives."""
+    async for s in db.sesi.find({"skor": {"$ne": None}}, {"id": 1, "skor": 1, "kategori": 1}):
+        correct = kategori_for(s["skor"])[0]
+        if s.get("kategori") != correct:
+            await db.sesi.update_one({"id": s["id"]}, {"$set": {"kategori": correct}})
+
+
 @app.on_event("startup")
 async def on_startup():
     await seed_codes()
+    await migrate_kategori()
 
 
 # ---- Auth ----
@@ -609,7 +618,7 @@ async def set_papan(sesi_id: str, body: TampilBody, request: Request):
 # ---- Board ----
 @api_router.get("/papan")
 async def papan(jenis: str = Query(...), peserta_id: Optional[str] = None):
-    if jenis not in ("bhurloka", "paramartha"):
+    if jenis not in ("bhurloka", "akasa", "paramartha"):
         raise HTTPException(400, "Jenis tidak sah")
     q = {"jenis": jenis, "status": "selesai"}
     if jenis == "paramartha":
@@ -734,8 +743,9 @@ async def admin_pesanan(kunci: str = ""):
     out = []
     async for o in db.pesanan_sertifikat.find({}, {"_id": 0}):
         s = await db.sesi.find_one({"id": o.get("sesi_id")})
+        kat = kategori_for(s["skor"])[0] if (s and s.get("skor") is not None) else None
         out.append({"id": o["id"], "tanggal": o["created_at"], "nama_cetak": o["nama_cetak"],
-                    "kategori": s.get("kategori") if s else None, "skor": s.get("skor") if s else None,
+                    "kategori": kat, "skor": s.get("skor") if s else None,
                     "telepon": o["telepon"], "alamat": o["alamat"], "status": o["status"],
                     "nomor_seri": o.get("nomor_seri")})
     out.sort(key=lambda o: o["tanggal"], reverse=True)

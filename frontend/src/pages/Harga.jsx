@@ -5,14 +5,14 @@ const PRICES = [
   ["Melanjutkan ke 120 soal berikutnya, termasuk pembacaan lengkap", "Rp17.000"],
   ["Pelatihan Candradimuka, sekali bayar untuk enam modul", "Rp90.000"],
   ["Sertifikat cetak bertanda tangan, di luar ongkos kirim", "Rp137.000"],
-  ["Peta Kesadaran digital, bisa dicetak sendiri", "Rp36.000"],
+  ["Profil Kesadaran digital, bisa dicetak sendiri", "Rp36.000"],
 ];
 
 export default function Harga() {
   return (
     <Layout>
       <div className="cd-topbar">
-        <Link to="/" className="cd-brand">Candradimuka</Link>
+        <span />
         <span className="mono" style={{ fontSize: 13, color: "var(--ink-2)" }}>Harga</span>
       </div>
       <h1 className="cd-h1" style={{ fontSize: 40 }}>Harga</h1>

@@ -35,8 +35,8 @@ export default function Home() {
 
   return (
     <Layout>
-      <p className="cd-label">Uji Profil Kesadaran · UPKT</p>
-      <h1 className="cd-h1" data-testid="hook-question">Triwikramā · Ngawatāra Candradimuka</h1>
+      <p className="cd-label cd-eyebrow">Triwikramā · Ngawatāra Candradimuka</p>
+      <h1 className="cd-h1" data-testid="hook-question">Seberapa Jernih Kesadaranmu?</h1>
       <p className="cd-lead" style={{ fontSize: 17 }} data-testid="hook-intro">
         Uji Profil Kesadaran ini memetakan cara kamu membaca situasi pada satu kesempatan melalui
         serangkaian skenario. Ini bukan ujian benar-salah, melainkan cermin bagi cara kesadaranmu
@@ -70,7 +70,7 @@ export default function Home() {
       </div>
 
       <div className="cd-navlinks">
-        <Link to="/papan" data-testid="link-papan">Papan</Link>
+        <Link to="/papan" data-testid="link-papan">Peta Kejernihan</Link>
         <Link to="/pelatihan" data-testid="link-pelatihan">Pelatihan</Link>
         <Link to="/harga" data-testid="link-harga">Harga</Link>
       </div>

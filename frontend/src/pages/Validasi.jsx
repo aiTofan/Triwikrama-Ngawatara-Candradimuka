@@ -23,7 +23,7 @@ export default function Validasi() {
   return (
     <Layout>
       <div className="cd-topbar">
-        <Link to="/" className="cd-brand">Candradimuka</Link>
+        <span />
         <span className="mono" style={{ fontSize: 13, color: "var(--ink-2)" }}>Validasi</span>
       </div>
       <h1 className="cd-h1" style={{ fontSize: 40 }}>Periksa Keaslian Sertifikat</h1>

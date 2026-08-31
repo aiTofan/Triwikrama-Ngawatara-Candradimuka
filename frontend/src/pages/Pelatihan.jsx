@@ -34,7 +34,7 @@ export default function Pelatihan() {
   return (
     <Layout>
       <div className="cd-topbar">
-        <Link to="/" className="cd-brand">Candradimuka</Link>
+        <span />
         <span className="mono" style={{ fontSize: 13, color: "var(--ink-2)" }}>Pelatihan</span>
       </div>
       <p className="cd-label">Pelatihan Candradimuka</p>
