@@ -7,6 +7,9 @@ import json
 import random
 import string
 import secrets
+import base64
+import hashlib
+import hmac
 import logging
 import httpx
 from pathlib import Path
@@ -30,6 +33,11 @@ app = FastAPI()
 api_router = APIRouter(prefix="/api")
 
 ADMIN_KEY = os.environ.get("ADMIN_KEY", "CANDRA2026")
+MIDTRANS_SERVER_KEY = os.environ.get("MIDTRANS_SERVER_KEY", "")
+MIDTRANS_CLIENT_KEY = os.environ.get("MIDTRANS_CLIENT_KEY", "")
+MIDTRANS_API_BASE = os.environ.get("MIDTRANS_API_BASE", "https://api.sandbox.midtrans.com")
+MIDTRANS_SNAP_BASE = os.environ.get("MIDTRANS_SNAP_BASE", "https://app.sandbox.midtrans.com")
+BIAYA_PARAMARTHA = 17000
 DATA_FILE = ROOT_DIR.parent / "data" / "bank-soal.json"
 EMERGENT_AUTH = "https://demobackend.emergentagent.com/auth/v1/env/oauth/session-data"
 
@@ -50,18 +58,16 @@ EXERCISE_BY_TIER = {
 }
 
 KATEGORI_TABLE = [
-    (25, 49, "Cicing", "diam dan bereaksi dari rasa, emosi atau kebiasaan"),
-    (50, 74, "Lulungu", "setengah sadar, masih linglung seperti baru bangun tidur"),
-    (75, 89, "Nyaring", "sudah bangun dan melihat jernih, tetapi belum tentu bertindak"),
-    (90, 100, "Eling", "sadar, berdaulat, dan menindaklanjuti apa yang dilihatnya"),
+    (25, 49, "Kesadaran Cicing", "diam dan bereaksi dari rasa, emosi atau kebiasaan"),
+    (50, 74, "Kesadaran Nyaring", "sudah bangun dan melihat jernih, tetapi belum tentu bertindak"),
+    (75, 100, "Kesadaran Eling", "sadar, berdaulat, dan menindaklanjuti apa yang dilihatnya"),
 ]
 KATEGORI_PARAGRAF = {
-    "Cicing": "Cicing — diam dan bereaksi dari rasa, emosi atau kebiasaan.",
-    "Lulungu": "Lulungu — setengah sadar, masih linglung seperti baru bangun tidur.",
-    "Nyaring": "Nyaring — sudah bangun dan melihat jernih, tetapi belum tentu bertindak.",
-    "Eling": "Eling — sadar, berdaulat, dan menindaklanjuti apa yang dilihatnya.",
+    "Kesadaran Cicing": "Kesadaran Cicing — diam dan bereaksi dari rasa, emosi atau kebiasaan.",
+    "Kesadaran Nyaring": "Kesadaran Nyaring — sudah bangun dan melihat jernih, tetapi belum tentu bertindak.",
+    "Kesadaran Eling": "Kesadaran Eling — sadar, berdaulat, dan menindaklanjuti apa yang dilihatnya.",
 }
-LEVEL_NAMA = {25: "Cicing", 50: "Lulungu", 75: "Nyaring", 100: "Eling"}
+LEVEL_NAMA = {25: "Kesadaran Cicing", 50: "Kesadaran Nyaring", 75: "Kesadaran Eling", 100: "Kesadaran Eling"}
 MENONJOL_BACAAN = {
     25: "Pada banyak situasi tanggapan muncul secara reaktif; latihan menahan jeda sebelum bertindak akan paling terasa dampaknya.",
     50: "Sebagian besar tanggapan berjarak namun masih diwarnai kepentingan diri; melatih kejujuran pada niat akan menajamkan bacaan berikutnya.",
@@ -206,13 +212,13 @@ async def seed_codes():
 
 async def migrate_kategori():
     """One-off (guarded by a marker): rewrite sesi.kategori from the score so no old band name survives."""
-    if await db.migrations.find_one({"name": "kategori_v2"}):
+    if await db.migrations.find_one({"name": "kategori_v3"}):
         return
     async for s in db.sesi.find({"skor": {"$ne": None}}, {"_id": 0, "id": 1, "skor": 1, "kategori": 1}).limit(100000):
         correct = kategori_for(s["skor"])[0]
         if s.get("kategori") != correct:
             await db.sesi.update_one({"id": s["id"]}, {"$set": {"kategori": correct}})
-    await db.migrations.insert_one({"name": "kategori_v2", "at": now_iso()})
+    await db.migrations.insert_one({"name": "kategori_v3", "at": now_iso()})
 
 
 @app.on_event("startup")
@@ -507,27 +513,33 @@ async def bayar(pj_id: str, body: BayarBody, request: Request):
         raise HTTPException(400, "Kode ini sudah dipakai.")
     await db.kode_akses.update_one({"kode": kode}, {"$set": {"dipakai_oleh": pj["peserta_id"], "dipakai_pada": now_iso()}})
     await db.perjalanan.update_one({"id": pj_id}, {"$set": {"terbuka": True, "dibayar_pada": now_iso(), "kode_dipakai": kode}})
-    # unlock Akasa: create its sesi
-    sid = await create_tier_sesi(pj["peserta_id"], pj_id, "akasa")
+    # Payment unlocks the final Mandala Paramārtha (and includes the full reading)
+    existing = set()
+    async for s in db.sesi.find({"perjalanan_id": pj_id}, {"_id": 0, "jenis": 1}):
+        existing.add(s["jenis"])
+    if "paramartha" in existing:
+        return {"ok": True, "terbuka": True, "sesi_id": None}
+    sid = await create_tier_sesi(pj["peserta_id"], pj_id, "paramartha")
     return {"ok": True, "terbuka": True, "sesi_id": sid}
 
 
 @api_router.post("/perjalanan/{pj_id}/lanjut")
 async def lanjut_tier(pj_id: str, request: Request):
-    """Create the next tier sesi after finishing akasa (-> paramartha)."""
+    """Advance to the next Mandala. Bhurloka -> Ākāśa is free (login only);
+    Ākāśa -> Paramārtha requires payment (perjalanan.terbuka)."""
     peserta = await current_peserta(request)
     if not peserta:
         raise HTTPException(401, "Masuk dengan Google untuk melanjutkan.")
     pj = await db.perjalanan.find_one({"id": pj_id})
     if not pj:
         raise HTTPException(404, "Perjalanan tidak ditemukan")
-    if not pj.get("terbuka"):
-        raise HTTPException(403, "Perjalanan belum dibuka.")
     existing = set()
     async for s in db.sesi.find({"perjalanan_id": pj_id}, {"_id": 0, "jenis": 1}):
         existing.add(s["jenis"])
     for key in TIER_ORDER:
         if key not in existing:
+            if key == "paramartha" and not pj.get("terbuka"):
+                raise HTTPException(402, "Perlu pembayaran Rp17.000 untuk melanjutkan ke Mandala Paramārtha.")
             sid = await create_tier_sesi(pj["peserta_id"], pj_id, key)
             return {"sesi_id": sid, "jenis": key}
     return {"sesi_id": None}
@@ -538,6 +550,105 @@ async def journey_sesis(pj_id: str) -> Dict[str, Dict]:
     async for s in db.sesi.find({"perjalanan_id": pj_id}):
         out[s["jenis"]] = s
     return out
+
+
+# ---- Midtrans payment (Snap) for Mandala Paramārtha ----
+def midtrans_auth() -> str:
+    return "Basic " + base64.b64encode(f"{MIDTRANS_SERVER_KEY}:".encode()).decode()
+
+
+async def unlock_paramartha(pj: Dict) -> Optional[str]:
+    """Mark the journey paid and create the Paramārtha sesi (idempotent)."""
+    await db.perjalanan.update_one({"id": pj["id"]}, {"$set": {"terbuka": True, "dibayar_pada": now_iso()}})
+    existing = set()
+    async for s in db.sesi.find({"perjalanan_id": pj["id"]}, {"_id": 0, "jenis": 1}):
+        existing.add(s["jenis"])
+    if "paramartha" in existing:
+        s = await db.sesi.find_one({"perjalanan_id": pj["id"], "jenis": "paramartha"}, {"_id": 0, "id": 1})
+        return s["id"] if s else None
+    return await create_tier_sesi(pj["peserta_id"], pj["id"], "paramartha")
+
+
+@api_router.get("/config/midtrans")
+async def config_midtrans():
+    return {"client_key": MIDTRANS_CLIENT_KEY, "snap_url": f"{MIDTRANS_SNAP_BASE}/snap/snap.js",
+            "enabled": bool(MIDTRANS_SERVER_KEY and MIDTRANS_CLIENT_KEY)}
+
+
+@api_router.post("/perjalanan/{pj_id}/bayar/midtrans")
+async def bayar_midtrans(pj_id: str, request: Request):
+    peserta = await current_peserta(request)
+    if not peserta:
+        raise HTTPException(401, "Masuk dengan Google untuk membayar.")
+    if not (MIDTRANS_SERVER_KEY and MIDTRANS_CLIENT_KEY):
+        raise HTTPException(503, "Pembayaran belum dikonfigurasi.")
+    pj = await db.perjalanan.find_one({"id": pj_id})
+    if not pj:
+        raise HTTPException(404, "Perjalanan tidak ditemukan")
+    order_id = f"trw-{pj_id[:8]}-{secrets.token_hex(4)}"
+    payload = {
+        "transaction_details": {"order_id": order_id, "gross_amount": BIAYA_PARAMARTHA},
+        "item_details": [{"id": "mandala-paramartha", "price": BIAYA_PARAMARTHA, "quantity": 1,
+                          "name": "Mandala Paramartha + pembacaan lengkap"}],
+        "enabled_payments": ["qris", "gopay", "shopeepay"],
+    }
+    async with httpx.AsyncClient(timeout=20) as hc:
+        r = await hc.post(f"{MIDTRANS_SNAP_BASE}/snap/v1/transactions",
+                          headers={"Accept": "application/json", "Content-Type": "application/json",
+                                   "Authorization": midtrans_auth()}, json=payload)
+    if r.status_code != 201:
+        logger.error("Midtrans token error %s %s", r.status_code, r.text[:200])
+        raise HTTPException(502, "Gagal membuat transaksi pembayaran.")
+    token = r.json()["token"]
+    await db.payments.insert_one({"order_id": order_id, "perjalanan_id": pj_id, "peserta_id": peserta["id"],
+                                  "amount": BIAYA_PARAMARTHA, "status": "pending", "created_at": now_iso()})
+    return {"order_id": order_id, "token": token, "client_key": MIDTRANS_CLIENT_KEY}
+
+
+async def midtrans_status(order_id: str) -> Dict:
+    async with httpx.AsyncClient(timeout=15) as hc:
+        r = await hc.get(f"{MIDTRANS_API_BASE}/v2/{order_id}/status", headers={"Authorization": midtrans_auth()})
+    if r.status_code not in (200, 201):
+        raise HTTPException(502, "Tidak dapat memeriksa status pembayaran.")
+    return r.json()
+
+
+async def reconcile(order_id: str) -> Dict:
+    pay = await db.payments.find_one({"order_id": order_id})
+    if not pay:
+        raise HTTPException(404, "Order tidak ditemukan")
+    st = await midtrans_status(order_id)
+    paid = (st.get("transaction_status") in {"settlement", "capture"}
+            and st.get("fraud_status", "accept") == "accept"
+            and int(float(st.get("gross_amount", "0"))) == BIAYA_PARAMARTHA)
+    sesi_id = None
+    if paid:
+        pj = await db.perjalanan.find_one({"id": pay["perjalanan_id"]})
+        if pj:
+            sesi_id = await unlock_paramartha(pj)
+        await db.payments.update_one({"order_id": order_id}, {"$set": {"status": st.get("transaction_status"), "paid": True}})
+    else:
+        await db.payments.update_one({"order_id": order_id}, {"$set": {"status": st.get("transaction_status")}})
+    return {"paid": paid, "status": st.get("transaction_status"), "sesi_id": sesi_id}
+
+
+@api_router.get("/perjalanan/{pj_id}/bayar/status")
+async def bayar_status(pj_id: str, order_id: str, request: Request):
+    peserta = await current_peserta(request)
+    if not peserta:
+        raise HTTPException(401, "Masuk dengan Google.")
+    return await reconcile(order_id)
+
+
+@api_router.post("/midtrans/notification")
+async def midtrans_notification(request: Request):
+    n = await request.json()
+    raw = (str(n.get("order_id", "")) + str(n.get("status_code", ""))
+           + str(n.get("gross_amount", "")) + MIDTRANS_SERVER_KEY)
+    expected = hashlib.sha512(raw.encode()).hexdigest()
+    if not hmac.compare_digest(expected, str(n.get("signature_key", ""))):
+        raise HTTPException(403, "Signature tidak sah.")
+    return await reconcile(n["order_id"])
 
 
 def build_peta(js: Dict[str, Dict]) -> List[Dict[str, Any]]:
@@ -618,6 +729,19 @@ async def hasil(sesi_id: str):
     }
     if terbuka:
         out["bacaan"] = build_bacaan(js, pj)
+    # Rank of this finished sesi within its Mandala board
+    if s.get("status") == "selesai":
+        tier_q = {"jenis": s["jenis"], "status": "selesai"}
+        if s["jenis"] == "paramartha":
+            tier_q["tampil_di_papan"] = True
+        total = await db.sesi.count_documents(tier_q)
+        ms = s.get("skor") or 0
+        mt = s.get("selesai_at") or ""
+        better = await db.sesi.count_documents({**tier_q, "$or": [
+            {"skor": {"$gt": ms}}, {"skor": ms, "selesai_at": {"$lt": mt}},
+        ]})
+        rank = better + 1
+        out["peringkat"] = {"rank": rank, "total": total, "in_top10": rank <= 10}
     return out
 
 

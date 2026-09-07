@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { Layout } from "../components/Layout";
 import { ProfileDisk } from "../components/ProfileDisk";
@@ -7,7 +7,19 @@ import { api } from "../api";
 import { useAuth, startLogin } from "../auth";
 
 const STATE_COLOR = { 25: "var(--s25)", 50: "var(--s50)", 75: "var(--s75)", 100: "var(--s100)" };
-const STATE_NAMA = { 25: "Cicing", 50: "Lulungu", 75: "Nyaring", 100: "Eling" };
+const STATE_NAMA = { 25: "Cicing", 50: "Nyaring", 75: "Eling", 100: "Eling" };
+
+function loadSnap(url, clientKey) {
+  return new Promise((resolve, reject) => {
+    if (window.snap) return resolve();
+    const s = document.createElement("script");
+    s.src = url;
+    s.setAttribute("data-client-key", clientKey);
+    s.onload = resolve;
+    s.onerror = reject;
+    document.body.appendChild(s);
+  });
+}
 
 export default function Hasil() {
   const { sesiId } = useParams();
@@ -15,13 +27,10 @@ export default function Hasil() {
   const { user } = useAuth();
   const [h, setH] = useState(null);
   const [err, setErr] = useState("");
-  const [kode, setKode] = useState("");
   const [payErr, setPayErr] = useState("");
   const [busy, setBusy] = useState(false);
-  const [payPanel, setPayPanel] = useState(false);
   const [tampil, setTampil] = useState(false);
   const [shared, setShared] = useState(false);
-  const payRef = useRef(null);
 
   const load = async () => {
     try { const r = await api.get(`/sesi/${sesiId}/hasil`); setH(r.data); setTampil(r.data.tampil_di_papan); }
@@ -34,19 +43,34 @@ export default function Hasil() {
 
   const b = h.bacaan;
 
-  const startPay = () => {
+  const payMidtrans = async () => {
     if (!user) { startLogin(); return; }
-    setPayPanel(true);
-    setTimeout(() => payRef.current?.scrollIntoView({ behavior: "smooth" }), 50);
-  };
-
-  const bayar = async () => {
     setBusy(true); setPayErr("");
     try {
-      const r = await api.post(`/perjalanan/${h.perjalanan_id}/bayar`, { kode });
-      if (r.data.sesi_id) nav(`/uji/${r.data.sesi_id}`);
-      else await load();
-    } catch (e) { setPayErr(e?.response?.data?.detail || "Kode tidak sah."); } finally { setBusy(false); }
+      const cfg = (await api.get("/config/midtrans")).data;
+      if (!cfg.enabled) { setPayErr("Pembayaran belum aktif. Coba lagi nanti."); setBusy(false); return; }
+      await loadSnap(cfg.snap_url, cfg.client_key);
+      const r = await api.post(`/perjalanan/${h.perjalanan_id}/bayar/midtrans`);
+      const { token, order_id } = r.data;
+      window.snap.pay(token, {
+        onSuccess: () => verifyPay(order_id),
+        onPending: () => verifyPay(order_id),
+        onError: () => { setPayErr("Pembayaran gagal."); setBusy(false); },
+        onClose: () => { setBusy(false); },
+      });
+    } catch (e) {
+      setPayErr(e?.response?.data?.detail || "Gagal memulai pembayaran.");
+      setBusy(false);
+    }
+  };
+
+  const verifyPay = async (orderId) => {
+    try {
+      const r = await api.get(`/perjalanan/${h.perjalanan_id}/bayar/status?order_id=${orderId}`);
+      if (r.data.paid && r.data.sesi_id) { nav(`/uji/${r.data.sesi_id}`); return; }
+      setPayErr("Pembayaran belum terkonfirmasi. Jika sudah membayar, tunggu sesaat lalu coba lagi.");
+    } catch { setPayErr("Gagal memeriksa status pembayaran."); }
+    setBusy(false);
   };
 
   const lanjutTier = async () => {
@@ -62,13 +86,18 @@ export default function Hasil() {
   };
 
   const share = async () => {
-    try { await navigator.clipboard.writeText(`${window.location.origin}/hasil/${sesiId}`); } catch {}
+    const url = `${window.location.origin}/hasil/${sesiId}`;
+    const text = `Hasil Uji Kejernihan Kesadaran — Mandala ${h.tier_nama}: ${h.kategori} (${h.skor}%)`;
+    if (navigator.share) {
+      try { await navigator.share({ title: "Triwikramā · Candradimuka", text, url }); return; } catch {}
+    }
+    try { await navigator.clipboard.writeText(url); } catch {}
     setShared(true); setTimeout(() => setShared(false), 2000);
   };
 
   return (
     <Layout>
-      <p className="cd-label">Hasil UPKT · {h.tier_nama}</p>
+      <p className="cd-label">Hasil Uji Kejernihan Kesadaran · Mandala {h.tier_nama}</p>
       <h1 className="hasil-kategori serif" data-testid="hasil-kategori">{h.kategori}</h1>
       <div className="hasil-persen" data-testid="hasil-persen">{h.skor}%</div>
 
@@ -80,21 +109,34 @@ export default function Hasil() {
       <p style={{ color: "var(--ink-2)", lineHeight: 1.6 }} data-testid="hasil-paragraf">{h.kategori_paragraf}</p>
       <p className="cd-faint" style={{ fontSize: 13 }} data-testid="floor-line">Skor terendah yang mungkin adalah 25, bukan 0.</p>
 
-      {!user && (
+      {!user ? (
         <div className="notice" data-testid="login-prompt">
-          <p>Masuk dengan Google untuk menyimpan hasilmu.</p>
+          <p>Masuk dengan Google untuk menyimpan hasilmu dan melihat peringkatmu di Peta Kejernihan.</p>
           <button className="cd-btn" style={{ marginTop: 8 }} data-testid="login-btn" onClick={startLogin}>Masuk dengan Google</button>
         </div>
-      )}
+      ) : h.peringkat ? (
+        <div className="notice" data-testid="peringkat-box">
+          <p style={{ color: "var(--ink)", fontWeight: 500 }}>
+            Peringkatmu di Mandala {h.tier_nama}: #{h.peringkat.rank} dari {h.peringkat.total.toLocaleString("id-ID")}
+          </p>
+          {!h.peringkat.in_top10 && (
+            <p data-testid="peringkat-note">Kamu berada di urutan {h.peringkat.rank}, di luar 10 besar. Terus berlatih untuk naik.</p>
+          )}
+          <Link to="/papan" data-testid="lihat-papan">Lihat Peta Kejernihan →</Link>
+        </div>
+      ) : null}
 
       <hr className="cd-divider" />
 
       {/* Progression controls */}
-      {h.jenis === "bhurloka" && !h.terbuka && (
+      {/* Bhurloka -> Ākāśa is free (login only) */}
+      {h.jenis === "bhurloka" && (
         <div data-testid="bhurloka-exit">
-          <button className="cd-btn" data-testid="lanjut-berbayar" onClick={startPay}>
-            Lanjutkan ke 120 soal berikutnya — Rp17.000
-          </button>
+          {user && (
+            <button className="cd-btn" data-testid="lanjut-akasa" disabled={busy} onClick={lanjutTier}>
+              {busy ? "Menyiapkan…" : "Lanjutkan ke Mandala Ākāśa"}
+            </button>
+          )}
           <p style={{ marginTop: 14 }}>
             <Link to="/" className="quiet-link" data-testid="kembali-candradimuka">Kembali ke Candradimuka</Link>
           </p>
@@ -103,24 +145,20 @@ export default function Hasil() {
           </p>
         </div>
       )}
-      {h.jenis === "akasa" && (
-        <button className="cd-btn" data-testid="lanjut-paramartha" disabled={busy} onClick={lanjutTier}>
-          {busy ? "Menyiapkan…" : "Lanjutkan ke Paramārtha"}
-        </button>
-      )}
-
-      {payPanel && h.jenis === "bhurloka" && !h.terbuka && (
-        <div className="cd-block" ref={payRef} data-testid="pay-panel">
-          <h2 className="cd-h2">Rp17.000 — 120 soal berikutnya, termasuk pembacaan lengkap</h2>
-          <p className="cd-muted">Pembayaran lewat transfer atau QRIS di luar aplikasi menghasilkan kode akses. Masukkan kode di sini.</p>
-          <div className="cd-field" style={{ marginTop: 12 }}>
-            <label htmlFor="kode">Kode akses</label>
-            <input id="kode" className="cd-input" data-testid="kode-input" value={kode} onChange={(e) => setKode(e.target.value)} placeholder="Masukkan kode" />
-          </div>
+      {/* Ākāśa -> Paramārtha requires payment (QRIS / e-wallet via Midtrans) */}
+      {h.jenis === "akasa" && !h.terbuka && (
+        <div data-testid="pay-panel">
+          <button className="cd-btn" data-testid="lanjut-berbayar" disabled={busy} onClick={payMidtrans}>
+            {busy ? "Memproses…" : "Lanjutkan ke Mandala Paramārtha — Rp17.000"}
+          </button>
+          <p className="cd-faint" style={{ fontSize: 13, marginTop: 8 }}>Bayar dengan QRIS, GoPay, atau ShopeePay.</p>
           {payErr && <p className="err" data-testid="pay-error">{payErr}</p>}
-          <button className="cd-btn" onClick={bayar} disabled={busy || !kode.trim()} data-testid="bayar-btn">{busy ? "Memeriksa…" : "Buka"}</button>
-          <p className="cd-faint" style={{ fontSize: 13, marginTop: 12 }}>Belum punya kode? Lihat <Link to="/harga">Harga</Link>.</p>
         </div>
+      )}
+      {h.jenis === "akasa" && h.terbuka && (
+        <button className="cd-btn" data-testid="lanjut-paramartha" disabled={busy} onClick={lanjutTier}>
+          {busy ? "Menyiapkan…" : "Lanjutkan ke Mandala Paramārtha"}
+        </button>
       )}
 
       <div style={{ marginTop: 18 }}>

@@ -54,8 +54,8 @@ export const ProfileDisk = ({ scores }) => {
       <canvas ref={ref} className="disk-canvas" role="img" aria-label="Cakram profil hasil uji" data-testid="profile-disk" />
       <div className="disk-legend">
         <span><i className="swatch" style={{ background: "var(--s25)" }} />Cicing</span>
-        <span><i className="swatch" style={{ background: "var(--s50)" }} />Lulungu</span>
-        <span><i className="swatch" style={{ background: "var(--s75)" }} />Nyaring</span>
+        <span><i className="swatch" style={{ background: "var(--s50)" }} />Nyaring</span>
+        <span><i className="swatch" style={{ background: "var(--s75)" }} />Eling</span>
         <span><i className="swatch" style={{ background: "var(--s100)" }} />Eling</span>
       </div>
     </div>

@@ -54,7 +54,7 @@ export default function Papan() {
               ))}
             </tbody>
           </table>
-          {data.my_rank && data.my_rank.rank > 100 && (
+          {data.my_rank && data.my_rank.rank > 10 && (
             <p className="cd-muted" style={{ marginTop: 14 }} data-testid="my-rank">
               Peringkatmu saat ini: {data.my_rank.rank} dari {data.my_rank.total.toLocaleString("id-ID")}.
             </p>
