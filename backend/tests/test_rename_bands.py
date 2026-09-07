@@ -7,14 +7,14 @@ sys.path.insert(0, "/app/backend/tests")
 from backend_test import (API, BASE_URL, api_client, new_peserta, simulate_google_session,  # noqa: E402
                           answer_all, unused_bacaan_code, get_sesi, mongo, ADMIN_KEY)
 
-BANDS = {25: "Cicing", 50: "Lulungu", 75: "Nyaring", 100: "Eling"}
+# Iteration-7: 3 bands (25-49 Cicing / 50-74 Nyaring / 75-100 Eling), "Kesadaran " prefix
+BANDS = {25: "Kesadaran Cicing", 50: "Kesadaran Nyaring", 75: "Kesadaran Eling", 100: "Kesadaran Eling"}
 PARAGRAF = {
-    "Cicing": "Cicing — diam dan bereaksi dari rasa, emosi atau kebiasaan.",
-    "Lulungu": "Lulungu — setengah sadar, masih linglung seperti baru bangun tidur.",
-    "Nyaring": "Nyaring — sudah bangun dan melihat jernih, tetapi belum tentu bertindak.",
-    "Eling": "Eling — sadar, berdaulat, dan menindaklanjuti apa yang dilihatnya.",
+    "Kesadaran Cicing": "Kesadaran Cicing — diam dan bereaksi dari rasa, emosi atau kebiasaan.",
+    "Kesadaran Nyaring": "Kesadaran Nyaring — sudah bangun dan melihat jernih.",
+    "Kesadaran Eling": "Kesadaran Eling — sadar, berdaulat, dan menindaklanjuti apa yang dilihatnya.",
 }
-OLD_NAMES = ("Nyaring Sela", "Nyaring Jati")
+OLD_NAMES = ("Nyaring Sela", "Nyaring Jati", "Lulungu")
 
 
 @pytest.fixture(scope="module")
@@ -49,9 +49,9 @@ def test_kategori_derived_at_render_even_if_db_stale(client):
     mongo().sesi.update_one({"id": pj["sesi_id"]}, {"$set": {"kategori": "Nyaring Jati"}})
     try:
         d = client.get(f"{API}/sesi/{pj['sesi_id']}/hasil").json()
-        assert d["kategori"] == "Eling", d["kategori"]
+        assert d["kategori"] == "Kesadaran Eling", d["kategori"]
     finally:  # restore so the DB-cleanliness check is not polluted by this test
-        mongo().sesi.update_one({"id": pj["sesi_id"]}, {"$set": {"kategori": "Eling"}})
+        mongo().sesi.update_one({"id": pj["sesi_id"]}, {"$set": {"kategori": "Kesadaran Eling"}})
 
 
 def test_no_old_band_names_left_in_db():
@@ -80,10 +80,11 @@ def test_papan_akasa_lists_finished_akasa(client):
     auth = {"Authorization": f"Bearer {tok}"}
     pj = client.post(f"{API}/perjalanan/mulai", json={"peserta_id": pid}).json()
     answer_all(client, pj["sesi_id"], level=50)
-    kode = unused_bacaan_code(client)
-    r = client.post(f"{API}/perjalanan/{pj['perjalanan_id']}/bayar", json={"kode": kode}, headers=auth)
+    # Iter-7 flow: Ākāśa is free after login via /lanjut (no payment required).
+    r = client.post(f"{API}/perjalanan/{pj['perjalanan_id']}/lanjut", json={}, headers=auth)
     assert r.status_code == 200, r.text
     akasa = r.json()["sesi_id"]
+    assert r.json()["jenis"] == "akasa"
     assert get_sesi(client, akasa)["total"] == 30
     answer_all(client, akasa, level=100)
 

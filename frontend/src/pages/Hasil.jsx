@@ -7,7 +7,6 @@ import { api } from "../api";
 import { useAuth, startLogin } from "../auth";
 
 const STATE_COLOR = { 25: "var(--s25)", 50: "var(--s50)", 75: "var(--s75)", 100: "var(--s100)" };
-const STATE_NAMA = { 25: "Cicing", 50: "Nyaring", 75: "Eling", 100: "Eling" };
 
 function loadSnap(url, clientKey) {
   return new Promise((resolve, reject) => {
@@ -192,7 +191,13 @@ export default function Hasil() {
             })}
           </div>
           <div className="sebaran-counts">
-            {[25, 50, 75, 100].map((k) => (<span key={k}><i className="swatch" style={{ background: STATE_COLOR[k] }} />{STATE_NAMA[k]}: {b.sebaran[String(k)]}</span>))}
+            <span><i className="swatch" style={{ background: STATE_COLOR[25] }} />Cicing: {b.sebaran["25"]}</span>
+            <span><i className="swatch" style={{ background: STATE_COLOR[50] }} />Nyaring: {b.sebaran["50"]}</span>
+            <span>
+              <i className="swatch" style={{ background: STATE_COLOR[75] }} />
+              <i className="swatch" style={{ background: STATE_COLOR[100], marginLeft: -2 }} />
+              Eling: {b.sebaran["75"] + b.sebaran["100"]}
+            </span>
           </div>
 
           <h2 className="cd-h2" style={{ marginTop: 28 }}>Keadaan yang paling menonjol</h2>

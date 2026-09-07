@@ -218,20 +218,20 @@ class TestJourneyGate:
         answer_all(client, pj["sesi_id"], level=25)
         h = client.get(f"{API}/sesi/{pj['sesi_id']}/hasil").json()
         assert h["skor"] == 25, h["skor"]
-        assert h["kategori"] == "Cicing"
+        assert h["kategori"] == "Kesadaran Cicing"
         assert [t["persen"] for t in h["peta"]] == [25, None, None]
         assert h["terbuka"] is False
         assert "bacaan" not in h
 
-        # pay with code
+        # pay with code — Iter-7: /bayar unlocks Mandala Paramārtha directly
         kode = unused_bacaan_code(client)
         r = client.post(f"{API}/perjalanan/{pjid}/bayar", json={"kode": kode}, headers=auth)
         assert r.status_code == 200, r.text
-        akasa_id = r.json()["sesi_id"]
-        ak = get_sesi(client, akasa_id)
-        assert ak["jenis"] == "akasa" and ak["total"] == 30
-        assert all(ak["soal_detail"][str(n)]["tingkat"] == "Ākāśa" for n in ak["soal_ids"])
-        assert ak["terbuka"] is True
+        para_id = r.json()["sesi_id"]
+        pa = get_sesi(client, para_id)
+        assert pa["jenis"] == "paramartha" and pa["total"] == 90
+        assert all(pa["soal_detail"][str(n)]["tingkat"] == "Paramārtha" for n in pa["soal_ids"])
+        assert pa["terbuka"] is True
 
         # code cannot be reused by another journey
         pid2 = new_peserta(client, "TEST_Reuse")
@@ -241,25 +241,19 @@ class TestJourneyGate:
                         headers={"Authorization": f"Bearer {tok2}"})
         assert r.status_code == 400 and "sudah dipakai" in r.json()["detail"]
 
-        # Akasa all-100
-        answer_all(client, akasa_id, level=100)
+        # Ākāśa sesi did not exist in this shortcut path — /lanjut should still
+        # not create it because paramartha already exists.
         r = client.post(f"{API}/perjalanan/{pjid}/lanjut", json={}, headers=auth)
         assert r.status_code == 200, r.text
-        para_id = r.json()["sesi_id"]
-        assert r.json()["jenis"] == "paramartha"
-        pa = get_sesi(client, para_id)
-        assert pa["jenis"] == "paramartha"
-        assert pa["total"] == 90, pa["total"]
-        assert pa["tier_nama"] == "Paramārtha"
-        assert all(pa["soal_detail"][str(n)]["tingkat"] == "Paramārtha" for n in pa["soal_ids"])
 
         answer_all(client, para_id, level=75)
         h = client.get(f"{API}/sesi/{para_id}/hasil").json()
         assert h["perjalanan_selesai"] is True, "perjalanan.selesai_at not set after Paramārtha"
-        assert [t["persen"] for t in h["peta"]] == [25, 100, 75], h["peta"]
+        # No Ākāśa in this shortcut path.
+        assert [t["persen"] for t in h["peta"]] == [25, None, 75], h["peta"]
         assert h["terbuka"] is True
         b = h["bacaan"]
-        assert sum(int(v) for v in b["sebaran"].values()) == 17 + 30 + pa["total"]
+        assert sum(int(v) for v in b["sebaran"].values()) == 17 + pa["total"]
         assert b["menonjol"]["skor"] in (25, 50, 75, 100)
         assert len(b["tangga"]) <= 3
         assert b["latihan"]["nama"] == "Cek Diri Dasa Kreta", b["latihan"]  # weakest = bhurloka(25)
@@ -300,7 +294,7 @@ class TestJourneyGate:
         vd = v.json()
         assert set(vd.keys()) == {"nama_lengkap", "tanggal_selesai", "peta"}
         assert vd["nama_lengkap"] == "TEST Nama Cetak"
-        assert [p["persen"] for p in vd["peta"]] == [25, 100, 75]
+        assert [p["persen"] for p in vd["peta"]] == [25, None, 75]
         low = v.text.lower()
         for leak in ("email", "telepon", "alamat", "peserta", "jawab"):
             assert leak not in low, f"validasi leaks {leak}"

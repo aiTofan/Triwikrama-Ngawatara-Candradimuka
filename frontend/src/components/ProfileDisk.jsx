@@ -55,8 +55,10 @@ export const ProfileDisk = ({ scores }) => {
       <div className="disk-legend">
         <span><i className="swatch" style={{ background: "var(--s25)" }} />Cicing</span>
         <span><i className="swatch" style={{ background: "var(--s50)" }} />Nyaring</span>
-        <span><i className="swatch" style={{ background: "var(--s75)" }} />Eling</span>
-        <span><i className="swatch" style={{ background: "var(--s100)" }} />Eling</span>
+        <span>
+          <i className="swatch" style={{ background: "var(--s75)" }} />
+          <i className="swatch" style={{ background: "var(--s100)", marginLeft: -2 }} />Eling
+        </span>
       </div>
     </div>
   );

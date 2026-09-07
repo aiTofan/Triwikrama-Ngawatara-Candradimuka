@@ -16,11 +16,13 @@ from backend_test import (API, api_client, new_peserta, simulate_google_session,
 
 CODE_RE = re.compile(r"^[A-Z0-9]{8}$")
 
-# Exact key set of the /hasil payload as of iteration-4 (no bacaan)
+# Exact key set of the /hasil payload as of iteration-7 (adds "peringkat" when
+# the sesi is finished; "bacaan" only when the journey is paid/terbuka).
 HASIL_KEYS = {
     "sesi_id", "jenis", "tier_nama", "peserta", "skor", "kategori", "kategori_desc",
     "kategori_paragraf", "terbuka", "selesai_at", "created_at", "jumlah_soal",
     "tampil_di_papan", "perjalanan_id", "perjalanan_selesai", "peta", "disk",
+    "peringkat",
 }
 BACAAN_KEYS = {"sebaran", "menonjol", "tangga", "latihan", "kode_dipakai"}
 
@@ -79,8 +81,8 @@ class TestHasilUnpaidBhurloka:
         assert d["jenis"] == "bhurloka"
         assert d["tier_nama"] == "Bhurloka"
         assert d["skor"] == 50
-        assert d["kategori"] == "Lulungu"
-        assert d["kategori_paragraf"].startswith("Lulungu")
+        assert d["kategori"] == "Kesadaran Nyaring"
+        assert d["kategori_paragraf"].startswith("Kesadaran Nyaring")
         assert d["terbuka"] is False
         assert d["jumlah_soal"] == 17
         assert d["perjalanan_selesai"] is False
@@ -159,7 +161,7 @@ class TestHasilPartialAndMixed:
         d = client.get(f"{API}/sesi/{pj['sesi_id']}/hasil").json()
         mean = sum(levels) / len(levels)
         assert d["skor"] == round(mean) == 65, (d["skor"], mean)
-        assert d["kategori"] == "Lulungu", d["kategori"]
+        assert d["kategori"] == "Kesadaran Nyaring", d["kategori"]
         assert d["disk"] == levels
         assert [t["persen"] for t in d["peta"]] == [65, None, None]
 
@@ -167,17 +169,25 @@ class TestHasilPartialAndMixed:
 class TestHasilPaidFullJourney:
     @pytest.fixture(scope="class")
     def journey(self, client):
+        """Iter-7 full journey: Bhurloka -> login /lanjut (free) Ākāśa -> /bayar
+        (code) unlocks Paramārtha directly."""
         pid = new_peserta(client, "TEST_R5_Full")
         tok = simulate_google_session(pid, "TEST R5 Full")
         auth = {"Authorization": f"Bearer {tok}"}
         pj = client.post(f"{API}/perjalanan/mulai", json={"peserta_id": pid}).json()
         answer_all(client, pj["sesi_id"], level=25)
-        kode = unused_bacaan_code(client)
-        r = client.post(f"{API}/perjalanan/{pj['perjalanan_id']}/bayar", json={"kode": kode}, headers=auth)
+        # free advance to Ākāśa
+        r = client.post(f"{API}/perjalanan/{pj['perjalanan_id']}/lanjut", json={}, headers=auth)
         assert r.status_code == 200, r.text
+        assert r.json()["jenis"] == "akasa"
         akasa = r.json()["sesi_id"]
         answer_all(client, akasa, level=100)
-        r = client.post(f"{API}/perjalanan/{pj['perjalanan_id']}/lanjut", json={}, headers=auth)
+        # /lanjut to Paramārtha WITHOUT payment must be 402
+        r402 = client.post(f"{API}/perjalanan/{pj['perjalanan_id']}/lanjut", json={}, headers=auth)
+        assert r402.status_code == 402, r402.text
+        # pay with access-code → creates paramartha sesi (unlock_paramartha)
+        kode = unused_bacaan_code(client)
+        r = client.post(f"{API}/perjalanan/{pj['perjalanan_id']}/bayar", json={"kode": kode}, headers=auth)
         assert r.status_code == 200, r.text
         para = r.json()["sesi_id"]
         answer_all(client, para, level=75)
@@ -196,7 +206,7 @@ class TestHasilPaidFullJourney:
         assert d["terbuka"] is True
         assert d["perjalanan_selesai"] is True
         assert d["jenis"] == "paramartha" and d["tier_nama"] == "Paramārtha"
-        assert d["skor"] == 75 and d["kategori"] == "Nyaring"
+        assert d["skor"] == 75 and d["kategori"] == "Kesadaran Eling"
         assert d["jumlah_soal"] == 90
         assert d["disk"] == [75] * 90
 

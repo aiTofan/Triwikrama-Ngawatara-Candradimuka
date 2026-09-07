@@ -59,12 +59,12 @@ EXERCISE_BY_TIER = {
 
 KATEGORI_TABLE = [
     (25, 49, "Kesadaran Cicing", "diam dan bereaksi dari rasa, emosi atau kebiasaan"),
-    (50, 74, "Kesadaran Nyaring", "sudah bangun dan melihat jernih, tetapi belum tentu bertindak"),
+    (50, 74, "Kesadaran Nyaring", "sudah bangun dan melihat jernih"),
     (75, 100, "Kesadaran Eling", "sadar, berdaulat, dan menindaklanjuti apa yang dilihatnya"),
 ]
 KATEGORI_PARAGRAF = {
     "Kesadaran Cicing": "Kesadaran Cicing — diam dan bereaksi dari rasa, emosi atau kebiasaan.",
-    "Kesadaran Nyaring": "Kesadaran Nyaring — sudah bangun dan melihat jernih, tetapi belum tentu bertindak.",
+    "Kesadaran Nyaring": "Kesadaran Nyaring — sudah bangun dan melihat jernih.",
     "Kesadaran Eling": "Kesadaran Eling — sadar, berdaulat, dan menindaklanjuti apa yang dilihatnya.",
 }
 LEVEL_NAMA = {25: "Kesadaran Cicing", 50: "Kesadaran Nyaring", 75: "Kesadaran Eling", 100: "Kesadaran Eling"}
