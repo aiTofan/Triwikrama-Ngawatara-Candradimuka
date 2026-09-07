@@ -58,3 +58,16 @@ Printed certificates ARE ordered through the app.
   (pre-DB check-char rejection, 10/IP/min rate limit, returns only name/date/tier %).
 - Privacy: /sesi and /hasil no longer expose email/google_sub; address/phone only on /admin/pesanan.
 - Verified: 22/22 backend pytest + 13 frontend flows (iteration_3).
+
+## Update 2026-06 (later) — Share teaser + post-login choice
+- `/hasil/:id` now detects owner vs visitor via `peserta.id` (returned by `/hasil`,
+  compared to localStorage `candra_peserta.id`). Non-owners opening a shared link
+  get a TEASER: display name + category + score + Peta Kejernihan + CTA "Mulai uji
+  kejernihanku" → `/`. No login prompt / progression / paid section / private data.
+- Bhurloka result (logged in) shows an explicit choice pair: "Lanjutkan ke Mandala
+  Ākāśa" + "Lihat Peta Kejernihan".
+- Sebaran "Eling" now uses a single swatch (was double 75/100 swatch).
+- KNOWN ISSUE (platform-side): Emergent-managed Google OAuth returns
+  `userinfo_failed / Failed to get user information` during consent, before our
+  backend is reached. Confirmed by support_agent as an Emergent infra issue — user
+  advised to contact support@emergent.sh. Our `/auth/session` exchange code is fine.

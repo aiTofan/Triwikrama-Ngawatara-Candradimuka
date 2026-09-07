@@ -5,6 +5,7 @@ import { ProfileDisk } from "../components/ProfileDisk";
 import { ResultMap } from "../components/ResultMap";
 import { api } from "../api";
 import { useAuth, startLogin } from "../auth";
+import { getPeserta } from "../peserta";
 
 const STATE_COLOR = { 25: "var(--s25)", 50: "var(--s50)", 75: "var(--s75)", 100: "var(--s100)" };
 
@@ -41,6 +42,38 @@ export default function Hasil() {
   if (!h) return <Layout><p className="cd-muted">Memuat…</p></Layout>;
 
   const b = h.bacaan;
+
+  const namaPeserta = h.peserta?.nama_lengkap || h.peserta?.nama_tampilan || "Seorang peserta";
+  const isOwner = !!(h.peserta?.id && getPeserta()?.id === h.peserta.id);
+
+  // Shared link opened by someone other than the owner → teaser page.
+  if (!isOwner) {
+    return (
+      <Layout>
+        <div data-testid="teaser-view">
+          <p className="cd-label">Peta Kejernihan Kesadaran · Mandala {h.tier_nama}</p>
+          <h1 className="serif" style={{ fontSize: 40, lineHeight: 1.1, margin: "6px 0 2px" }} data-testid="teaser-nama">{namaPeserta}</h1>
+          <p className="cd-muted" style={{ marginTop: 0 }}>membagikan hasil Uji Profil Kesadaran Triwikrama.</p>
+
+          <h2 className="hasil-kategori serif" style={{ marginTop: 22 }} data-testid="teaser-kategori">{h.kategori}</h2>
+          <div className="hasil-persen" data-testid="teaser-persen">{h.skor}%</div>
+
+          <ProfileDisk scores={h.disk} />
+
+          <h2 className="cd-h2" style={{ marginTop: 10 }}>Peta Kejernihan</h2>
+          <ResultMap peta={h.peta} />
+
+          <div className="notice" style={{ marginTop: 22 }} data-testid="teaser-cta">
+            <p style={{ color: "var(--ink)", fontWeight: 500 }}>Seberapa jernih kesadaranmu?</p>
+            <p className="cd-muted">Ikuti Uji Profil Kesadaran Triwikrama dan petakan sendiri kejernihan kesadaranmu — mulai dari Mandala Bhurloka, gratis.</p>
+            <Link to="/" className="cd-btn" style={{ marginTop: 10, display: "inline-block" }} data-testid="teaser-mulai">Mulai uji kejernihanku</Link>
+          </div>
+
+          <p className="cd-faint" style={{ fontSize: 13, marginTop: 14 }}>Skor terendah yang mungkin adalah 25, bukan 0.</p>
+        </div>
+      </Layout>
+    );
+  }
 
   const payMidtrans = async () => {
     if (!user) { startLogin(); return; }
@@ -131,11 +164,19 @@ export default function Hasil() {
       {/* Bhurloka -> Ākāśa is free (login only) */}
       {h.jenis === "bhurloka" && (
         <div data-testid="bhurloka-exit">
-          {user && (
-            <button className="cd-btn" data-testid="lanjut-akasa" disabled={busy} onClick={lanjutTier}>
-              {busy ? "Menyiapkan…" : "Lanjutkan ke Mandala Ākāśa"}
-            </button>
-          )}
+          {user ? (
+            <div data-testid="bhurloka-choice">
+              <p style={{ color: "var(--ink)", fontWeight: 500, marginBottom: 10 }}>Hasilmu tersimpan. Mau ke mana selanjutnya?</p>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+                <button className="cd-btn" data-testid="lanjut-akasa" disabled={busy} onClick={lanjutTier}>
+                  {busy ? "Menyiapkan…" : "Lanjutkan ke Mandala Ākāśa"}
+                </button>
+                <Link to="/papan" className="cd-btn-ghost" data-testid="lihat-peta-kejernihan" style={{ display: "inline-flex", alignItems: "center" }}>
+                  Lihat Peta Kejernihan
+                </Link>
+              </div>
+            </div>
+          ) : null}
           <p style={{ marginTop: 14 }}>
             <Link to="/" className="quiet-link" data-testid="kembali-candradimuka">Kembali ke Candradimuka</Link>
           </p>
@@ -195,7 +236,6 @@ export default function Hasil() {
             <span><i className="swatch" style={{ background: STATE_COLOR[50] }} />Nyaring: {b.sebaran["50"]}</span>
             <span>
               <i className="swatch" style={{ background: STATE_COLOR[75] }} />
-              <i className="swatch" style={{ background: STATE_COLOR[100], marginLeft: -2 }} />
               Eling: {b.sebaran["75"] + b.sebaran["100"]}
             </span>
           </div>
