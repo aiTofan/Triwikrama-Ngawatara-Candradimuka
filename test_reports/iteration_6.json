@@ -1,0 +1,42 @@
+{
+  "summary": "Iteration-6 regression for the deployment-readiness cleanup (Candradimuka/Triwikramā). All 70 pytest tests pass (36 backend_test.py + 12 test_rename_bands.py + 7 test_refactor_hasil.py + 15 NEW test_deploy_cleanup.py). Verified end-to-end: (a) /papan rewrite — GET /api/papan?jenis=bhurloka|akasa|paramartha each returns rank/nama/skor/tanggal keys only, top limited to 100, sorted by skor desc then selesai_at asc, total equals db.sesi.count_documents(matching filter incl. tampil_di_papan=true for paramartha); unknown jenis => 400; my_rank for a peserta outside the top-100 (simulated with a skor=1 TEST_ sesi) reports rank == total, and returns None for unknown peserta_id. (b) admin — GET /api/admin/kode?kunci=CANDRA2026 returns exactly 55 seeded codes (30 bacaan + 20 mandiri + 5 kohor, all with _id stripped); GET /api/admin/pesanan?kunci=CANDRA2026 returns rows carrying telepon, alamat, kategori derived from skor, plus nomor_seri; both admin endpoints => 403 without / with wrong kunci; server.ADMIN_KEY (env-driven, default 'CANDRA2026') equals 'CANDRA2026'. (c) migrate_kategori marker doc {name:'kategori_v2'} is present in db.migrations, so the migration is idempotent and no longer runs on every startup. (d) /periksa route is gone — no /api/periksa/{kode} endpoint (404) and the frontend router logs 'No routes matched location /periksa' (SPA fallback renders home, no crash). Footer 'Periksa keaslian sertifikat' points to /validasi and navigates correctly. (e) FULL journey regression still green (backend_test.TestJourneyGate.test_full_journey_and_pause): create peserta -> Bhurloka(17) drawn, /hasil peta = [25,None,None] with kategori 'Cicing', terbuka=false and no 'bacaan' key; simulated Google session (peserta.google_sub + user_sessions + Bearer) pays with an unused 'bacaan' code -> Akasa(30) sesi is 'terbuka' with tingkat=Ākāśa, code is now unusable ('sudah dipakai'); Akasa finished, /lanjut -> Paramartha(90) with tier_nama 'Paramārtha' and tingkat=Paramārtha; finishing Paramartha sets perjalanan.selesai_at, /hasil peta = [25,100,75] with bacaan.sebaran summing to 137, menonjol in {25,50,75,100}, tangga <= 3, latihan.nama = 'Cek Diri Dasa Kreta' (weakest Bhurloka), kode_dipakai equals the consumed code; second /perjalanan/mulai immediately after returns {jeda:true, boleh_pada:<+14d>}. (f) certificate flow: 401 without session, then 200 with Bearer producing a serial matching ^TRW-\\d{2}-[0-9A-HJKMNP-TV-Z]{7}-[0-9A-HJKMNP-TV-Z]$; admin/pesanan carries telepon+alamat for the new row; POST /api/validasi returns only {nama_lengkap, tanggal_selesai, peta} with no email/telepon/alamat/peserta/jawab leaks; bad check char and unknown-but-valid serials both 404 (pre-DB reject confirmed); rate limit trips 429 by <=10th call within a minute. (g) /sesi/{id} payload still option TEXT ONLY (no '\"skor\"' key anywhere, {token,teks} only); Bhurloka draws exactly 17, Akasa 30, Paramartha 90 with correct tingkat; per-session option shuffle + cross-session exclusion honored. (h) demo data present: 28 demo peserta and 28 demo sesi (14 bhurloka / 8 akasa / 6 paramartha) with the 'demo_' id prefix — preserved, not touched. Frontend smoke on the public URL: home shows the gold 'Candradimuka' link and question eyebrow, /papan renders THREE tabs (Bhurloka/Ākāśa/Paramārtha) with the demo Indonesian names (Maya Anggraini, Lukman Hakim, Putri Handayani, Nanda Pratama, Indah Lestari, Hendra Wijaya, Citra Dewanti, Oka Suryanto, Kirana Ayu, ...) and the 'Waktu' column formatted exactly like '7 September 2026 - 11:08AM'. Footer link 'Periksa keaslian sertifikat' navigates to /validasi. No CORS or 5xx errors; the two console noises are the pre-existing anonymous /api/auth/me 401s and a benign 'No routes matched location /periksa' router warning (SPA fallback, expected since the route was intentionally removed).",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "GET /api/papan", "issue": "Papan does not filter out TEST_-prefixed leftover sesi rows from prior test iterations, so board 1..8 shows TEST_Band100/TEST_BandDerive/TEST_R5_Mixed above real demo names. Purely cosmetic in a shared test DB — a one-shot cleanup script or an exclusion of ids matching ^TEST_ in the /papan query would keep demo screenshots pristine."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [
+      {"flow": "/periksa (removed)", "issue": "Because the SPA has no catch-all 404 route, navigating to /periksa renders the home page silently with a react-router warning 'No routes matched location /periksa'. Consider adding a <Route path='*'> 404 fallback so unknown paths look intentional.", "affected_selectors": []}
+    ],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_deploy_cleanup.py",
+    "/app/backend/tests/backend_test.py",
+    "/app/backend/tests/test_rename_bands.py",
+    "/app/backend/tests/test_refactor_hasil.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "Optional: hide TEST_-prefixed sesi rows on /papan (either exclude in the Mongo query or one-shot cleanup) so the demo board is pure Indonesian names.",
+    "Optional: add a <Route path='*'> 404 element in App.js — removing /periksa left no fallback, so unknown URLs silently render home."
+  ],
+  "critical_code_review_comments": [
+    "/papan my_rank counts 'better' docs with a Mongo $or on skor>my OR (skor==my AND selesai_at<my). Good — matches the sort. Ensure an index on {jenis:1, status:1, skor:-1, selesai_at:1} exists once the collection grows; today the count_documents with $or requires a full scan on each request.",
+    "migrate_kategori has a marker guard but still iterates up to 100000 documents on the first run; that's a one-off, but consider batching via update_many with an aggregation pipeline if kategori labels shift again.",
+    "admin_kode/admin_pesanan both hard-cap at 5000/2000 via .limit(). If real orders exceed 2000, silent truncation will hide new entries — add explicit pagination (skip/limit + total count) before that becomes a bug."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_deploy_cleanup.py"
+  ],
+  "success_rate": {"backend": "100%", "frontend": "100%"},
+  "test_credentials": "/app/memory/test_credentials.md — Bearer simulated by inserting peserta.google_sub + user_sessions row. Admin kunci=CANDRA2026. /api/admin/kode returns 55 codes (30 bacaan / 20 mandiri / 5 kohor); this run consumed 1 'bacaan' code (full-journey test) leaving ~29 unused (verified pre-run via db).",
+  "seed_data_creation": "None new. All new tests use TEST_-prefixed docs and clean them up (or the reused suite pattern). Demo demo_* rows (28 peserta + 28 sesi) are untouched.",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Run `cd /app/backend && python -m pytest tests/ -q` — expect 70 green (pytest.ini forces -n2 loadscope). New file test_deploy_cleanup.py pins: (1) ADMIN_KEY==CANDRA2026 via env, (2) /api/admin/kode returns exactly {bacaan:30, mandiri:20, kohor:5}=55, (3) /papan shape/sort/total-matches-count/my_rank-outside-top/None-for-unknown-peserta/400-on-bad-jenis, (4) demo_* counts 14/8/6 preserved, (5) migration marker 'kategori_v2' present, (6) no /api/periksa endpoint. If /papan filtering changes to exclude TEST_ ids, update TestPapan.test_papan_sorted_and_total_matches accordingly. Note: the boards in the shared DB include leftover TEST_* rows from earlier iterations and will keep showing until cleaned — this is cosmetic only and does not affect correctness.",
+  "rca_of_the_issue": "No regression from this round. The two 'minor' items are pre-existing cosmetic/UX polish: TEST_ leftovers are DB residue from prior CI runs (not from this iteration), and the missing SPA 404 was implicit once /periksa was removed. Neither blocks the deployment goal."
+}

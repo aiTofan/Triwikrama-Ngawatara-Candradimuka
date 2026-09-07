@@ -29,7 +29,7 @@ db = client[os.environ['DB_NAME']]
 app = FastAPI()
 api_router = APIRouter(prefix="/api")
 
-ADMIN_KEY = "CANDRA2026"
+ADMIN_KEY = os.environ.get("ADMIN_KEY", "CANDRA2026")
 DATA_FILE = ROOT_DIR.parent / "data" / "bank-soal.json"
 EMERGENT_AUTH = "https://demobackend.emergentagent.com/auth/v1/env/oauth/session-data"
 
@@ -205,11 +205,14 @@ async def seed_codes():
 
 
 async def migrate_kategori():
-    """One-off: rewrite sesi.kategori from the score so no old band name survives."""
-    async for s in db.sesi.find({"skor": {"$ne": None}}, {"id": 1, "skor": 1, "kategori": 1}):
+    """One-off (guarded by a marker): rewrite sesi.kategori from the score so no old band name survives."""
+    if await db.migrations.find_one({"name": "kategori_v2"}):
+        return
+    async for s in db.sesi.find({"skor": {"$ne": None}}, {"_id": 0, "id": 1, "skor": 1, "kategori": 1}).limit(100000):
         correct = kategori_for(s["skor"])[0]
         if s.get("kategori") != correct:
             await db.sesi.update_one({"id": s["id"]}, {"$set": {"kategori": correct}})
+    await db.migrations.insert_one({"name": "kategori_v2", "at": now_iso()})
 
 
 @app.on_event("startup")
@@ -299,7 +302,7 @@ async def auth_logout(request: Request, response: Response):
 # ---- Draw logic ----
 async def seen_soal_ids(peserta_id: str) -> Dict[int, str]:
     seen: Dict[int, str] = {}
-    async for s in db.sesi.find({"peserta_id": peserta_id}):
+    async for s in db.sesi.find({"peserta_id": peserta_id}, {"_id": 0, "soal_ids": 1, "created_at": 1}):
         created = s.get("created_at", "")
         for no in s.get("soal_ids", []):
             if no not in seen or created < seen[no]:
@@ -420,11 +423,10 @@ async def mulai_perjalanan(body: MulaiPerjalanan):
     if not peserta:
         raise HTTPException(404, "Peserta tidak ditemukan")
     # 14-day pause between finished journeys
-    last = None
-    async for pj in db.perjalanan.find({"peserta_id": body.peserta_id, "selesai_at": {"$ne": None}}):
-        sa = pj.get("selesai_at")
-        if sa and (last is None or sa > last):
-            last = sa
+    latest = await db.perjalanan.find_one(
+        {"peserta_id": body.peserta_id, "selesai_at": {"$ne": None}},
+        {"_id": 0, "selesai_at": 1}, sort=[("selesai_at", -1)])
+    last = latest.get("selesai_at") if latest else None
     if last:
         boleh = datetime.fromisoformat(last) + timedelta(days=14)
         if datetime.now(timezone.utc) < boleh:
@@ -522,7 +524,7 @@ async def lanjut_tier(pj_id: str, request: Request):
     if not pj.get("terbuka"):
         raise HTTPException(403, "Perjalanan belum dibuka.")
     existing = set()
-    async for s in db.sesi.find({"perjalanan_id": pj_id}):
+    async for s in db.sesi.find({"perjalanan_id": pj_id}, {"_id": 0, "jenis": 1}):
         existing.add(s["jenis"])
     for key in TIER_ORDER:
         if key not in existing:
@@ -636,22 +638,29 @@ async def papan(jenis: str = Query(...), peserta_id: Optional[str] = None):
     q = {"jenis": jenis, "status": "selesai"}
     if jenis == "paramartha":
         q["tampil_di_papan"] = True
-    rows = []
-    async for s in db.sesi.find(q):
-        rows.append(s)
-    rows.sort(key=lambda s: (-(s.get("skor") or 0), s.get("selesai_at") or ""))
-    total = len(rows)
+    proj = {"_id": 0, "id": 1, "peserta_id": 1, "skor": 1, "selesai_at": 1}
+    total = await db.sesi.count_documents(q)
+    order = [("skor", -1), ("selesai_at", 1)]
+    top_docs = await db.sesi.find(q, proj).sort(order).limit(100).to_list(100)
+    pids = list({s["peserta_id"] for s in top_docs})
+    pmap = {}
+    async for p in db.peserta.find({"id": {"$in": pids}}, {"_id": 0, "id": 1, "nama_lengkap": 1, "nama_tampilan": 1}):
+        pmap[p["id"]] = p
     top = []
-    for i, s in enumerate(rows[:100]):
-        p = await db.peserta.find_one({"id": s["peserta_id"]}, {"_id": 0})
+    for i, s in enumerate(top_docs):
+        p = pmap.get(s["peserta_id"])
         nama = (p.get("nama_lengkap") or p.get("nama_tampilan")) if p else "-"
         top.append({"rank": i + 1, "nama_tampilan": nama, "skor": s.get("skor"), "tanggal": s.get("selesai_at")})
     my_rank = None
     if peserta_id:
-        for i, s in enumerate(rows):
-            if s["peserta_id"] == peserta_id:
-                my_rank = {"rank": i + 1, "total": total}
-                break
+        mine = await db.sesi.find_one({**q, "peserta_id": peserta_id}, proj, sort=order)
+        if mine:
+            ms = mine.get("skor") or 0
+            mt = mine.get("selesai_at") or ""
+            better = await db.sesi.count_documents({**q, "$or": [
+                {"skor": {"$gt": ms}}, {"skor": ms, "selesai_at": {"$lt": mt}},
+            ]})
+            my_rank = {"rank": better + 1, "total": total}
     return {"top": top, "total": total, "my_rank": my_rank}
 
 
@@ -742,9 +751,7 @@ async def validasi(body: ValidasiBody, request: Request):
 async def admin_kode(kunci: str = ""):
     if kunci != ADMIN_KEY:
         raise HTTPException(403, "Kunci tidak sesuai.")
-    codes = []
-    async for k in db.kode_akses.find({}, {"_id": 0}):
-        codes.append(k)
+    codes = await db.kode_akses.find({}, {"_id": 0}).limit(5000).to_list(5000)
     codes.sort(key=lambda c: (c["jenis"], c["kode"]))
     return {"kode": codes}
 
@@ -753,9 +760,14 @@ async def admin_kode(kunci: str = ""):
 async def admin_pesanan(kunci: str = ""):
     if kunci != ADMIN_KEY:
         raise HTTPException(403, "Kunci tidak sesuai.")
+    orders = await db.pesanan_sertifikat.find({}, {"_id": 0}).limit(2000).to_list(2000)
+    sesi_ids = [o.get("sesi_id") for o in orders if o.get("sesi_id")]
+    sesi_map = {}
+    async for s in db.sesi.find({"id": {"$in": sesi_ids}}, {"_id": 0, "id": 1, "skor": 1}).limit(2000):
+        sesi_map[s["id"]] = s
     out = []
-    async for o in db.pesanan_sertifikat.find({}, {"_id": 0}):
-        s = await db.sesi.find_one({"id": o.get("sesi_id")})
+    for o in orders:
+        s = sesi_map.get(o.get("sesi_id"))
         kat = kategori_for(s["skor"])[0] if (s and s.get("skor") is not None) else None
         out.append({"id": o["id"], "tanggal": o["created_at"], "nama_cetak": o["nama_cetak"],
                     "kategori": kat, "skor": s.get("skor") if s else None,

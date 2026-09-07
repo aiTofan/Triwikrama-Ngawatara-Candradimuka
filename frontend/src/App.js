@@ -8,7 +8,6 @@ import Papan from "@/pages/Papan";
 import Pelatihan from "@/pages/Pelatihan";
 import Sertifikat from "@/pages/Sertifikat";
 import Harga from "@/pages/Harga";
-import Periksa from "@/pages/Periksa";
 import Validasi from "@/pages/Validasi";
 import AdminKode from "@/pages/AdminKode";
 import AdminPesanan from "@/pages/AdminPesanan";
@@ -32,6 +31,17 @@ function AuthCallback() {
   return <Layout><p className="cd-muted">Menyimpan sesi…</p></Layout>;
 }
 
+function NotFound() {
+  return (
+    <Layout>
+      <p className="cd-label">404</p>
+      <h1 className="cd-h1" style={{ fontSize: 40 }}>Halaman tidak ditemukan</h1>
+      <p className="cd-muted">Tautan yang kamu tuju tidak ada atau sudah dipindahkan.</p>
+      <p style={{ marginTop: 12 }}><a href="/">Kembali ke Candradimuka</a></p>
+    </Layout>
+  );
+}
+
 function AppInner() {
   const location = useLocation();
   if (location.hash && location.hash.includes("session_id=")) return <AuthCallback />;
@@ -44,10 +54,10 @@ function AppInner() {
       <Route path="/pelatihan" element={<Pelatihan />} />
       <Route path="/sertifikat/:sesiId" element={<Sertifikat />} />
       <Route path="/harga" element={<Harga />} />
-      <Route path="/periksa" element={<Periksa />} />
       <Route path="/validasi" element={<Validasi />} />
       <Route path="/admin/kode" element={<AdminKode />} />
       <Route path="/admin/pesanan" element={<AdminPesanan />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
