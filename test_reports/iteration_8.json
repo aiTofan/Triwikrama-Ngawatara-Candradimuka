@@ -1,0 +1,27 @@
+{
+  "summary": "Iteration-8: targeted verification of the 'Gagal memulai. Coba lagi.' fix (stale localStorage peserta id). Both backend and frontend checks pass. Backend: added /app/backend/tests/test_iter8_stale_mulai.py (2 tests). test_create_peserta_then_mulai_returns_sesi -> POST /api/peserta then POST /api/perjalanan/mulai returns {jeda:false, sesi_id:<uuid>}, GET /api/sesi/{id} returns jenis='bhurloka', tier_nama Bhurloka, total=17 and soal_ids length 17. test_mulai_with_unknown_peserta_returns_404 -> POST /api/perjalanan/mulai with peserta_id='does-not-exist-<uuid>' returns 404 exactly (this is the branch Home.jsx recovers from). Frontend: STALE SCENARIO — set localStorage.candra_peserta = {id:'does-not-exist-123', nama_tampilan:'Uji'}, reload, click [data-testid=mulai-btn]; page navigated to /uji/5c080d2f-df4d-4ab0-9173-418ba9e92461 with 5 opsi buttons visible; NO [data-testid=home-error] shown; only console noise was the expected 404 from the first /perjalanan/mulai call before self-heal. FRESH SCENARIO — cleared localStorage, typed nama, clicked mulai; created a new peserta and navigated to /uji/28056689-... with no home-error. Regression (full Bhurloka completion -> /hasil label 'Mandala Bhurloka') was fully green in iteration_7 (82/82); this iteration re-verified only the two changed paths per E1's 'light and targeted' instruction. No CORS/5xx errors observed anywhere.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {"ui_bugs": [], "integration_issues": [], "design_issues": []},
+  "test_report_links": [
+    "/app/backend/tests/test_iter8_stale_mulai.py",
+    "/app/backend/tests/test_iter7_flow_and_midtrans.py",
+    "/app/backend/tests/backend_test.py"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Home.jsx mulai(): the 404-retry branch only runs when e.response.status===404. If the network transiently returns 500 or the request is aborted mid-flight (offline, DNS blip) the user still lands on the generic 'Gagal memulai. Coba lagi.' toast — acceptable but consider distinguishing network errors from server errors so the retry message can suggest a reload rather than implying user error.",
+    "Home.jsx mulai(): buatPeserta() is called on the 404 branch without checking whether the stored email is still desired; the recreated peserta re-uses the current form fields (nama/email) which is correct today, but if the form was pre-filled from stale localStorage the visitor may unintentionally reuse a name they no longer want. Minor UX nit.",
+    "peserta.js savePeserta writes to a single localStorage key with no schema version; any future field rename will silently produce another stale-id class of bug. Consider stamping a schema version and validating on read.",
+    "Server /perjalanan/mulai returns 404 with a plain detail string; frontend depends on the status code alone which is fine, but a machine-readable error code (e.g. detail={code:'peserta_not_found'}) would make future clients less brittle."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_iter8_stale_mulai.py"
+  ],
+  "success_rate": {"backend": "100% (2/2 new + 82/82 prior)", "frontend": "100% on targeted stale+fresh mulai flow"},
+  "test_credentials": "None required for this flow. localStorage key 'candra_peserta'.",
+  "seed_data_creation": "TEST_iter8_ok, TEST_iter8_probe, TEST_iter8_regress*, TEST_FreshVisitor, TEST_Regression8 peserta rows created via public API. No demo_* rows touched.",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "The 'Gagal memulai' self-heal is verified. To reproduce manually: navigate to REACT_APP_BACKEND_URL, run `localStorage.setItem('candra_peserta', JSON.stringify({id:'does-not-exist-123', nama_tampilan:'Uji'}))`, reload, click [data-testid=mulai-btn] — expect navigation to /uji/<sesiId> and NO [data-testid=home-error]. The console will show one benign 404 from the first /perjalanan/mulai call (that's the trigger for the retry). Full Bhurloka -> /hasil regression is still covered end-to-end in iteration_7 tests; no changes needed there.",
+  "rca_of_the_issue": "USER-REPORTED: clicking home 'Mulai' showed red 'Gagal memulai. Coba lagi.' persistently across refresh and browsers. CAUSE: a prior demo-data cleanup deleted non-demo peserta rows but the visitor's browser still held a stale peserta_id in localStorage.candra_peserta; the FE reused that id for POST /api/perjalanan/mulai which the backend correctly answered with 404 (peserta_not_found), then the generic catch in Home.jsx surfaced 'Gagal memulai'. MITIGATION (implemented in Home.jsx mulai()): on 404 from /perjalanan/mulai, transparently POST /api/peserta again to recreate the participant, savePeserta, and retry /perjalanan/mulai once. Verified this iteration with a fabricated non-existent id in localStorage — user is navigated straight into a fresh Bhurloka /uji/<id> with no error banner."
+}

@@ -22,12 +22,22 @@ export default function Home() {
     if (!nama.trim()) { setErr("Isi nama tampilan terlebih dahulu."); return; }
     setBusy(true); setErr("");
     try {
-      let peserta = getPeserta();
-      if (!peserta) {
+      const buatPeserta = async () => {
         const r = await api.post("/peserta", { nama_tampilan: nama.trim(), email: email.trim() || null });
-        peserta = r.data; savePeserta(peserta);
+        savePeserta(r.data);
+        return r.data;
+      };
+      let peserta = getPeserta() || (await buatPeserta());
+      let s;
+      try {
+        s = await api.post("/perjalanan/mulai", { peserta_id: peserta.id });
+      } catch (e) {
+        if (e?.response?.status === 404) {
+          // Stored participant id no longer exists (e.g. reset) — recreate and retry once.
+          peserta = await buatPeserta();
+          s = await api.post("/perjalanan/mulai", { peserta_id: peserta.id });
+        } else { throw e; }
       }
-      const s = await api.post("/perjalanan/mulai", { peserta_id: peserta.id });
       if (s.data.jeda) { setErr(`Kamu dapat memulai perjalanan baru pada ${new Date(s.data.boleh_pada).toLocaleDateString("id-ID")}. ${s.data.pesan}`); setBusy(false); return; }
       nav(`/uji/${s.data.sesi_id}`);
     } catch { setErr("Gagal memulai. Coba lagi."); } finally { setBusy(false); }
