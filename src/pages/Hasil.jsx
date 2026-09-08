@@ -4,8 +4,10 @@ import { Layout } from "../components/Layout";
 import { ProfileDisk } from "../components/ProfileDisk";
 import { ResultMap } from "../components/ResultMap";
 import { useAuth } from "../auth";
-import { db } from "../firebase";
-import { doc, getDoc, collection, query, where, getDocs, setDoc } from "firebase/firestore";
+import { sesiService } from "../services/sesiService";
+import { soalService } from "../services/soalService";
+import { CONFIG } from "../config";
+import { TINGKAT, KOLOM } from "../domain/soal";
 
 function shuffle(array) {
   const result = [...array];
@@ -35,53 +37,49 @@ export default function Hasil() {
 
     (async () => {
       try {
-        let sSnap;
         let s;
-        try {
-          sSnap = await getDoc(doc(db, 'sessions', sesiId));
-        } catch (e) {
-          console.warn("getDoc failed, checking local storage", e);
-        }
-        
-        if (!sSnap || !sSnap.exists()) {
-          const offlineData = localStorage.getItem(`offline_session_${sesiId}`);
+        const res = await sesiService.ambilSesi(sesiId);
+        if (res.success) {
+          s = res.data;
+        } else {
+          console.warn("ambilSesi failed, checking local storage", res.message);
+          const offlineData = sesiService.ambilOffline(sesiId);
           if (offlineData) {
-            s = JSON.parse(offlineData);
+            s = offlineData;
           } else {
             throw new Error("Sesi tidak ditemukan");
           }
-        } else {
-          s = sSnap.data();
         }
         
         if (s.peserta_id !== user.uid) throw new Error("Forbidden");
         
         const getKategori = (skor) => {
+          if (skor === undefined || skor === null) return { nama: "Menunggu Kalkulasi", desc: "Sistem sedang mengkalkulasi skor Anda" };
           if (skor <= 59) return { nama: "Kesadaran Cicing", desc: "diam dan bereaksi dari rasa, emosi atau kebiasaan" };
           if (skor <= 84) return { nama: "Kesadaran Nyaring", desc: "sudah bangun dan melihat jernih" };
           return { nama: "Kesadaran Eling", desc: "sadar, berdaulat, dan menindaklanjuti apa yang dilihatnya" };
         };
         const kat = getKategori(s.skor);
         
-        const TIER_BY_KEY = { bhurloka: "Bhurloka", akasa: "Ākāśa", paramartha: "Paramārtha" };
+        const TIER_BY_KEY = { bhurloka: TINGKAT.BHURLOKA, akasa: TINGKAT.AKASA, paramartha: TINGKAT.PARAMARTHA };
         const tierOrder = ['bhurloka', 'akasa', 'paramartha'];
         
-        const pjSnap = await getDocs(
-          query(collection(db, 'sessions'), 
-            where('perjalanan_id', '==', s.perjalanan_id),
-            where('status', '==', 'selesai')
-          )
-        );
-        
-        const sessions = [];
-        pjSnap.forEach(d => sessions.push(d.data()));
+        let sessions = [];
+        const resPj = await sesiService.ambilSesiPerjalanan(s.perjalanan_id);
+        if (resPj.success) {
+          sessions = resPj.data.filter(d => ['selesai', 'terverifikasi'].includes(d.status));
+        }
+
+        if (['selesai', 'terverifikasi'].includes(s.status) && !sessions.find(x => x.id === s.id)) {
+          sessions.push(s);
+        }
         
         for (let i = 0; i < localStorage.length; i++) {
           const key = localStorage.key(i);
           if (key && key.startsWith('offline_session_')) {
             try {
               const parsed = JSON.parse(localStorage.getItem(key));
-              if (parsed.perjalanan_id === s.perjalanan_id && parsed.status === 'selesai') {
+              if (parsed.perjalanan_id === s.perjalanan_id && ['selesai', 'terverifikasi'].includes(parsed.status)) {
                 if (!sessions.find(x => x.id === parsed.id)) {
                   sessions.push(parsed);
                 }
@@ -95,24 +93,25 @@ export default function Hasil() {
           return {
             key,
             nama: TIER_BY_KEY[key],
-            persen: ses ? ses.skor : null
+            persen: ses ? ses.skor : null,
+            selesai: !!ses
           };
         });
         
-        const disk = s.soal_ids.filter(no => !s.soal_detail[no]?.is_trap).map(no => {
+        const disk = s.disk || s.soal_ids.filter(no => !s.soal_detail[no]?.is_trap).map(no => {
           const tok = s.jawaban[no];
           if (tok) {
-            const p = s.soal_detail[no].pilihan.find(x => x.token === tok);
-            return p ? p._skor : 0;
+            const p = s.soal_detail[no].pilihan.find(x => x.opsi_id === tok || x.token === tok || x.id === tok);
+            return p && p._skor !== undefined ? p._skor : null;
           }
-          return 0;
-        });
+          return null;
+        }).filter(x => x !== null);
 
         setData({
           sesi_id: s.id, 
           jenis: s.jenis, 
           tier_nama: TIER_BY_KEY[s.jenis],
-          skor: s.skor, 
+          skor: s.skor, status: s.status, 
           kategori: kat.nama, 
           kategori_desc: kat.desc,
           kategori_paragraf: `${kat.nama} — ${kat.desc}`,
@@ -135,67 +134,55 @@ export default function Hasil() {
     try {
       const tierOrder = ['bhurloka', 'akasa', 'paramartha'];
       const TIER_BY_KEY = {
-        bhurloka: { match: "Bhurloka", target: 17 },
-        akasa: { match: "Ākāśa", target: 30 },
-        paramartha: { match: "Paramārtha", target: 90 },
+        bhurloka: { match: TINGKAT.BHURLOKA, target: 17 },
+        akasa: { match: TINGKAT.AKASA, target: 30 },
+        paramartha: { match: TINGKAT.PARAMARTHA, target: 90 }, // Paramartha target handled differently, but we follow quotas
       };
       
-      const pjSnap = await getDocs(query(collection(db, 'sessions'), where('perjalanan_id', '==', data.perjalanan_id)));
-      const completed = [];
-      pjSnap.forEach(d => completed.push(d.data().jenis));
-      
+      const completed = data.peta.filter(t => t.selesai).map(t => t.key);
       const nextTier = tierOrder.find(t => !completed.includes(t));
+      
       if (!nextTier) {
-        nav("/papan");
+        nav("/");
         return;
       }
       
       const tier = TIER_BY_KEY[nextTier];
       
-      // We will fallback to array shuffle since we must do it on the client
-      const soalSnap = await getDocs(query(collection(db, 'bank_soal'), where('tingkat', '==', tier.match)));
-      let pool = [];
-      soalSnap.forEach(d => pool.push({ ...d.data(), id: d.id }));
+      const poolResult = await soalService.ambilPoolSoal(tier.match);
+      if (!poolResult.success) {
+        setErr("Gagal memulai: " + poolResult.message);
+        setBusy(false);
+        return;
+      }
+
+      const { inti: intiPool, pemeriksa: pemeriksaPool } = poolResult.data;
       
-      // Paramartha fallback (in case not found by match, use bagian, skipped here for simplicity as we use tingkat properly)
-      if (pool.length === 0) {
-        setErr(`Bank soal kosong untuk tingkat ${tier.match}. Harap hubungi Admin.`);
+      const actualTarget = CONFIG.QUOTAS[tier.match] || tier.target;
+      const hasPemeriksa = pemeriksaPool.length > 0;
+      const requiredInti = hasPemeriksa ? actualTarget - 1 : actualTarget;
+
+      if (intiPool.length < requiredInti) {
+        const totalTersedia = intiPool.length + (hasPemeriksa ? 1 : 0);
+        setErr(`Soal untuk tahap ini belum lengkap (tersedia ${totalTersedia} dari ${actualTarget}).`);
         setBusy(false);
         return;
       }
       
-      const actualTarget = Math.min(pool.length, tier.target);
-      const drawn = shuffle(pool).slice(0, actualTarget);
-      
-      const trapQuestion = {
-        id: "trap-" + crypto.randomUUID().slice(0, 8),
-        is_trap: true,
-        skenario: "Anda sedang memimpin sebuah rapat evaluasi proyek yang berjalan cukup alot. Di tengah diskusi, seorang anggota tim menyampaikan gagasan yang sebenarnya sangat cemerlang, namun ia menyampaikannya dengan nada yang cukup konfrontatif. Untuk memastikan bahwa Anda benar-benar membaca dan meresapi setiap skenario dalam ujian ini dengan penuh kesadaran, mohon abaikan hiruk-pikuk rapat tersebut dan pilihlah opsi yang menyarankan Anda untuk menunda keputusan hingga besok pagi, karena opsi itulah jawaban yang benar untuk pertanyaan ini.",
-        pilihan: shuffle([
-          { teks: "Merespons nada konfrontatif tersebut dengan tegas saat itu juga agar otoritas Anda sebagai pemimpin rapat tidak diremehkan oleh anggota tim lainnya.", token: crypto.randomUUID().slice(0, 8), _skor: 0, is_correct: false },
-          { teks: "Menunda pengambilan keputusan hingga besok pagi agar semua pihak dapat menenangkan diri, sebagaimana instruksi yang tertera pada skenario ini.", token: crypto.randomUUID().slice(0, 8), _skor: 100, is_correct: true },
-          { teks: "Menerima gagasan cemerlang tersebut namun sekaligus memberikan teguran keras di depan umum mengenai cara berpendapat yang tidak pantas.", token: crypto.randomUUID().slice(0, 8), _skor: 0, is_correct: false },
-          { teks: "Menghentikan rapat sejenak dan meminta anggota tim tersebut untuk menyusun laporan tertulis sebagai bentuk pertanggungjawaban atas gagasannya.", token: crypto.randomUUID().slice(0, 8), _skor: 0, is_correct: false }
-        ])
-      };
-      const trapIndex = Math.floor(Math.random() * (drawn.length - 2)) + 1;
-      drawn[trapIndex] = trapQuestion;
+      const drawnPemeriksa = hasPemeriksa ? shuffle(pemeriksaPool).slice(0, 1) : [];
+      const drawnInti = shuffle(intiPool).slice(0, requiredInti);
+      const drawn = shuffle([...drawnInti, ...drawnPemeriksa]);
       
       const new_sesi_id = crypto.randomUUID();
       const detail = {};
       drawn.forEach(it => {
-        if (it.is_trap) {
-          detail[it.id] = it;
-        } else {
-          detail[it.no || it.id] = { 
-            ...it, 
-            pilihan: shuffle(it.pilihan).map(p => ({ 
-              teks: p.teks,
-              token: crypto.randomUUID().slice(0, 8),
-              _skor: p.skor 
-            })) 
-          };
-        }
+        detail[it.id] = { 
+          ...it, 
+          [KOLOM.PILIHAN]: shuffle(it[KOLOM.PILIHAN] || it.pilihan).map(p => ({ 
+            [KOLOM.TEKS]: p[KOLOM.TEKS] || p.teks,
+            [KOLOM.OPSI_ID]: p[KOLOM.OPSI_ID] || p.token || crypto.randomUUID().slice(0, 8)
+          })) 
+        };
       });
       
       const sessionData = {
@@ -203,21 +190,22 @@ export default function Hasil() {
         perjalanan_id: data.perjalanan_id,
         peserta_id: user.uid,
         jenis: nextTier,
+        tingkat: tier.match,
         status: 'berjalan',
         posisi: 0,
         jawaban: {},
-        soal_ids: drawn.map(d => d.no || d.id),
+        soal_ids: drawn.map(d => d.id),
         soal_detail: detail,
+        pemeriksa_tersedia: hasPemeriksa,
         created_at: new Date().toISOString()
       };
       
-      try {
-        await setDoc(doc(db, 'sessions', new_sesi_id), sessionData);
-      } catch (err) {
-        if (err.code === 'resource-exhausted' || err.message?.includes('Quota') || err.message?.includes('offline')) {
-          localStorage.setItem(`offline_session_${new_sesi_id}`, JSON.stringify(sessionData));
+      const createRes = await sesiService.buatSesi(sessionData);
+      if (!createRes.success) {
+        if (createRes.errorCode === 'resource-exhausted' || createRes.errorCode === 'deadline-exceeded') {
+          sesiService.simpanOffline(new_sesi_id, sessionData);
         } else {
-          throw err;
+          throw new Error(createRes.message);
         }
       }
       nav(`/uji/${new_sesi_id}`);
@@ -241,12 +229,27 @@ export default function Hasil() {
       <h1 className="cd-h1" style={{ fontSize: 40, letterSpacing: "-0.01em" }}>Profil Kesadaranmu</h1>
       
       <div className="hasil-hero" data-testid="hasil-hero" style={{ textAlign: 'center' }}>
-        <p className="cd-h1" style={{ fontSize: 96, margin: 0, lineHeight: 1 }}>{data.skor}%</p>
+        {data.skor === undefined && (
+          <button className="cd-btn" style={{ marginBottom: 16 }} onClick={async () => {
+             const { hitungSkorDariPublik } = await import('../penilaian');
+             const { sesiService } = await import('../services/sesiService');
+             const raw = await sesiService.ambilSesi(data.sesi_id);
+             const hasil = hitungSkorDariPublik(raw);
+             await sesiService.updateSesi(data.sesi_id, {
+                skor: hasil.skor, skor_mentah: hasil.skor_mentah, disk: hasil.disk,
+                penalti_jebakan: hasil.penalti_jebakan, status: 'selesai'
+             });
+             window.location.reload();
+          }}>Hitung Ulang Skor</button>
+        )}
+        <p className="cd-h1" style={{ fontSize: data.skor !== undefined ? 96 : 32, margin: 0, lineHeight: 1 }}>
+          {(data.status === 'selesai' || data.status === 'terverifikasi') && data.skor !== undefined && data.skor !== null ? `${data.skor}%` : ''}
+        </p>
         <p className="cd-lead" style={{ marginTop: 8 }}>{data.kategori}</p>
         <p className="cd-muted">{data.kategori_desc}</p>
       </div>
 
-      {data.disk && (
+      {data.disk && data.disk.length > 0 && (
         <div style={{ marginTop: 32 }}>
           <p className="cd-label">Distribusi Pilihan</p>
           <div style={{ height: 300, width: '100%', position: 'relative' }}>
@@ -268,13 +271,27 @@ export default function Hasil() {
         <ResultMap peta={data.peta} />
       </div>
 
-      <div style={{ marginTop: 32, display: "flex", gap: 12 }}>
-        {data.terbuka ? (
-          <button className="cd-btn" onClick={lanjut} disabled={busy} data-testid="btn-lanjut-mandala">
-            {busy ? "Menyiapkan…" : "Lanjutkan Perjalanan"}
-          </button>
-        ) : (
-          <button className="cd-btn" onClick={() => nav("/")}>Kembali ke Beranda</button>
+      <div style={{ marginTop: 32 }}>
+        <div style={{ display: "flex", gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
+          {data.terbuka && data.jenis !== 'paramartha' ? (
+            <>
+              {(() => {
+                const isCurrentSelesai = data.peta.find(p => p.key === data.jenis)?.selesai;
+                return (
+                  <button className="cd-btn" onClick={lanjut} disabled={busy || !isCurrentSelesai} data-testid="btn-lanjut-mandala">
+                    {!isCurrentSelesai ? "Selesaikan tahap ini dahulu" : (busy ? "Menyiapkan…" : `Lanjutkan ke ${data.jenis === 'bhurloka' ? 'Ākāśa' : 'Paramārtha'}`)}
+                  </button>
+                );
+              })()}
+            </>
+          ) : (
+            <button className="cd-btn" onClick={() => nav("/")}>Kembali ke Beranda</button>
+          )}
+        </div>
+        {data.terbuka && data.jenis !== 'paramartha' && (
+          <p className="cd-faint" style={{ marginTop: 12, fontSize: 13 }}>
+            Tahap {data.jenis === 'bhurloka' ? '2' : '3'}: {data.jenis === 'bhurloka' ? 'Ākāśa' : 'Paramārtha'} — Estimasi waktu {CONFIG.WAKTU_MENIT[data.jenis === 'bhurloka' ? 'Ākāśa' : 'Paramārtha']} menit
+          </p>
         )}
       </div>
     </Layout>

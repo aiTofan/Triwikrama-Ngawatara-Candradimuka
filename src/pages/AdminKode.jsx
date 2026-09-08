@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Layout } from "../components/Layout";
-import { api } from "../api";
-import { fmtTanggal } from "../peserta";
+import { apiService } from "../services/apiService";
+import { fmtTanggal } from "../lib/format";
 
 export default function AdminKode() {
   const [sp] = useSearchParams();
@@ -11,7 +11,7 @@ export default function AdminKode() {
   const [denied, setDenied] = useState(false);
 
   useEffect(() => {
-    api.get(`/admin/kode?kunci=${encodeURIComponent(kunci)}`)
+    apiService.get(`/admin/kode?kunci=${encodeURIComponent(kunci)}`)
       .then((r) => setData(r.data.kode))
       .catch(() => setDenied(true));
   }, [kunci]);

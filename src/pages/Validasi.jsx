@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Layout } from "../components/Layout";
-import { api } from "../api";
-import { fmtTanggal } from "../peserta";
+import { apiService } from "../services/apiService";
+import { fmtTanggal } from "../lib/format";
 
 export default function Validasi() {
   const [nomor, setNomor] = useState("");
@@ -13,7 +13,7 @@ export default function Validasi() {
   const periksa = async () => {
     if (!nomor.trim()) return;
     setBusy(true); setErr(""); setRes(null);
-    try { const r = await api.post("/validasi", { nomor_seri: nomor.trim().toUpperCase() }); setRes(r.data); }
+    try { const r = await apiService.post("/validasi", { nomor_seri: nomor.trim().toUpperCase() }); setRes(r.data); }
     catch (e) {
       if (e?.response?.status === 429) setErr("Terlalu banyak permintaan.");
       else setErr(e?.response?.data?.detail || "Nomor seri tidak ditemukan.");

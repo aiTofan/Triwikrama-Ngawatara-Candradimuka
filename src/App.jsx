@@ -67,11 +67,15 @@ function AppInner() {
   );
 }
 
+import { ErrorBoundary } from "@/components/ErrorBoundary";
+
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <AppInner />
+        <ErrorBoundary>
+          <AppInner />
+        </ErrorBoundary>
       </BrowserRouter>
     </div>
   );

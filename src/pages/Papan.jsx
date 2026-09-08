@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Layout } from "../components/Layout";
 import { useAuth } from "../auth";
-import { db } from "../firebase";
-import { collection, query, where, getDocs, getDoc, doc } from "firebase/firestore";
+import { papanService } from "../services/papanService";
+import { TINGKAT } from "../domain/soal";
 
 function fmtWaktu(isoString) {
   if (!isoString) return "-";
@@ -11,9 +11,9 @@ function fmtWaktu(isoString) {
 }
 
 const TABS = [
-  ["bhurloka", "Bhurloka"],
-  ["akasa", "Ākāśa"],
-  ["paramartha", "Paramārtha"],
+  ["bhurloka", TINGKAT.BHURLOKA],
+  ["akasa", TINGKAT.AKASA],
+  ["paramartha", TINGKAT.PARAMARTHA],
 ];
 
 export default function Papan() {
@@ -24,69 +24,10 @@ export default function Papan() {
   useEffect(() => {
     (async () => {
       setData(null);
-      try {
-        const snap = await getDocs(
-          query(collection(db, 'sessions'), 
-            where('jenis', '==', tab),
-            where('status', '==', 'selesai')
-          )
-        );
-        
-        const sessions = [];
-        snap.forEach(d => sessions.push(d.data()));
-        
-        const userBest = new Map();
-        for (const s of sessions) {
-          const existing = userBest.get(s.peserta_id);
-          if (!existing || s.skor > existing.skor) {
-            userBest.set(s.peserta_id, s);
-          }
-        }
-        
-        let allRanks = Array.from(userBest.values());
-        allRanks.sort((a, b) => b.skor - a.skor || new Date(a.created_at) - new Date(b.created_at));
-        
-        const topSessions = allRanks.slice(0, 100);
-        const top = [];
-        
-        // Caching user profiles
-        const userCache = {};
-        for (let i = 0; i < topSessions.length; i++) {
-          const s = topSessions[i];
-          let nama = "Anonim";
-          
-          if (userCache[s.peserta_id]) {
-            nama = userCache[s.peserta_id];
-          } else {
-            try {
-              const uDoc = await getDoc(doc(db, 'users', s.peserta_id));
-              if (uDoc.exists()) {
-                nama = uDoc.data().nama_tampilan || "Anonim";
-                userCache[s.peserta_id] = nama;
-              }
-            } catch (e) {}
-          }
-          
-          top.push({
-            rank: i + 1,
-            peserta_id: s.peserta_id,
-            nama_tampilan: nama,
-            skor: s.skor,
-            tanggal: s.created_at
-          });
-        }
-        
-        let my_rank = null;
-        if (user) {
-          const myIndex = allRanks.findIndex(x => x.peserta_id === user.uid);
-          if (myIndex !== -1) {
-            my_rank = { rank: myIndex + 1, total: allRanks.length };
-          }
-        }
-        
-        setData({ top, my_rank, total: allRanks.length });
-      } catch (err) {
-        console.error(err);
+      const res = await papanService.ambilPapanTingkat(tab, user?.uid);
+      if (res.success) {
+        setData(res.data);
+      } else {
         setData({ top: [], my_rank: null, total: 0 });
       }
     })();

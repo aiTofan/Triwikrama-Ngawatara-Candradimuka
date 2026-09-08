@@ -4,10 +4,11 @@ import { Layout } from "../components/Layout";
 import { Kropak } from "../components/Kropak";
 import { Tritangtu } from "../components/Tritangtu";
 import { useAuth } from "../auth";
-import { db } from "../firebase";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { sesiService } from "../services/sesiService";
 
 const BLOCK = 15;
+
+import { TINGKAT } from "../domain/soal";
 
 export default function Uji() {
   const { sesiId } = useParams();
@@ -28,25 +29,19 @@ export default function Uji() {
 
     (async () => {
       try {
-        const docRef = doc(db, 'sessions', sesiId);
-        let sSnap;
         let data;
-        try {
-          sSnap = await getDoc(docRef);
-        } catch (e) {
-          console.warn("getDoc failed, checking local storage", e);
-        }
-        
-        if (!sSnap || !sSnap.exists()) {
-          const offlineData = localStorage.getItem(`offline_session_${sesiId}`);
+        const res = await sesiService.ambilSesi(sesiId);
+        if (res.success) {
+          data = res.data;
+        } else {
+          console.warn("ambilSesi failed, checking local storage", res.message);
+          const offlineData = sesiService.ambilOffline(sesiId);
           if (offlineData) {
-             data = JSON.parse(offlineData);
+             data = offlineData;
           } else {
             setErr("Sesi tidak ditemukan.");
             return;
           }
-        } else {
-          data = sSnap.data();
         }
         
         if (data.peserta_id !== user.uid) {
@@ -54,8 +49,8 @@ export default function Uji() {
           return;
         }
 
-        const TIER_BY_KEY = { bhurloka: "Bhurloka", akasa: "Ākāśa", paramartha: "Paramārtha" };
-        data.tier_nama = TIER_BY_KEY[data.jenis];
+        const TIER_BY_KEY = { bhurloka: TINGKAT.BHURLOKA, akasa: TINGKAT.AKASA, paramartha: TINGKAT.PARAMARTHA };
+        data.tier_nama = data.tingkat || TIER_BY_KEY[data.jenis];
         
         const localJawaban = localStorage.getItem(`sesi_${sesiId}_jawaban`);
         const localPosisi = localStorage.getItem(`sesi_${sesiId}_posisi`);
@@ -103,29 +98,32 @@ export default function Uji() {
   })();
 
   const persistStateToDb = async (pos, currentJawaban) => { 
-    try { 
-      await updateDoc(doc(db, 'sessions', sesiId), { 
-        posisi: pos,
-        jawaban: currentJawaban || jawaban
-      }); 
-    } catch (e) {
-      console.error(e);
-      if (e.code === 'resource-exhausted' || e.message?.includes('Quota') || e.message?.includes('offline')) {
-        const offlineData = localStorage.getItem(`offline_session_${sesiId}`);
+    const updateData = { 
+      posisi: pos,
+      jawaban: currentJawaban || jawaban
+    };
+    const res = await sesiService.updateSesi(sesiId, updateData);
+    if (!res.success) {
+      if (res.errorCode === 'resource-exhausted' || res.errorCode === 'deadline-exceeded') {
+        const offlineData = sesiService.ambilOffline(sesiId);
         if (offlineData) {
-          const parsed = JSON.parse(offlineData);
+          const parsed = offlineData;
           parsed.posisi = pos;
           parsed.jawaban = currentJawaban || jawaban;
-          localStorage.setItem(`offline_session_${sesiId}`, JSON.stringify(parsed));
+          sesiService.simpanOffline(sesiId, parsed);
         } else {
-          localStorage.setItem(`offline_session_${sesiId}`, JSON.stringify({ ...sesi, posisi: pos, jawaban: currentJawaban || jawaban }));
+          sesiService.simpanOffline(sesiId, { ...sesi, posisi: pos, jawaban: currentJawaban || jawaban });
         }
       }
     } 
   };
 
-  const pick = (token) => {
-    const next = { ...jawaban, [String(no)]: token };
+  const pick = (opsi_id) => {
+    if (!opsi_id || opsi_id === "undefined") {
+      setErr("Terjadi kesalahan: ID pilihan tidak valid. Mohon muat ulang halaman.");
+      return;
+    }
+    const next = { ...jawaban, [String(no)]: opsi_id };
     setSesi({ ...sesi, jawaban: next });
     localStorage.setItem(`sesi_${sesiId}_jawaban`, JSON.stringify(next));
     localStorage.setItem(`sesi_${sesiId}_posisi`, idx.toString());
@@ -155,71 +153,33 @@ export default function Uji() {
   const selesai = async () => {
     setFinishing(true);
     try { 
-      let skorTotal = 0, n = 0;
-      let scoresArray = [];
-      let trapPenalty = 0;
-
-      for (const soalId of sesi.soal_ids) {
-        const tok = sesi.jawaban[soalId];
-        if (tok) {
-          const sd = sesi.soal_detail[soalId];
-          const p = sd.pilihan.find(x => x.token === tok);
-          if (p) {
-            if (sd.is_trap) {
-              if (!p.is_correct) trapPenalty += 20;
-            } else {
-              skorTotal += p._skor;
-              scoresArray.push(p._skor);
-              n++;
-            }
-          }
-        }
-      }
-      
-      let baseSkor = n ? Math.round(skorTotal / n) : 0;
-      
-      let stdDev = 0;
-      if (n > 1) {
-        const mean = skorTotal / n;
-        const variance = scoresArray.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0) / n;
-        stdDev = Math.sqrt(variance);
-      }
-      
-      let penaltyInconsistency = stdDev > 25 ? 10 : 0;
-      let skorAkhir = Math.max(0, baseSkor - penaltyInconsistency - trapPenalty);
-      
-      const getKategori = (skor) => {
-        if (skor <= 59) return { nama: "Kesadaran Cicing", desc: "diam dan bereaksi dari rasa, emosi atau kebiasaan" };
-        if (skor <= 84) return { nama: "Kesadaran Nyaring", desc: "sudah bangun dan melihat jernih" };
-        return { nama: "Kesadaran Eling", desc: "sadar, berdaulat, dan menindaklanjuti apa yang dilihatnya" };
-      };
-      const kat = getKategori(skorAkhir);
-      
+      const { hitungSkorDariPublik } = await import('../penilaian');
+      const hasil = hitungSkorDariPublik({ ...sesi, jawaban: sesi.jawaban });
       const payload = {
         jawaban: sesi.jawaban,
-        skor: skorAkhir,
-        skor_mentah: baseSkor,
-        penalti_deviasi: penaltyInconsistency > 0,
-        penalti_jebakan: trapPenalty > 0,
         status: 'selesai',
-        kategori: kat.nama
+        skor: hasil.skor,
+        skor_mentah: hasil.skor_mentah,
+        disk: hasil.disk,
+        penalti_jebakan: hasil.penalti_jebakan,
+        penalti_deviasi: hasil.penalti_deviasi,
+        selesai_pada: new Date().toISOString()
       };
-      
-      try {
-        await updateDoc(doc(db, 'sessions', sesiId), payload);
-      } catch (err) {
-        if (err.code === 'resource-exhausted' || err.message?.includes('Quota') || err.message?.includes('offline')) {
-           const offlineData = localStorage.getItem(`offline_session_${sesiId}`);
+
+      const res = await sesiService.updateSesi(sesiId, payload);
+      if (!res.success) {
+        if (res.errorCode === 'resource-exhausted' || res.errorCode === 'deadline-exceeded') {
+           const offlineData = sesiService.ambilOffline(sesiId);
            if (offlineData) {
-             const parsed = JSON.parse(offlineData);
+             const parsed = offlineData;
              Object.assign(parsed, payload);
-             localStorage.setItem(`offline_session_${sesiId}`, JSON.stringify(parsed));
+             sesiService.simpanOffline(sesiId, parsed);
            } else {
              const newData = { ...sesi, ...payload };
-             localStorage.setItem(`offline_session_${sesiId}`, JSON.stringify(newData));
+             sesiService.simpanOffline(sesiId, newData);
            }
         } else {
-           throw err;
+           throw new Error(res.message);
         }
       }
       
@@ -262,17 +222,20 @@ export default function Uji() {
         <p className="skenario-teks" data-testid="skenario">{soal.skenario}</p>
       </Kropak>
       <div className="opsi-list" data-testid="opsi-list">
-        {soal.pilihan.map((p) => (
-          <button key={p.token} className={"opsi-card" + (chosen === p.token ? " selected" : "")} data-testid={`opsi-${p.token}`} onClick={() => pick(p.token)}>
-            {p.teks}
-          </button>
-        ))}
+        {soal.pilihan.map((p) => {
+          const optId = p.opsi_id || p.id || p.token; // Fallbacks just in case but relying on opsi_id
+          return (
+            <button key={optId} className={"opsi-card" + (chosen === optId ? " selected" : "")} data-testid={`opsi-${optId}`} onClick={() => pick(optId)}>
+              {p.teks}
+            </button>
+          )
+        })}
       </div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 24, gap: 12, flexWrap: "wrap" }}>
         {idx > 0 ? <button className="cd-btn-ghost" data-testid="sebelumnya" onClick={() => setIdx(idx - 1)}>Sebelumnya</button> : <span />}
         {!isLast
           ? <button className="cd-btn" data-testid="lanjut" disabled={!chosen} onClick={goNext}>Lanjut</button>
-          : <button className="cd-btn" data-testid="selesai" disabled={!allAnswered || finishing} onClick={selesai}>{finishing ? "Menghitung…" : "Lihat hasil"}</button>}
+          : <button className="cd-btn" data-testid="selesai" disabled={!allAnswered || finishing} onClick={selesai}>{finishing ? "Menyimpan…" : "Selesai"}</button>}
       </div>
       {isPausable && (
         <div style={{ display: "flex", gap: 16, marginTop: 22 }}>

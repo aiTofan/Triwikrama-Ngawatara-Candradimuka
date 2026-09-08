@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Layout } from "../components/Layout";
 
 const PRICES = [
-  ["Melanjutkan ke 120 soal berikutnya, termasuk pembacaan lengkap", "Rp17.000"],
+  ["Melanjutkan ke 63 soal berikutnya, termasuk pembacaan lengkap", "Rp17.000"],
   ["Pelatihan Candradimuka, sekali bayar untuk enam modul", "Rp90.000"],
   ["Sertifikat cetak bertanda tangan, di luar ongkos kirim", "Rp137.000"],
   ["Profil Kesadaran digital, bisa dicetak sendiri", "Rp36.000"],

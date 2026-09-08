@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Layout } from "../components/Layout";
-import { api } from "../api";
-import { fmtTanggal } from "../peserta";
+import { apiService } from "../services/apiService";
+import { fmtTanggal } from "../lib/format";
 import { useAuth, startLogin } from "../auth";
+import { TINGKAT } from "../domain/soal";
 
 const AUTHOR = "Ki Ageng Candradimuka";
 
@@ -18,7 +19,7 @@ export default function Sertifikat() {
   const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
 
   useEffect(() => {
-    api.get(`/sesi/${sesiId}/hasil`).then((r) => {
+    apiService.get(`/sesi/${sesiId}/hasil`).then((r) => {
       if (!r.data.perjalanan_selesai) { setErr("Sertifikat hanya untuk perjalanan yang telah menyelesaikan ketiga tingkat."); return; }
       setH(r.data);
       setF((p) => ({ ...p, nama_cetak: r.data.peserta?.nama_lengkap || r.data.peserta?.nama_tampilan || "" }));
@@ -31,7 +32,7 @@ export default function Sertifikat() {
   const submit = async () => {
     if (!f.nama_cetak.trim() || !f.telepon.trim() || !f.alamat.trim()) return;
     setBusy(true);
-    try { const r = await api.post(`/sertifikat/${sesiId}`, f); setOrder(r.data); window.scrollTo(0, 0); }
+    try { const r = await apiService.post(`/sertifikat/${sesiId}`, f); setOrder(r.data); window.scrollTo(0, 0); }
     catch (e) { setErr(e?.response?.data?.detail || "Gagal menyimpan pesanan."); } finally { setBusy(false); }
   };
 
@@ -52,8 +53,8 @@ export default function Sertifikat() {
       <div className="sertifikat-preview" data-testid="sertifikat-preview">
         <p className="body">
           Sertifikat ini menyatakan bahwa {nama} telah menyelesaikan Uji Profil Kesadaran Triwikrama
-          sebanyak 137 soal pada {tanggal}, dengan profil Bhurloka {persenOf("bhurloka")}%,
-          Ākāśa {persenOf("Ākāśa")}%, dan Paramārtha {persenOf("Paramārtha")}%.
+          sebanyak 137 soal pada {tanggal}, dengan profil {TINGKAT.BHURLOKA} {persenOf("bhurloka")}%,
+          {TINGKAT.AKASA} {persenOf("akasa")}%, dan {TINGKAT.PARAMARTHA} {persenOf("paramartha")}%.
         </p>
         <p className="small">Uji ini memetakan cara seseorang membaca situasi pada satu kesempatan, bukan kadar kejernihan kesadarannya.</p>
         <p className="kode" data-testid="preview-kode">Nomor seri: {order ? order.nomor_seri : "dibuat saat pemesanan"}</p>

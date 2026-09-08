@@ -1,35 +1,18 @@
 import { useEffect, useState } from "react";
-import { auth, db } from "./firebase";
-import { GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, signInAnonymously } from "firebase/auth";
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { auth } from "./firebase";
+import { GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, signInAnonymously, linkWithPopup } from "firebase/auth";
+import { penggunaService } from "./services/penggunaService";
 
 export async function startAnonymousLogin(nama) {
   try {
     const result = await signInAnonymously(auth);
     const user = result.user;
     
-    try {
-      const userRef = doc(db, "users", user.uid);
-      const userSnap = await getDoc(userRef);
-      if (!userSnap.exists()) {
-        await setDoc(userRef, {
-          id: user.uid,
-          email: '',
-          nama_tampilan: nama || 'Peserta',
-          nama_lengkap: nama || 'Peserta',
-          avatar_url: '',
-          role: 'user'
-        });
-      } else {
-        await updateDoc(userRef, {
-          nama_tampilan: nama || userSnap.data().nama_tampilan,
-          nama_lengkap: nama || userSnap.data().nama_lengkap
-        });
-      }
-    } catch (e) {
-      console.warn("Could not save user to Firestore (quota likely exceeded), proceeding anyway", e);
-    }
-
+    // Jangan langsung menulis ke Firestore saat pembuatan sesi tamu pertama kali, 
+    // karena token auth Firebase seringkali belum sepenuhnya sinkron ke klien Firestore.
+    // Menulis langsung akan menyebabkan galat permission-denied.
+    // Profil akan disimpan di kemudian waktu atau diabaikan untuk tamu.
+    
     return user;
   } catch (error) {
     console.error("Error signing in anonymously", error);
@@ -39,24 +22,28 @@ export async function startAnonymousLogin(nama) {
 
 export async function startLogin() {
   const provider = new GoogleAuthProvider();
+  let user;
   try {
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
+    if (auth.currentUser && auth.currentUser.isAnonymous) {
+      try {
+        const result = await linkWithPopup(auth.currentUser, provider);
+        user = result.user;
+      } catch (linkError) {
+        if (linkError.code === 'auth/credential-already-in-use') {
+          await signOut(auth);
+          const result = await signInWithPopup(auth, provider);
+          user = result.user;
+        } else {
+          throw linkError;
+        }
+      }
+    } else {
+      const result = await signInWithPopup(auth, provider);
+      user = result.user;
+    }
     
     try {
-      // Check if user exists in Firestore
-      const userRef = doc(db, "users", user.uid);
-      const userSnap = await getDoc(userRef);
-      if (!userSnap.exists()) {
-        await setDoc(userRef, {
-          id: user.uid,
-          email: user.email,
-          nama_tampilan: user.displayName || 'Peserta',
-          nama_lengkap: user.displayName || 'Peserta',
-          avatar_url: user.photoURL || '',
-          role: user.email === 'tofantriwikrama@gmail.com' ? 'admin' : 'user' // Setup initial admin
-        });
-      }
+      await penggunaService.sinkronkanPenggunaGoogle(user);
     } catch (e) {
       console.warn("Could not save user to Firestore (quota likely exceeded), proceeding anyway", e);
     }
@@ -66,6 +53,12 @@ export async function startLogin() {
     console.error("Error signing in", error);
     throw error;
   }
+}
+
+export async function logoutAndClear() {
+  await signOut(auth);
+  localStorage.clear();
+  window.location.href = "/";
 }
 
 export async function logout() {
@@ -89,10 +82,9 @@ export function useAuth() {
           role: 'user'
         };
         try {
-          const userRef = doc(db, "users", firebaseUser.uid);
-          const userSnap = await getDoc(userRef);
-          if (userSnap.exists()) {
-            userData = { ...userData, ...userSnap.data() };
+          const profileRes = await penggunaService.ambilProfil(firebaseUser.uid);
+          if (profileRes.success && profileRes.data) {
+            userData = { ...userData, ...profileRes.data };
           }
         } catch (e) {
           console.warn("Could not fetch user role, fallback to default", e);

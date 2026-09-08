@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { geodesik } from "../geo";
+import { geodesik } from "../lib/geometri";
 
 const STATE_VAR = { 25: "--s25", 50: "--s50", 75: "--s75", 100: "--s100" };
 

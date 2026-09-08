@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { gambarCakram } from "../geo";
+import { gambarCakram } from "../lib/geometri";
 
 // Fixed full-viewport hyperbolic background, drawn once on load and on resize.
 export const Background = () => {

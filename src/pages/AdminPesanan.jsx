@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Layout } from "../components/Layout";
-import { api } from "../api";
-import { fmtTanggal } from "../peserta";
+import { apiService } from "../services/apiService";
+import { fmtTanggal } from "../lib/format";
 
 const STATUSES = ["baru", "dibayar", "dicetak", "dikirim"];
 
@@ -13,14 +13,14 @@ export default function AdminPesanan() {
   const [denied, setDenied] = useState(false);
 
   const load = () => {
-    api.get(`/admin/pesanan?kunci=${encodeURIComponent(kunci)}`)
+    apiService.get(`/admin/pesanan?kunci=${encodeURIComponent(kunci)}`)
       .then((r) => setData(r.data.pesanan))
       .catch(() => setDenied(true));
   };
   useEffect(load, [kunci]);
 
   const ubah = async (id, status) => {
-    await api.patch(`/admin/pesanan/${id}/status?kunci=${encodeURIComponent(kunci)}`, { status });
+    await apiService.patch(`/admin/pesanan/${id}/status?kunci=${encodeURIComponent(kunci)}`, { status });
     load();
   };
 

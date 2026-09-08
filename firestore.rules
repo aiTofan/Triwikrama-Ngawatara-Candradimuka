@@ -38,6 +38,9 @@ service cloud.firestore {
     }
 
     match /bank_soal/{soalId} {
+      allow read, write: if isAdmin();
+    }
+    match /soal_publik/{soalId} {
       allow read: if isSignedIn();
       allow write: if isAdmin();
     }

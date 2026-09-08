@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth, logout } from "../auth";
 import { Layout } from "../components/Layout";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { db } from "../firebase";
+import { penggunaService } from "../services/penggunaService";
 import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
@@ -15,10 +14,10 @@ export default function Profile() {
 
   useEffect(() => {
     if (user && user.uid) {
-      getDoc(doc(db, "users", user.uid)).then(d => {
-        if (d.exists()) {
-          setNamaTampilan(d.data().nama_tampilan || user.nama_tampilan || "");
-          setAvatarUrl(d.data().avatar_url || user.avatar_url || "");
+      penggunaService.ambilProfil(user.uid).then(res => {
+        if (res.success && res.data) {
+          setNamaTampilan(res.data.nama_tampilan || user.nama_tampilan || "");
+          setAvatarUrl(res.data.avatar_url || user.avatar_url || "");
         }
       });
     }
@@ -39,15 +38,19 @@ export default function Profile() {
     setSaving(true);
     setMessage("");
     try {
-      await updateDoc(doc(db, "users", user.uid), {
+      const res = await penggunaService.updateProfil(user.uid, {
         nama_tampilan: namaTampilan,
         avatar_url: avatarUrl
       });
-      setUser(prev => ({ ...prev, nama_tampilan: namaTampilan, avatar_url: avatarUrl }));
-      setMessage("Profil berhasil diperbarui.");
+      if (res.success) {
+        setUser(prev => ({ ...prev, nama_tampilan: namaTampilan, avatar_url: avatarUrl }));
+        setMessage("Profil berhasil diperbarui.");
+      } else {
+        setMessage("Gagal memperbarui profil: " + res.message);
+      }
     } catch (err) {
       console.error(err);
-      setMessage("Gagal memperbarui profil.");
+      setMessage("Gagal memperbarui profil: " + err.message);
     } finally {
       setSaving(false);
     }
@@ -102,6 +105,10 @@ export default function Profile() {
 
         <div style={{ display: 'flex', gap: 12, marginTop: '2rem' }}>
           <button className="cd-btn-ghost" onClick={() => nav("/")}>Kembali ke Beranda</button>
+          <button className="cd-btn-ghost" onClick={async () => {
+            const { logoutAndClear } = await import("../auth");
+            await logoutAndClear();
+          }} style={{ color: 'var(--alert)' }}>Keluar</button>
         </div>
     </Layout>
   );

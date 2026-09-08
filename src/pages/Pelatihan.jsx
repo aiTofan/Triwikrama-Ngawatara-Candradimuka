@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Layout } from "../components/Layout";
-import { api } from "../api";
+import { apiService } from "../services/apiService";
 
 const LATIHAN = [
   ["Cek Diri Dasa Kreta", "Memeriksa reaksi diri terhadap sepuluh keadaan dasar sehari-hari."],
@@ -22,7 +22,7 @@ export default function Pelatihan() {
     if (!f.nama.trim() || !f.kontak.trim()) return;
     setBusy(true);
     try {
-      await api.post("/minat", {
+      await apiService.post("/minat", {
         nama: f.nama, kontak: f.kontak, jalur: f.jalur,
         jumlah_orang: f.jalur === "Kohor" && f.jumlah_orang ? parseInt(f.jumlah_orang, 10) : null,
         catatan: f.catatan || null, kode_pembacaan: f.kode_pembacaan || null,

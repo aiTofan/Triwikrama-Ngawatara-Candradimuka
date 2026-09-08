@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Layout } from "../components/Layout";
-import { useAuth, startLogin, startAnonymousLogin } from "../auth";
-import { db } from "../firebase";
-import { collection, query, where, getDocs, doc, setDoc } from "firebase/firestore";
+import { useAuth, startLogin, startAnonymousLogin, logoutAndClear } from "../auth";
+import { soalService } from "../services/soalService";
+import { sesiService } from "../services/sesiService";
+import { penggunaService } from "../services/penggunaService";
+import { auth } from "../firebase";
+import { onAuthStateChanged, signInAnonymously } from "firebase/auth";
+import { CONFIG } from "../config";
+import { TINGKAT, KOLOM } from "../domain/soal";
 
 function shuffle(array) {
   const result = [...array];
@@ -22,74 +27,92 @@ export default function Home() {
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
   const [lanjut, setLanjut] = useState(null);
-
   const [guestName, setGuestName] = useState("");
 
   useEffect(() => {
-    // Note: Since api needs the bearer token, we could fetch pending session status here if needed
-  }, []);
+    if (!loading && !user) {
+      (async () => {
+        try {
+          setBusy(true);
+          await signInAnonymously(auth);
+        } catch (e) {
+          console.error("[AUTH] Gagal signInAnonymously:", e.code, e);
+          if (e.code === 'auth/operation-not-allowed') {
+            setErr("Masuk anonim belum diaktifkan di Firebase, hubungi pengelola.");
+          } else {
+            setErr(`Gagal menyiapkan sesi tamu (${e.code || e.message}). Silakan periksa koneksi internet Anda dan coba lagi.`);
+          }
+        } finally {
+          setBusy(false);
+        }
+      })();
+    }
+  }, [user, loading]);
 
   const mulai = async () => {
     setBusy(true); setErr("");
     try {
       let currentUser = user;
+      
       if (!currentUser) {
+         setErr("Sesi gagal disiapkan. Silakan muat ulang halaman atau periksa koneksi Anda.");
+         setBusy(false);
+         return;
+      }
+
+      if (!currentUser.nama_tampilan) {
         if (!guestName.trim()) {
           setErr("Silakan masukkan nama Anda untuk memulai.");
           setBusy(false);
           return;
         }
-        currentUser = await startAnonymousLogin(guestName.trim());
+        
+        try {
+           await penggunaService.simpanPenggunaAnonim(currentUser, guestName.trim());
+           currentUser = { ...currentUser, nama_tampilan: guestName.trim() };
+        } catch (authErr) {
+           console.error("[AUTH] Gagal menyimpan profil anonim:", authErr.code, authErr);
+           currentUser.nama_tampilan = guestName.trim();
+        }
       }
       
       const userId = currentUser.uid;
       const pj_id = crypto.randomUUID();
       const sesi_id = crypto.randomUUID();
       
-      // Query pool for Bhurloka
-      const snap = await getDocs(query(collection(db, 'bank_soal'), where('tingkat', '==', 'Bhurloka')));
-      let pool = [];
-      snap.forEach(d => {
-        pool.push({ ...d.data(), id: d.id });
-      });
-      
-      if (pool.length === 0) {
-        setErr("Bank soal kosong. Harap hubungi Admin.");
+      const poolResult = await soalService.ambilPoolSoal(TINGKAT.BHURLOKA);
+      if (!poolResult.success) {
+        setErr("Gagal memulai: " + poolResult.message);
+        setBusy(false);
+        return;
+      }
+
+      const { inti: intiPool, pemeriksa: pemeriksaPool } = poolResult.data;
+
+      const targetCount = CONFIG.QUOTAS[TINGKAT.BHURLOKA];
+      const hasPemeriksa = pemeriksaPool.length > 0;
+      const requiredInti = hasPemeriksa ? targetCount - 1 : targetCount;
+
+      if (intiPool.length < requiredInti) {
+        const totalTersedia = intiPool.length + (hasPemeriksa ? 1 : 0);
+        setErr(`Soal untuk tahap ini belum lengkap (tersedia ${totalTersedia} dari ${targetCount}).`);
         setBusy(false);
         return;
       }
       
-      const targetCount = Math.min(pool.length, 17);
-      const drawn = shuffle(pool).slice(0, targetCount);
+      const drawnPemeriksa = hasPemeriksa ? shuffle(pemeriksaPool).slice(0, 1) : [];
+      const drawnInti = shuffle(intiPool).slice(0, requiredInti);
+      const drawn = shuffle([...drawnInti, ...drawnPemeriksa]);
       
-      const trapQuestion = {
-        id: "trap-" + crypto.randomUUID().slice(0, 8),
-        is_trap: true,
-        skenario: "Anda sedang memimpin sebuah rapat evaluasi proyek yang berjalan cukup alot. Di tengah diskusi, seorang anggota tim menyampaikan gagasan yang sebenarnya sangat cemerlang, namun ia menyampaikannya dengan nada yang cukup konfrontatif. Untuk memastikan bahwa Anda benar-benar membaca dan meresapi setiap skenario dalam ujian ini dengan penuh kesadaran, mohon abaikan hiruk-pikuk rapat tersebut dan pilihlah opsi yang menyarankan Anda untuk menunda keputusan hingga besok pagi, karena opsi itulah jawaban yang benar untuk pertanyaan ini.",
-        pilihan: shuffle([
-          { teks: "Merespons nada konfrontatif tersebut dengan tegas saat itu juga agar otoritas Anda sebagai pemimpin rapat tidak diremehkan oleh anggota tim lainnya.", token: crypto.randomUUID().slice(0, 8), _skor: 0, is_correct: false },
-          { teks: "Menunda pengambilan keputusan hingga besok pagi agar semua pihak dapat menenangkan diri, sebagaimana instruksi yang tertera pada skenario ini.", token: crypto.randomUUID().slice(0, 8), _skor: 100, is_correct: true },
-          { teks: "Menerima gagasan cemerlang tersebut namun sekaligus memberikan teguran keras di depan umum mengenai cara berpendapat yang tidak pantas.", token: crypto.randomUUID().slice(0, 8), _skor: 0, is_correct: false },
-          { teks: "Menghentikan rapat sejenak dan meminta anggota tim tersebut untuk menyusun laporan tertulis sebagai bentuk pertanggungjawaban atas gagasannya.", token: crypto.randomUUID().slice(0, 8), _skor: 0, is_correct: false }
-        ])
-      };
-      const trapIndex = Math.floor(Math.random() * (drawn.length - 2)) + 1;
-      drawn[trapIndex] = trapQuestion;
-
       const detail = {};
       drawn.forEach(it => {
-        if (it.is_trap) {
-          detail[it.id] = it;
-        } else {
-          detail[it.no || it.id] = { 
-            ...it, 
-            pilihan: shuffle(it.pilihan).map(p => ({ 
-              teks: p.teks,
-              token: crypto.randomUUID().slice(0, 8),
-              _skor: p.skor // In a pure client-side SPA, the client calculates the score
-            })) 
-          };
-        }
+        detail[it.id] = { 
+          ...it, 
+          [KOLOM.PILIHAN]: shuffle(it[KOLOM.PILIHAN] || it.pilihan).map(p => ({ 
+            [KOLOM.TEKS]: p[KOLOM.TEKS] || p.teks,
+            [KOLOM.OPSI_ID]: p[KOLOM.OPSI_ID] || p.token || crypto.randomUUID().slice(0, 8)
+          })) 
+        };
       });
       
       const sessionData = {
@@ -97,27 +120,28 @@ export default function Home() {
         perjalanan_id: pj_id,
         peserta_id: userId,
         jenis: 'bhurloka',
+        tingkat: TINGKAT.BHURLOKA,
         status: 'berjalan',
         posisi: 0,
         jawaban: {},
-        soal_ids: drawn.map(d => d.no || d.id),
+        soal_ids: drawn.map(d => d.id),
         soal_detail: detail,
+        pemeriksa_tersedia: hasPemeriksa,
         created_at: new Date().toISOString()
       };
       
-      try {
-        await setDoc(doc(db, 'sessions', sesi_id), sessionData);
-      } catch (err) {
-        if (err.code === 'resource-exhausted' || err.message?.includes('Quota')) {
-          localStorage.setItem(`offline_session_${sesi_id}`, JSON.stringify(sessionData));
+      const createRes = await sesiService.buatSesi(sessionData);
+      if (!createRes.success) {
+        if (createRes.errorCode === 'resource-exhausted' || createRes.errorCode === 'deadline-exceeded') {
+          sesiService.simpanOffline(sesi_id, sessionData);
         } else {
-          throw err;
+          throw new Error(createRes.message);
         }
       }
       
       nav(`/uji/${sesi_id}`);
     } catch (e) { 
-      console.error(e);
+      console.warn("Gagal memulai sesi:", e.message);
       setErr("Gagal memulai: " + e.message); 
     } finally { 
       setBusy(false); 
@@ -126,17 +150,24 @@ export default function Home() {
 
   return (
     <Layout>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: '10px' }}>
         <p className="cd-label cd-eyebrow" style={{ margin: 0 }}>Triwikramā · Ngawatāra Candradimuka</p>
-        <div style={{ display: 'flex', gap: '12px' }}>
-          {!loading && !user && (
-            <button className="cd-btn-ghost" onClick={startLogin} style={{ padding: '6px 12px' }}>Masuk Akun</button>
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          {!loading && (
+            <button className="cd-btn-ghost" onClick={startLogin} style={{ padding: '6px 12px' }}>
+              {user && user.isAnonymous ? "Tautkan Akun Google" : "Masuk dengan Google"}
+            </button>
           )}
           {user && (
             <Link to="/profil" className="cd-btn-ghost" style={{ padding: '6px 12px', textDecoration: 'none' }}>Profil</Link>
           )}
           {user && user.role === 'admin' && (
-            <Link to="/admin/dashboard" className="cd-btn" style={{ padding: '6px 12px', textDecoration: 'none', background: 'var(--ink)', color: 'var(--ground)' }}>Admin</Link>
+            <Link to="/admin/dashboard" className="cd-btn" style={{ padding: '6px 12px', textDecoration: 'none', background: 'var(--ink)', color: 'var(--ground)' }}>Dasbor Admin</Link>
+          )}
+          {user && (
+            <button className="cd-btn-ghost" onClick={async () => {
+              await logoutAndClear();
+            }} style={{ padding: '6px 12px', color: 'var(--alert)' }}>Keluar</button>
           )}
         </div>
       </div>
@@ -157,7 +188,7 @@ export default function Home() {
       )}
 
       <div className="cd-block">
-        {!user ? (
+        {!user || !user.nama_tampilan ? (
            <div style={{ marginBottom: 16 }}>
              <label style={{ display: 'block', marginBottom: 8, fontWeight: 500, fontSize: 14, color: 'var(--ink)' }}>Nama Anda</label>
              <input 
@@ -174,10 +205,22 @@ export default function Home() {
            <p className="cd-muted" style={{ marginBottom: 16 }}>Hai, <strong>{user.nama_tampilan}</strong>. Siap untuk memulai?</p>
         )}
         
-        {err && <p className="err" data-testid="home-error">{err}</p>}
+        {err && (
+          <div className="notice" data-testid="home-error" style={{ marginBottom: 16, borderLeftColor: 'var(--alert)', background: 'rgba(239, 68, 68, 0.05)' }}>
+            <p style={{ color: 'var(--alert)', margin: 0 }}>{err}</p>
+            {(err.includes('Gagal menghubungi') || err.includes('Pendaftaran tamu gagal') || err.includes('Anda tidak memiliki hak akses')) && (
+              <button className="cd-btn-ghost" onClick={mulai} disabled={busy} style={{ marginTop: 8, padding: '4px 8px', fontSize: 13 }}>
+                Coba Lagi
+              </button>
+            )}
+          </div>
+        )}
         <button className="cd-btn" style={{ marginTop: 8 }} onClick={mulai} disabled={busy || loading} data-testid="mulai-btn">
           {busy || loading ? "Menyiapkan…" : "Mulai Ujian"}
         </button>
+        <p className="cd-faint" style={{ marginTop: 12, fontSize: 13 }}>
+          Tahap 1: {TINGKAT.BHURLOKA} — Estimasi waktu {CONFIG.WAKTU_MENIT[TINGKAT.BHURLOKA]} menit
+        </p>
       </div>
 
       <div className="cd-navlinks">
