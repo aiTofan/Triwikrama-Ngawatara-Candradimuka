@@ -1,0 +1,68 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile data",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nama_tampilan": { "type": "string" },
+        "nama_lengkap": { "type": "string" },
+        "email": { "type": "string" },
+        "avatar_url": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "admin"] }
+      },
+      "required": ["id", "email", "role"]
+    },
+    "Session": {
+      "title": "Session",
+      "description": "A user's attempt at a Mandala",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "peserta_id": { "type": "string" },
+        "jenis": { "type": "string" },
+        "status": { "type": "string", "enum": ["berjalan", "selesai"] },
+        "skor": { "type": "number" },
+        "soal_ids": { "type": "array", "items": { "type": "string" } },
+        "jawaban": { "type": "object" },
+        "posisi": { "type": "number" },
+        "terbuka": { "type": "boolean" },
+        "perjalanan_id": { "type": "string" },
+        "soal_detail": { "type": "object" }
+      },
+      "required": ["id", "peserta_id", "jenis", "status"]
+    },
+    "BankSoal": {
+      "title": "BankSoal",
+      "description": "The question bank containing questions and scores",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "no": { "type": "number" },
+        "bagian": { "type": "number" },
+        "tingkat": { "type": "string" },
+        "jenis": { "type": "string" },
+        "judul": { "type": "string" },
+        "skenario": { "type": "string" },
+        "pilihan": { "type": "array" },
+        "sidik_jari": { "type": "string" }
+      },
+      "required": ["id", "no", "tingkat", "judul", "skenario", "pilihan", "sidik_jari"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles"
+    },
+    "sessions/{sessionId}": {
+      "schema": { "$ref": "#/entities/Session" },
+      "description": "User test sessions"
+    },
+    "bank_soal/{soalId}": {
+      "schema": { "$ref": "#/entities/BankSoal" },
+      "description": "Question bank"
+    }
+  }
+}

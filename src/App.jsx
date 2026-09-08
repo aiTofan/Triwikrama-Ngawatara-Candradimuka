@@ -42,6 +42,9 @@ function NotFound() {
   );
 }
 
+import Profile from "@/pages/Profile";
+import AdminDashboard from "@/pages/AdminDashboard";
+
 function AppInner() {
   const location = useLocation();
   if (location.hash && location.hash.includes("session_id=")) return <AuthCallback />;
@@ -55,8 +58,10 @@ function AppInner() {
       <Route path="/sertifikat/:sesiId" element={<Sertifikat />} />
       <Route path="/harga" element={<Harga />} />
       <Route path="/validasi" element={<Validasi />} />
+      <Route path="/admin/dashboard" element={<AdminDashboard />} />
       <Route path="/admin/kode" element={<AdminKode />} />
       <Route path="/admin/pesanan" element={<AdminPesanan />} />
+      <Route path="/profil" element={<Profile />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

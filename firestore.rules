@@ -1,0 +1,45 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() { return request.auth != null; }
+    function isAdmin() { return isSignedIn() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'; }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+
+    function isValidUser(data) {
+      return data.keys().hasAll(['id', 'email', 'role']) 
+        && data.id is string 
+        && data.email is string 
+        && data.role in ['user', 'admin']
+        && (data.role == 'user' || isAdmin() || (data.email == 'tofantriwikrama@gmail.com')); // Initial bootstrap
+    }
+
+    match /users/{userId} {
+      // Allow any signed in user to read user documents (needed for leaderboard names)
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && request.auth.uid == userId && isValidUser(incoming());
+      allow update: if isSignedIn() && (
+        // Admin can update anything
+        isAdmin() ||
+        // User can update their own profile, but cannot change their role
+        (request.auth.uid == userId && incoming().diff(existing()).affectedKeys().hasOnly(['nama_tampilan', 'nama_lengkap', 'avatar_url']))
+      );
+      allow delete: if isAdmin();
+    }
+
+    match /sessions/{sessionId} {
+      allow read: if isSignedIn() && (resource.data.peserta_id == request.auth.uid || isAdmin() || resource.data.status == 'selesai'); // Allow reading finished sessions for leaderboard
+      allow create: if isSignedIn() && incoming().peserta_id == request.auth.uid;
+      allow update: if isSignedIn() && resource.data.peserta_id == request.auth.uid;
+    }
+
+    match /bank_soal/{soalId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+  }
+}
