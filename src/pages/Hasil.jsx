@@ -62,7 +62,7 @@ export default function Hasil() {
            }
         }
         
-        if (s.peserta_id !== user.uid && !hasLocalAccess) {
+        if (s.peserta_id !== user.uid && !hasLocalAccess && user.role !== 'admin') {
            throw new Error("Forbidden");
         }
 
@@ -277,7 +277,7 @@ export default function Hasil() {
       <h1 className="cd-h1" style={{ fontSize: 40, letterSpacing: "-0.01em" }}>Profil Kesadaranmu</h1>
       
       <div className="hasil-hero" data-testid="hasil-hero" style={{ textAlign: 'center' }}>
-        {(data.skor === undefined || data.gagal_dinilai) && (
+        {(data.skor === undefined || data.gagal_dinilai || (user && user.role === 'admin')) && (
           <div style={{ marginBottom: 16 }}>
              {data.gagal_dinilai && <p style={{ color: 'var(--alert)', marginBottom: 8, fontSize: '14px' }}>⚠️ Maaf, terjadi kegagalan saat mencocokkan beberapa skor jawaban Anda. Klik tombol di bawah ini untuk mencoba menghitung ulang.</p>}
              <button className="cd-btn" onClick={async () => {

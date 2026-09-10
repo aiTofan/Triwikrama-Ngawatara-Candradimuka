@@ -31,6 +31,12 @@ export function bukaSkor(opsiId, sandi) {
       const masked = parseInt(sandi, 36);
       if (isNaN(masked)) return null;
       const intVal = masked ^ keyByte;
+      // Aturan untuk sandi lama tanpa huruf 'z':
+      // Jika hasil bacaan ratusan (lebih besar dari ~96.3), itu berarti sudah dikalikan 10 pada masanya,
+      // sehingga harus dibagi 10. Jika kurang dari itu, nilainya memang apa adanya.
+      if (intVal > 100) {
+          return intVal / 10;
+      }
       return intVal;
   }
 }
