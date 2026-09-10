@@ -10,15 +10,27 @@ function getHashByte(str) {
 }
 
 export function sandiSkor(opsiId, nilai) {
-  if (nilai === null || nilai === undefined) return null;
+  if (nilai === null || nilai === undefined || isNaN(nilai)) return null;
   const keyByte = getHashByte(PEPPER + opsiId);
-  const masked = parseInt(nilai, 10) ^ keyByte;
-  return masked.toString(36);
+  const intVal = Math.round(Number(nilai) * 10);
+  const masked = intVal ^ keyByte;
+  return 'z' + masked.toString(36);
 }
 
 export function bukaSkor(opsiId, sandi) {
-  if (sandi === null || sandi === undefined) return 0;
+  if (sandi === null || sandi === undefined || sandi === '') return null;
+  
   const keyByte = getHashByte(PEPPER + opsiId);
-  const masked = parseInt(sandi, 36);
-  return masked ^ keyByte;
+  
+  if (typeof sandi === 'string' && sandi.startsWith('z')) {
+      const masked = parseInt(sandi.slice(1), 36);
+      if (isNaN(masked)) return null;
+      const intVal = masked ^ keyByte;
+      return intVal / 10;
+  } else {
+      const masked = parseInt(sandi, 36);
+      if (isNaN(masked)) return null;
+      const intVal = masked ^ keyByte;
+      return intVal;
+  }
 }

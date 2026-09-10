@@ -1,0 +1,1512 @@
+{
+ "soal": [
+  {
+   "no": 1,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Laporan Proyek Sempurna",
+   "skenario": "Anak buah Anda menyerahkan laporan penutup program pemberdayaan. Isinya: \"Seluruh tahapan terlaksana sesuai rencana dengan capaian seratus persen. Tidak ditemukan hambatan berarti di lapangan. Antusiasme penerima manfaat sangat tinggi.\" Bagian mana yang paling perlu ditanyakan lebih dulu?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Tidak ada. Laporan yang seluruh capaiannya terpenuhi memang tidak menyisakan pertanyaan bagi pembacanya."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Kalimat tentang antusiasme, supaya penilaian sebesar itu tidak masuk laporan tanpa satu pun angka pendukung."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Kalimat \"tidak ditemukan hambatan berarti\", sebab kata berarti menyisakan ruang yang tidak dilaporkan."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Kalimat \"tidak ditemukan hambatan berarti\", sebab yang menentukan berarti atau tidak justru penyusun laporannya."
+    }
+   ]
+  },
+  {
+   "no": 2,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "berjangkar",
+   "judul": "Tawaran Merek Pengganti di Apotek",
+   "skenario": "Obat yang diresepkan sedang kosong. Pemasok menawarkan: \"Yang diresepkan memang kosong. Tapi ada merek lain, kandungannya persis sama, cuma harganya beda. Ini yang paling banyak dipakai sekarang.\" Apa yang tidak disebutkan di dalam kalimat ini?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Tidak ada. Keterangannya sudah lengkap, kandungannya sama dan perbedaan harganya pun sudah ia sebutkan."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Berapa persisnya selisih harga antara merek yang diresepkan dan merek pengganti yang ia tawarkan tadi."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Selisih harganya, dan bahwa penggantian merek pada resep dokter memerlukan persetujuan penulis resepnya."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Selisih harga dan keharusan persetujuan dokter; adapun \"paling banyak dipakai\" bukan alasan medis."
+    }
+   ]
+  },
+  {
+   "no": 3,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Dua Ahli yang Bertolak Belakang",
+   "skenario": "Dua ahli menyerahkan kesimpulan. Yang pertama: \"Investasi ini mengembalikan modal dalam tiga tahun bila adopsi pasar mencapai empat puluh persen.\" Yang kedua: \"Investasi ini akan menjadi beban, sebab teknologi serupa gagal di tiga negara.\" Apa yang paling membedakan keduanya?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Rekam jejaknya, supaya keputusan sepenting ini berpijak pada ahli yang paling sering terbukti benar."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Nada keyakinannya, sebab yang pertama menyebutkan syarat sementara yang kedua langsung menyebut kegagalan."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Yang pertama menyebutkan syarat yang bisa diuji, sementara yang kedua bersandar pada kejadian di tempat lain."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Yang pertama menyebutkan syarat yang bisa diuji, jadi tanyakan lebih dulu berapa adopsi pasarnya sekarang."
+    }
+   ]
+  },
+  {
+   "no": 4,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Pasal dalam Draf Aturan Pengadaan",
+   "skenario": "Divisi kepatuhan menyodorkan draf aturan pengadaan darurat. Pasal 7 berbunyi: \"Dalam keadaan mendesak, pengadaan dapat dilakukan melalui penunjukan langsung. Keadaan mendesak ditetapkan oleh pimpinan unit kerja.\" Apa yang tidak ada di dalam pasal ini?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Tidak ada yang kurang, dan justru pasal inilah yang memangkas pengadaan yang selama ini bertele-tele dan lamban."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Batas nilai rupiahnya, sebab penunjukan langsung tanpa pagu jelas membuka pintu bagi pengadaan bernilai besar."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Tidak ada pihak lain yang memeriksa penetapan itu; penetap dan pelaksananya orang yang sama."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Penetap dan pelaksananya orang yang sama, sehingga yang perlu ditambahkan justru siapa yang berwenang menolaknya."
+    }
+   ]
+  },
+  {
+   "no": 5,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Pengumuman Penyaluran Bantuan",
+   "skenario": "Pengumuman ditempel di balai desa: \"Penyaluran bantuan pangan tahap ini menjangkau tujuh puluh persen keluarga terdaftar. Sisanya akan diupayakan pada tahap berikutnya sesuai ketersediaan.\" Kalimat mana yang paling banyak menyembunyikan?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Tidak ada. Pengumuman ini justru terbuka, sebab angka tujuh puluh persennya disebutkan apa adanya."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Kata menjangkau, yang membuat kekurangan tiga puluh persen itu terdengar seperti sebuah capaian tersendiri."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Frasa \"akan diupayakan sesuai ketersediaan\", sebab tidak ada satu pun hal yang bisa ditagih dari kalimat itu."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Frasa \"sesuai ketersediaan\", sebab tidak menyebut siapa tiga puluh persen itu maupun kapan tahapnya."
+    }
+   ]
+  },
+  {
+   "no": 6,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Bahan Kampanye yang Disiapkan Tim",
+   "skenario": "Tim sukses menyerahkan satu kalimat untuk disebarkan: \"Bisakah kita mempercayai pengelolaan uang rakyat kepada orang yang usahanya sendiri pernah bangkrut?\" Apa yang sebenarnya dikerjakan kalimat ini?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Menyampaikan rekam jejak yang berhak diketahui pemilih, supaya mereka tidak salah memilih nanti."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Menyerang pribadi calon lawan, hanya saja dengan cara yang jauh lebih halus daripada tuduhan terbuka."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Mengubah kejadian pribadi menjadi ukuran kemampuan mengelola, tanpa menyatakannya sebagai tuduhan."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Menaruh tuduhan itu sebagai pertanyaan, supaya penyebarnya tidak pernah bisa dimintai bukti atas isinya."
+    }
+   ]
+  },
+  {
+   "no": 7,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "jangkar-palsu",
+   "judul": "Pengumuman Pembangunan Pabrik",
+   "skenario": "Pengumuman kepala desa dibacakan di balai warga: \"Pembangunan pabrik ini akan membuka seribu lapangan kerja bagi putra daerah dan menyalurkan dana bantuan sosial setiap tahun. Kajian dampak lingkungan sedang disiapkan dan akan menyusul.\" Diuji dengan Tri Tangtu di Buana, unsur mana yang belum terpenuhi?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Tidak ada yang kurang, sebab ketiganya terpenuhi: rakyat mendapat pekerjaan dan desa mendapat dana."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Unsur Ratu, sebab belum jelas siapa yang akan mengeksekusi janji seribu lapangan kerja itu."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Unsur Resi, sebab kajian dampak diletakkan menyusul, sesudah keputusannya diumumkan kepada warga."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Unsur Resi, sebab kajian yang menyusul tidak lagi bisa mengubah keputusan yang sudah diumumkan kepada warga."
+    }
+   ]
+  },
+  {
+   "no": 8,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Memo Efisiensi Struktural",
+   "skenario": "Memo internal beredar: \"Demi menjaga keberlangsungan perusahaan dan melindungi mayoritas karyawan, telah diambil langkah efisiensi struktural sebesar dua puluh persen. Keputusan sulit ini diambil demi kepentingan bersama.\" Apa yang disembunyikan oleh susunan kalimatnya?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Tidak ada. Memo ini sudah menyebut angka dua puluh persennya secara terbuka kepada karyawan."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Istilah efisiensi struktural, yang dipakai untuk memperhalus sebutan pemutusan hubungan kerja."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Pelakunya. \"Telah diambil\" tidak menyebut pemutusnya, dan kepentingan bersama tidak menyebut penanggungnya."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Pelakunya, dan satu pertanyaan membongkarnya: apakah pemotongan itu berlaku bagi penyusun memo."
+    }
+   ]
+  },
+  {
+   "no": 9,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Tanggapan Manajemen atas Tuntutan Upah",
+   "skenario": "Manajemen menjawab tuntutan serikat: \"Kami memahami aspirasi rekan-rekan. Namun kondisi pasar saat ini menuntut kehati-hatian. Kami berkomitmen membahasnya kembali pada waktu yang tepat.\" Apa arti sesungguhnya dari kalimat terakhir?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Bahwa manajemen memang berniat membahasnya lagi begitu kondisi pasar membaik nanti."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Bahwa pembahasannya ditunda, supaya perusahaan tidak menanggung kenaikan sebelum keadaannya benar-benar siap."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Bahwa tidak ada tanggal di dalamnya, sehingga waktu yang tepat bisa juga berarti tidak akan pernah tiba."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Tidak ada tanggal di dalamnya, jadi minta frasa itu diganti tanggal di risalah agar bisa ditagih nanti."
+    }
+   ]
+  },
+  {
+   "no": 10,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Tiga Kuitansi yang Berdampingan",
+   "skenario": "Dalam laporan kepanitiaan festival, tiga kuitansi berdampingan. \"Sewa panggung, Rp 45.000.000, PT Karya Muda, rincian terlampir.\" \"Konsumsi panitia, Rp 3.200.000, Warung Bu Tinah, rincian terlampir.\" \"Perlengkapan panggung, Rp 50.000.000, Toko Sinar Jaya, Jl. Melati No. 12.\" Apa yang paling perlu diperiksa lebih dulu?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Kuitansi sewa panggung, supaya nilai terbesar kedua itu tidak lolos begitu saja dari pemeriksaan Anda hari ini."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Kuitansi konsumsi panitia, sebab pengeluaran kecil paling sering dipakai menyelipkan biaya-biaya yang lain."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Kuitansi ketiga, sebab hanya kuitansi itu yang tidak menyertakan rincian barang apa saja yang dibeli."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Kuitansi ketiga, lalu mendatangi alamatnya, sebab hanya itu yang bisa diperiksa tanpa bertanya."
+    }
+   ]
+  },
+  {
+   "no": 11,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Presentasi Hasil Proyek",
+   "skenario": "Dalam rapat evaluasi, seorang anggota tim mempresentasikan hasil proyek: \"Dalam proyek ini saya memastikan seluruh tahapan berjalan, mengoordinasikan tim, dan mengawal mutu keluarannya sampai selesai.\" Tidak satu pun nama rekannya ia sebut. Apa yang paling menonjol dari susunan kalimat itu?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Tidak ada yang menonjol, sebab begitulah lazimnya orang menyampaikan hasil kerjanya di hadapan jajaran direksi."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Pemakaian kata saya yang berulang-ulang, padahal proyek sebesar itu jelas dikerjakan oleh satu tim penuh."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Seluruh kata kerjanya kata kerja pengawasan, tanpa satu pun kata kerja yang menyatakan mengerjakan."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Seluruhnya kata kerja pengawasan, jadi tanyakan bagian mana yang ia kerjakan sendiri agar jelas duduknya."
+    }
+   ]
+  },
+  {
+   "no": 12,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "berjangkar",
+   "judul": "Pengumuman Kenaikan Iuran Komite",
+   "skenario": "Surat sekolah dibagikan kepada orang tua: \"Sehubungan dengan peningkatan kebutuhan operasional, iuran komite disesuaikan menjadi Rp 350.000 per bulan terhitung bulan depan. Atas pengertian Bapak dan Ibu kami ucapkan terima kasih.\" Apa yang hilang dari pengumuman ini?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Tidak ada yang hilang. Besaran barunya dan waktu berlakunya sudah disebutkan dengan jelas."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Alasan rincinya, supaya orang tua paham apa yang dimaksud dengan peningkatan kebutuhan operasional itu."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Rincian penggunaannya dan ruang menolak, sebab kalimat terakhirnya sudah menganggap persetujuan terjadi."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Rincian penggunaan dan ruang menolak; minta rinciannya dibacakan agar seluruh orang tua ikut mendengar."
+    }
+   ]
+  },
+  {
+   "no": 13,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Percakapan di Tahap Akhir Tender",
+   "skenario": "Seorang panitia tender berbicara empat mata dengan Anda: \"Perusahaan Bapak sebenarnya sudah paling siap. Cuma memang di tahap akhir ini biasanya ada penyesuaian sekitar sepuluh persen untuk kelancaran administrasi. Rekan-rekan yang lain sudah biasa.\" Apa yang sebenarnya disampaikan?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Bahwa masih ada komponen biaya administrasi yang belum Anda hitung di dalam penawaran perusahaan Anda tadi."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Bahwa ia meminta uang tambahan, hanya saja disampaikan dengan cara yang tidak langsung."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Bahwa ia meminta suap, dan menyebut rekan lain sudah biasa supaya penolakan Anda terdengar aneh."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Ia meminta suap dan mengabarkan praktik itu sudah berjalan, dan kalimat terakhirnya yang perlu dicatat."
+    }
+   ]
+  },
+  {
+   "no": 14,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Ketentuan Agunan Kredit Usaha",
+   "skenario": "Ketentuan internal bank berbunyi: \"Pengajuan kredit usaha wajib disertai agunan berupa aset tetap atas nama pemohon. Pemohon tanpa agunan tidak dapat diproses.\" Siapa yang paling diuntungkan oleh ketentuan ini apa adanya?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Pemohon, supaya ia tidak terjerat utang yang tidak akan sanggup ia bayar di kemudian hari."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Bank, supaya risiko kredit macetnya ditekan serendah mungkin lewat agunan berupa aset tetap."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Yang sudah memiliki aset, sebab kepemilikan sebelumnya dijadikan syarat memperoleh yang berikutnya."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Yang sudah memiliki aset, sehingga yang perlu dicari dasar penilaian lain seperti arus kas harian."
+    }
+   ]
+  },
+  {
+   "no": 15,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Jawaban Pengurus soal Pengeras Suara",
+   "skenario": "Beberapa warga mengeluhkan volume pengeras suara pada malam hari. Pengurus menjawab: \"Suara ini sudah ada sejak sebelum perumahan itu dibangun. Yang keberatan sebaiknya menyesuaikan, sebab tempat ibadah bukan pihak yang harus mengalah.\" Apa yang dikerjakan jawaban ini terhadap persoalannya?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Menegaskan hak yang memang lebih dulu ada di tempat itu, sehingga tidak perlu dipersoalkan lagi."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Menolak keberatan warga dengan bersandar pada kebiasaan yang sudah berjalan bertahun-tahun lamanya di sana."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Memindahkan persoalan dari volume suara menjadi persoalan siapa yang lebih berhak, agar volumenya tak lagi dibicarakan."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Memindahkan persoalan volume menjadi persoalan hak, padahal yang bisa disepakati justru angka dan jamnya."
+    }
+   ]
+  },
+  {
+   "no": 16,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Baris Laporan Tahunan CSR",
+   "skenario": "Satu baris dalam laporan tahunan perusahaan berbunyi: \"Program air bersih: satu unit sumur bor senilai Rp 340.000.000 telah diserahterimakan kepada masyarakat Desa Sukamaju. Program dinyatakan selesai seratus persen.\" Apa sebenarnya yang diukur oleh baris ini?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Manfaat yang diterima warga, sebab sumurnya sudah berdiri dan sudah diserahkan kepada mereka."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Besarnya dana yang dikeluarkan perusahaan untuk memenuhi kewajiban tanggung jawab sosialnya tahun itu."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Yang diukur penyerahannya, bukan pemakaiannya; kata selesai di sini berarti selesai bagi perusahaan saja."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Penyerahannya, bukan pemakaiannya, sebab tidak ada ukuran berapa rumah mendapat air setahun sesudahnya."
+    }
+   ]
+  },
+  {
+   "no": 17,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "jangkar-palsu",
+   "judul": "Surat Edaran Pembelajaran Berbasis Aplikasi",
+   "skenario": "Surat edaran diterima seluruh sekolah: \"Pembelajaran berbasis aplikasi diwajibkan sebagai bagian dari transformasi digital menuju sumber daya manusia unggul. Satuan pendidikan yang belum siap agar segera menyesuaikan.\" Mitos apa yang bekerja di dalam surat ini?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Tidak ada mitos di dalamnya. Penguasaan teknologi memang keharusan zaman, dan sekolah tidak bisa mengelak."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Mitos bahwa seluruh sekolah punya kemampuan yang sama untuk menyesuaikan diri dalam waktu yang sama."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Mitos bahwa alatnya yang menentukan mutu, seolah aplikasi dengan sendirinya melahirkan sumber daya unggul."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Mitos bahwa alat menentukan mutu, terbaca dari kata menyesuaikan yang memindahkan seluruh bebannya ke bawah."
+    }
+   ]
+  },
+  {
+   "no": 18,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Jawaban Pengurus Koperasi",
+   "skenario": "Sudah dua tahun laporan kas tidak dibacakan dalam rapat. Ketika ditanya, pengurus menjawab: \"Laporannya tetap kami susun tiap bulan. Selama ini tidak ada anggota yang mempertanyakan, dan itu tanda kepercayaan. Kalau dibacakan tiap rapat, waktunya habis untuk hal yang sudah jelas.\" Apa yang dikerjakan jawaban ini?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Menjelaskan bahwa laporannya tersusun tiap bulan, dan pembacaannya semata soal efisiensi waktu."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Menghindari permintaan anggota, sebab waktu rapat memang terbatas dan agendanya masih banyak yang lain."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Mengubah tidak adanya pertanyaan menjadi bukti kepercayaan, padahal bisa berarti tidak ada yang tahu bertanya."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Mengubah ketiadaan pertanyaan menjadi bukti kepercayaan; usulkan pembacaan kas agar jadi aturan tetap."
+    }
+   ]
+  },
+  {
+   "no": 19,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Tawaran Pinjaman Sepuluh Menit",
+   "skenario": "Tetangga Anda menunjukkan iklan aplikasi pinjaman di layar ponselnya: \"Cair 10 menit. Tanpa jaminan. Bunga mulai 0,4% per hari. Cukup KTP dan izin akses daftar kontak.\" Bagian mana yang paling menentukan sekaligus paling mudah terlewat?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Kalimat tanpa jaminan, supaya peminjam sadar bahwa pinjaman semacam itu selalu berisiko besar baginya."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Kata mulai pada bunganya, sebab angka yang sebenarnya bisa jauh lebih tinggi daripada yang tertulis di iklan."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Satuan per hari pada bunganya; empat persepuluh persen sehari berarti sekitar 146 persen setahun."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Satuan per hari dan izin akses kontak, sebab keduanya menjelaskan bagaimana penagihannya nanti."
+    }
+   ]
+  },
+  {
+   "no": 20,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Daftar Penerima yang Bertanda Tangan Lengkap",
+   "skenario": "Anda memegang daftar penerima bantuan kampung. Seluruh baris sudah bertanda tangan. Enam keluarga yang namanya tercantum di daftar itu menyatakan tidak pernah menerima apa pun. Apa yang paling perlu diperiksa lebih dulu?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Keterangan keenam keluarga itu, sebab bisa saja mereka lupa atau keliru mengingat waktu penerimaannya dulu."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Jumlah bantuan yang tercatat keluar dari gudang, dibandingkan dengan jumlah yang tercatat sampai di kampung."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Tanda tangan pada keenam baris itu, dibandingkan dengan tanda tangan asli keluarganya agar ketahuan bedanya."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Tanda tangan keenam baris itu dibandingkan aslinya, lalu siapa yang memegang daftarnya pada saat itu."
+    }
+   ]
+  },
+  {
+   "no": 21,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Belasan Ulasan dalam Satu Malam",
+   "skenario": "Dagangan daring Anda menerima belasan ulasan bintang satu dalam satu malam. Tiga di antaranya: \"Barang tidak sesuai, penjual tidak jujur.\" \"Barangnya tidak sesuai, penjualnya tidak jujur.\" \"Tidak sesuai barangnya, penjual tidak jujur.\" Apa yang membedakan ini dari keluhan pelanggan sungguhan?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Tidak ada yang membedakan. Pelanggan yang kecewa memang menuliskan keluhan yang mirip-mirip."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Jumlahnya yang datang bersamaan dalam satu malam, padahal biasanya keluhan berdatangan sedikit demi sedikit."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Ketiganya berbeda hanya pada urutan katanya, sebab keluhan sungguhan berbeda pada rincian dan bukan susunannya."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Berbeda hanya pada urutan kata dan bukan pada rinciannya, dan pola itulah yang dilaporkan ke pengelola lapak."
+    }
+   ]
+  },
+  {
+   "no": 22,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "berjangkar",
+   "judul": "Pengumuman di Papan Puskesmas",
+   "skenario": "Pengumuman ditempel di papan puskesmas: \"Pemberian vaksin dilaksanakan serentak bagi seluruh warga. Yang belum menerima agar segera mendatangi petugas. Kelengkapan vaksin menjadi syarat pengurusan administrasi kependudukan.\" Apa yang tidak ada di dalamnya?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Tidak ada yang kurang; pengumuman ini sudah menyebut sasarannya dan akibat bila warga belum menerimanya."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Jadwal dan tempatnya yang lebih rinci, sebab warga perlu tahu kapan dan di mana mereka harus datang."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Keterangan tentang isinya, dan hak menolak beserta akibatnya; yang tertulis hanya kewajiban dan sanksinya."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Keterangan isi dan hak menolak, sebab keduanya yang menentukan apakah persetujuan diberikan dengan sadar."
+    }
+   ]
+  },
+  {
+   "no": 23,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Pengumuman Pemasangan Mesin Baru",
+   "skenario": "Pengumuman ditempel di papan pabrik: \"Pemasangan mesin baru ini bertujuan meningkatkan mutu dan meringankan beban kerja rekan-rekan. Tidak ada rencana pengurangan tenaga kerja saat ini.\" Bagian mana yang paling menentukan?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Kalimat meringankan beban kerja, sebab itulah yang paling langsung dirasakan pekerja nantinya."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Kalimat tentang tidak adanya rencana pengurangan, sebab itulah jaminan yang paling ditunggu seluruh pekerja."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Dua kata di ujungnya, saat ini; tanpa keduanya ia sebuah jaminan, dengan keduanya ia keterangan hari ini."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Dua kata saat ini, lalu tanyakan pekerjaan apa yang tetap dibutuhkan setelah mesin berjalan penuh."
+    }
+   ]
+  },
+  {
+   "no": 24,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Usulan Ketua Arisan",
+   "skenario": "Dua anggota yang sudah menerima berhenti menyetor. Ketua arisan mengusulkan: \"Dua orang itu sedang kesulitan, jadi kita tutupi dulu bersama-sama supaya putarannya tidak berhenti. Nanti kalau sudah lancar pasti diganti.\" Apa yang dipindahkan oleh usulan ini?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Tidak ada yang dipindahkan. Ini gotong royong biasa yang memang menjadi dasar setiap kelompok arisan."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Beban setoran dua orang itu kepada seluruh anggota lain, untuk sementara waktu sampai keadaannya membaik."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Risikonya. Yang sudah menerima tetap memegang uangnya, yang belum menerima menambah setoran."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Risikonya, kepada yang belum menerima, sehingga jadwal cicilan tertulislah yang mengembalikan letaknya."
+    }
+   ]
+  },
+  {
+   "no": 25,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Unggahan Pembagian Bantuan",
+   "skenario": "Seorang rekan mengunggah video pembagian bantuan dengan keterangan: \"Alhamdulillah, sedikit yang bisa kami bagikan hari ini. Semoga menginspirasi teman-teman untuk ikut berbagi.\" Wajah penerima terlihat jelas sedang menerima bungkusan sambil menunduk. Siapa yang paling diuntungkan oleh unggahan ini?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Penerima bantuan, supaya lewat unggahan itu lebih banyak orang tergerak menyumbang untuk mereka."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Pengunggahnya, sebab namanya ikut dikenal bersama kebaikan yang memang benar-benar ia kerjakan hari itu."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Pengunggahnya, dan biayanya ditanggung penerima yang wajahnya beredar dalam keadaan paling tidak berdaya."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Pengunggahnya dengan biaya ditanggung penerima, sebab tidak ada tanda mereka pernah dimintai izin lebih dulu."
+    }
+   ]
+  },
+  {
+   "no": 26,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Selebaran tentang Satu Tangan yang Kuat",
+   "skenario": "Sebuah selebaran beredar di kampung: \"Sudah saatnya satu tangan yang kuat mengambil alih. Terlalu banyak kepala hanya melahirkan kegaduhan. Serahkan kepada yang berani, dan biarkan ia bekerja tanpa diganggu.\" Apa yang dikerjakan selebaran ini?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Menyerukan ketegasan yang memang dibutuhkan, sebab terlalu banyak kepala memang menghambat pekerjaan siapa pun di kampung."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Menyerukan agar satu orang diberi kekuasaan lebih besar daripada yang lain dalam mengambil keputusan kampung."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Mengubah pengawasan menjadi gangguan, sebab menolak diawasi lalu berubah menjadi syarat untuk bisa bekerja."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Mengubah pengawasan menjadi gangguan, dan satu pertanyaan mengujinya: siapa yang menilai bila ia keliru."
+    }
+   ]
+  },
+  {
+   "no": 27,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "jangkar-palsu",
+   "judul": "Permintaan Kepala Sekolah",
+   "skenario": "Kepala sekolah memanggil Anda: \"Bu, tolong dilihat lagi nilai beberapa anak ini. Angka kelulusan kita tahun lalu sudah turun. Saya tidak meminta apa pun yang menyalahi aturan, hanya minta dipertimbangkan kembali dengan lebih manusiawi.\" Apa yang dikerjakan kalimat terakhirnya?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Menegaskan bahwa permintaannya memang tidak menyalahi satu pun ketentuan yang berlaku di sekolah tersebut."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Melunakkan permintaan itu supaya terdengar sebagai kebijaksanaan, bukan sebagai tekanan dari seorang atasan."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Memindahkan penilaian dari ukuran ke belas kasihan, sehingga menolak terdengar tidak manusiawi."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Memindahkan penilaian ke belas kasihan, jadi kembalikan dengan meminta permintaan itu disampaikan tertulis."
+    }
+   ]
+  },
+  {
+   "no": 28,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Pesan yang Menyebar Cepat",
+   "skenario": "Sebuah pesan menyebar cepat dari tangan ke tangan: \"Sudah ribuan orang membuktikan sendiri. Jangan mau jadi kelinci percobaan. Yang tidak percaya silakan tanggung sendiri akibatnya nanti.\" Apa yang dikerjakan pesan ini?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Mengingatkan orang agar berhati-hati, dan peringatan seperti itu memang perlu disebarkan seluas-luasnya kepada semua."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Menakut-nakuti pembacanya dengan kalimat yang tidak menyertakan satu pun keterangan yang bisa diperiksa orang."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Memakai jumlah sebagai pengganti bukti, lalu menutup pintu bertanya supaya tidak ada yang menuntut keterangan."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Memakai jumlah sebagai pengganti bukti dan menutup pintu bertanya; keduanya dibuka dengan menanyakan siapa ribuan itu."
+    }
+   ]
+  },
+  {
+   "no": 29,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Dapur Bersama dan Koperasi Desa",
+   "skenario": "Pengumuman kegiatan berbunyi: \"Dapur bersama akan dikelola langsung oleh penyelenggara pusat agar mutunya terjaga. Koperasi desa cukup menyediakan tenaga dan tempat.\" Apa yang dipindahkan oleh susunan ini?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Tidak ada yang dipindahkan, sebab yang di pusat memang lebih mampu menjaga mutu daripada koperasi desa."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Tanggung jawab mutu, dari koperasi desa kepada penyelenggara pusat yang dianggap lebih berpengalaman."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Kedaulatannya; desa menyediakan tenaga dan tempat tetapi tidak memegang pengelolaan maupun perputaran uangnya."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Kedaulatannya, sebab koperasi desa semestinya mengelola dapurnya di bawah koordinasi kementerian dan badan gizi."
+    }
+   ]
+  },
+  {
+   "no": 30,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Aliran Anggaran Dapur Bersama",
+   "skenario": "Rencana kegiatan memuat: \"Anggaran dapur bersama dialirkan langsung kepada penyedia yang ditunjuk. Bahan baku diadakan secara terpusat untuk menjaga harga.\" Apa yang tidak disebut di dalamnya?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Tidak ada; pengadaan terpusat memang cara paling murah dan pengaliran langsung memang yang paling cepat."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Siapa penyedia yang ditunjuk itu, sebab namanya sama sekali belum disebutkan di dalam rencana."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Petani dan pedagang desa tidak muncul sama sekali; uangnya lewat di atas desa tanpa singgah di dalamnya."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Desa tidak muncul sebagai pemasok; bahan baku diambil dari koperasi desa lebih dulu agar uangnya singgah."
+    }
+   ]
+  },
+  {
+   "no": 31,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "berjangkar",
+   "judul": "Enam Berbanding Empat",
+   "skenario": "Sebuah perjanjian bagi hasil berbunyi: \"Pemilik lahan menerima enam bagian, penggarap menerima empat bagian, setelah dikurangi seluruh biaya penggarapan.\" Apa yang tidak disebut di dalamnya?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Tidak ada; pembagiannya sudah jelas enam berbanding empat dan biayanya sudah disebut dikurangi lebih dulu."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Berapa lama perjanjian ini berlaku, sebab jangka waktunya belum tertulis di mana pun di dalamnya."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Siapa yang menanggung biaya penggarapan; bila ditanggung penggarap, bagiannya bukan empat melainkan jauh di bawahnya."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Siapa menanggung biayanya, sebab tanpa itu angka empat bagian tidak berarti apa-apa bagi penggarapnya."
+    }
+   ]
+  },
+  {
+   "no": 32,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Saya Sudah Perintahkan",
+   "skenario": "Seorang yang memimpin kampung berkata di setiap pertemuan: \"Saya sudah perintahkan. Saya sudah tegur. Saya sudah minta diperbaiki.\" Jalan yang rusak itu sudah dua musim tidak berubah sedikit pun. Apa yang dikerjakan kalimat-kalimat itu?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Menunjukkan bahwa ia sudah bekerja keras, dan yang tersisa tinggal bawahannya yang belum juga menjalankan perintahnya."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Menyampaikan bahwa perintahnya tidak dijalankan oleh orang-orang yang berada di bawahnya selama dua musim."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Memindahkan ukuran keberhasilan dari jalan yang diperbaiki menjadi perintah yang dikeluarkan, sebab perintah lebih mudah dihitung."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Memindahkan ukuran dari jalan ke perintah, dan satu pertanyaan mengembalikannya: musim ini berapa depa yang diperbaiki."
+    }
+   ]
+  },
+  {
+   "no": 33,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Dua Sambutan untuk Jembatan yang Sama",
+   "skenario": "Dalam sambutan peresmian ia berkata: \"Ini semua berkat kerja keras kita bersama.\" Ketika jembatan yang sama roboh tiga bulan kemudian, ia berkata: \"Pelaksana di lapangan yang lalai.\" Apa yang terbaca dari dua kalimat itu?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Keduanya benar pada waktunya; yang berhasil memang kerja bersama dan yang gagal memang kelalaian pelaksana."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Ia tidak tetap pendiriannya dalam menyebut siapa yang bertanggung jawab atas pekerjaan itu."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Keberhasilan ditarik ke atas dan kegagalan didorong ke bawah, dengan orang yang sama menjadi juru bicaranya."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Keberhasilan ditarik ke atas dan kegagalan didorong ke bawah, sebab nama yang disebut berbeda di kedua sambutan."
+    }
+   ]
+  },
+  {
+   "no": 34,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Lukisan di Gerbang Kampung",
+   "skenario": "Sebuah lukisan dipasang di gerbang kampung: pemimpin berdiri di atas bukit menghadap matahari terbit, sementara warga digambarkan kecil-kecil menengadah dari lembah di bawahnya. Apa yang dikerjakan penempatan itu?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Menggambarkan harapan warga kepada pemimpinnya, dan itu memang wajar dilukiskan pada gerbang sebuah kampung."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Menempatkan pemimpin lebih tinggi daripada warga di dalam gambar itu, supaya terlihat siapa yang memimpin kampung."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Menjadikan ketinggian sebagai sifat orangnya, sebab jabatan yang dititipkan semestinya bisa diambil kembali."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Menjadikan ketinggian sebagai sifat orangnya; ujinya apa yang tersisa dari lukisan itu bila ia tidak menjabat lagi."
+    }
+   ]
+  },
+  {
+   "no": 35,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Calon yang Tidak Punya Apa-apa",
+   "skenario": "Seorang calon berkata: \"Saya tidak punya apa-apa untuk dibagikan. Yang bisa saya janjikan hanya giliran yang jelas dan catatan yang bisa dibaca siapa saja.\" Orang-orang menyebutnya calon yang tidak berisi. Apa sebenarnya yang ia tawarkan?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Memang tidak menawarkan apa-apa; yang dibutuhkan warga adalah yang bisa memberi, bukan yang sekadar berjanji mencatat."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Menawarkan kejujuran, meskipun kejujuran saja belum tentu cukup untuk mengurus seluruh kampung."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Menawarkan satu-satunya hal yang masih bisa ditagih sesudah ia menjabat, supaya giliran tidak bergantung pada siapa pun."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Menawarkan yang bisa ditagih sesudahnya; pemberian habis dibagi sedangkan catatan tetap bisa diperiksa siapa pun."
+    }
+   ]
+  },
+  {
+   "no": 36,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "jangkar-palsu",
+   "judul": "Keterangan Penyuluh tentang Bibit",
+   "skenario": "Kelompok tani menerima bibit bantuan yang menurut pengalaman warga tidak cocok dengan tanah setempat. Penyuluh menjawab: \"Bibit ini sudah lolos uji nasional. Kalau di daerah lain berhasil, tidak ada alasan di sini gagal. Yang penting caranya diikuti dengan benar.\" Apa yang dikerjakan kalimat terakhirnya?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Mengingatkan petani agar mengikuti anjuran teknisnya, supaya hasil panen mereka nanti bisa maksimal."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Menutup kemungkinan bahwa bibitnya sendiri yang tidak cocok dengan keadaan tanah di daerah itu."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Memindahkan seluruh kemungkinan kegagalan kepada petani, sehingga bibitnya tidak bisa dipersoalkan."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Memindahkan kegagalan kepada petani, jadi patahkan dengan menanam sebagian saja lalu mencatat hasilnya."
+    }
+   ]
+  },
+  {
+   "no": 37,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Yang Paham Situasi Tentu Mengerti",
+   "skenario": "Dalam pertemuan terbuka, seorang pengurus berkata: \"Yang paham situasi tentu mengerti mengapa nama itu tidak bisa kita dorong sekarang. Rekan-rekan lama pasti sudah menangkap maksud saya.\" Kepada siapa kalimat ini sebenarnya ditujukan?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Kepada seluruh yang hadir, sebab ia berbicara di pertemuan terbuka dan tidak menyebut siapa pun secara khusus."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Kepada pengurus yang lebih senior, yang dianggap lebih paham keadaan daripada anggota yang baru."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Kepada sekelompok kecil yang sudah tahu, sementara yang lain sengaja dibiarkan tidak mengerti di ruangan yang sama."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Kepada sekelompok kecil yang sudah tahu, supaya situasi itu diterangkan di forum yang sama bagi semua."
+    }
+   ]
+  },
+  {
+   "no": 38,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Istilah yang Tiba-tiba Ada di Mana-mana",
+   "skenario": "Dalam tiga hari, satu istilah yang belum pernah terdengar muncul di hampir setiap obrolan kampung dengan susunan kalimat yang nyaris sama. Tidak ada yang bisa menyebutkan dari siapa ia pertama kali mendengarnya. Apa yang paling menonjol?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Tidak ada yang menonjol, sebab istilah baru memang menyebar cepat ketika orang menganggapnya berguna bagi mereka."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Kecepatan penyebarannya, yang menunjukkan istilah itu memang sedang banyak dibicarakan orang di seluruh kampung."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Susunan kalimatnya nyaris sama; yang tumbuh dari obrolan berbeda-beda, yang disebar seragam agar cepat melekat."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Susunannya seragam padahal sumbernya tidak ada, dan itu yang ditelusuri: siapa paling awal mengucapkannya."
+    }
+   ]
+  },
+  {
+   "no": 39,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Dahulu Kampung Ini Tidak Pernah Berselisih",
+   "skenario": "Seorang tetua berkata di setiap kesempatan: \"Dahulu kampung ini makmur dan tidak pernah ada perselisihan. Semua rusak sejak orang-orang baru datang membawa kebiasaan mereka.\" Apa yang dikerjakan cerita itu?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Mengingatkan warga pada masa yang lebih baik, supaya mereka menjaga apa yang masih tersisa dari kampung ini."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Menyalahkan pendatang atas keadaan kampung yang sekarang, tanpa menyebutkan sebab yang lain."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Menjadikan masa lalu yang tidak bisa diperiksa sebagai ukuran, sebab tiap keluhan hari ini jadi punya tertuduhnya."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Menjadikan masa lalu tak terperiksa sebagai ukuran; ujinya perselisihan apa yang tercatat pada masa itu."
+    }
+   ]
+  },
+  {
+   "no": 40,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Lambang yang Dipasang Kembali",
+   "skenario": "Sebuah lambang lama dipasang kembali di seluruh sudut kampung, dan siapa pun yang tidak memasangnya di rumahnya mulai ditanyai tetangganya. Apa yang sedang terjadi pada lambang itu?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Lambang itu sedang dihidupkan kembali sebagai pengikat kebersamaan, dan itu memang baik bagi kampung mana pun."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Lambang itu dipakai untuk menandai siapa yang ikut dan siapa yang tidak ikut di dalam kampung ini."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Ia berhenti menjadi lambang yang dipahami dan berubah menjadi alat penyaring, sebab artinya tidak lagi ditanyakan."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Ia berubah menjadi alat penyaring, dan itu ketahuan dari satu hal: tidak ada lagi yang bisa menerangkan maknanya."
+    }
+   ]
+  },
+  {
+   "no": 41,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "berjangkar",
+   "judul": "Dihadiri Seluruh Perwakilan",
+   "skenario": "Berita acara memuat: \"Keputusan diambil melalui musyawarah yang dihadiri seluruh perwakilan.\" Di bawahnya tertera dua belas tanda tangan dari tiga puluh dua perwakilan yang terdaftar. Apa yang paling menonjol?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Tidak ada; dua belas yang hadir sudah cukup mengambil keputusan bila yang lain memang berhalangan."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Kehadirannya kurang dari separuh, sehingga keputusan itu bisa saja dipersoalkan orang di kemudian hari."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Kata seluruh pada berita acaranya, yang tidak cocok dengan dua belas tanda tangan di bawahnya."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Kata seluruh yang tidak cocok dengan jumlahnya, sebab berita acara yang keliru akan dipakai sebagai dasar."
+    }
+   ]
+  },
+  {
+   "no": 42,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Mengencangkan Ikat Pinggang",
+   "skenario": "Pengumuman berbunyi: \"Kita semua harus siap mengencangkan ikat pinggang demi masa depan bersama. Pengorbanan hari ini adalah warisan bagi anak cucu.\" Apa yang tidak dijelaskan di dalamnya?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Tidak ada; pengorbanan bersama memang diperlukan, dan penjelasan rincinya bisa menyusul di kemudian hari."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Berapa lama pengencangan itu harus dijalani warga sebelum keadaannya kembali seperti semula."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Siapa saja yang termasuk kita; kalimat itu tidak menyebut apakah yang mengumumkan ikut mengencangkan juga."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Siapa termasuk kita, dan itu yang ditanyakan: ikat pinggang mana yang dikencangkan lebih dulu, dan milik siapa."
+    }
+   ]
+  },
+  {
+   "no": 43,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Dua Kabar pada Satu Halaman",
+   "skenario": "Pada satu halaman pengumuman, kabar tentang seorang warga yang meninggal karena menunggu giliran berobat dicetak kecil di sudut bawah, berdampingan dengan kabar besar tentang peresmian gapura baru. Apa yang dikerjakan penempatan itu?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Tidak mengerjakan apa-apa, sebab penempatan kabar memang ditentukan oleh besar kecilnya peristiwanya."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Menonjolkan peresmian gapura dan mengecilkan kabar warga yang meninggal karena menunggu giliran berobat itu."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Mengajarkan pembacanya mana yang pantas diperhatikan; yang kecil lama-lama dibaca sebagai yang tidak penting."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Mengajarkan mana yang pantas diperhatikan, sebab yang kecil lama-lama dibaca sebagai yang memang tidak penting."
+    }
+   ]
+  },
+  {
+   "no": 44,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Yang Akan Datang Menyelesaikan Semuanya",
+   "skenario": "Cerita beredar bahwa akan datang seseorang yang menyelesaikan seluruh persoalan kampung dalam waktu singkat, dan tanda-tandanya sudah mulai tampak. Orang-orang mulai menunda memperbaiki apa yang bisa mereka perbaiki sendiri. Apa yang dikerjakan cerita itu?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Memberi harapan kepada warga yang sudah lelah, dan harapan memang dibutuhkan pada masa yang berat."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Membuat orang menunggu, padahal sebagian persoalannya bisa mereka kerjakan sekarang juga."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Memindahkan tanggung jawab dari yang berkepentingan kepada seseorang yang belum ada dan belum tentu datang."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Memindahkan tanggung jawab kepada yang belum ada, supaya satu perbaikan dikerjakan sendiri hari ini juga."
+    }
+   ]
+  },
+  {
+   "no": 45,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Rincian yang Hanya Sebelah",
+   "skenario": "Laporan pertanggungjawaban memuat rincian pengeluaran lengkap sampai satuan terkecil, tetapi bagian penerimaannya hanya satu baris: \"Sumbangan warga dan pihak lain.\" Apa yang paling perlu ditanyakan?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Tidak ada; yang penting pengeluarannya rinci, sebab di situlah uang paling mungkin disalahgunakan orang."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Rincian pengeluarannya sekali lagi, sebab yang rinci pun bisa saja digelembungkan angkanya satu per satu."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Sisi penerimaannya; yang rinci hanya keluarnya, agar masuknya tidak bisa dicocokkan dengan apa pun."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Sisi penerimaannya, sebab tanpa daftar penyumbang beserta jumlahnya tidak ada yang bisa dicocokkan."
+    }
+   ]
+  },
+  {
+   "no": 46,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "jangkar-palsu",
+   "judul": "Syarat pada Pengumuman Lelang",
+   "skenario": "Pengumuman lelang memuat syarat: \"Peserta wajib memiliki pengalaman pada pekerjaan sejenis di wilayah ini dengan nilai setara, disertai surat rekomendasi dari mitra terdahulu.\" Apa yang dikerjakan syarat ini?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Menjaga agar pekerjaannya jatuh kepada yang benar-benar berpengalaman, dan itu tujuan setiap syarat lelang di mana pun."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Menyaring peserta yang belum pernah mengerjakan pekerjaan sejenis di wilayah ini sebelumnya."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Menutup pintu bagi yang baru, supaya hanya yang pernah bekerja di sini yang bisa memenuhi syaratnya."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Menutup pintu bagi yang baru lewat syarat masa lalu, dan itu yang dipersoalkan: mengapa pengalaman harus di wilayah ini."
+    }
+   ]
+  },
+  {
+   "no": 47,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Deretan Sebutan di Depan Nama",
+   "skenario": "Nama seseorang di undangan kini selalu diikuti sederet sebutan yang panjang, dan warga mulai merasa sungkan membantah pendapatnya di dalam pertemuan. Apa yang dikerjakan deretan itu?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Menunjukkan kepakarannya, dan wajar bila orang lebih mendengarkan yang lebih tinggi ilmunya."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Membuat orang lebih menghormatinya di dalam pertemuan daripada sebelum deretan sebutan itu mulai dipakai."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Memindahkan penilaian dari isi ucapannya kepada sebutan di depan namanya, sebab membantah lalu terasa kurang ajar."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Memindahkan penilaian dari isi ke sebutan; ujinya membaca pendapatnya tanpa nama dan sebutannya sama sekali."
+    }
+   ]
+  },
+  {
+   "no": 48,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Pengertian Sebagaimana Biasanya",
+   "skenario": "Dalam suratnya, sebuah pihak menulis: \"Kami berharap prosesnya dapat berjalan dengan pengertian sebagaimana biasanya, mengingat hubungan baik yang selama ini terjalin.\" Apa yang sebenarnya disampaikan?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Sebuah harapan biasa agar urusannya berjalan lancar, sebagaimana lazimnya surat resmi ditutup orang selama ini."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Sebuah permintaan agar prosesnya dipercepat karena hubungan kedua pihak sudah terjalin lama."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Sebuah pengingat bahwa pernah ada perlakuan tertentu sebelumnya, dan perlakuan itu diharapkan berulang."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Sebuah pengingat atas perlakuan sebelumnya, dan itu yang dicatat: sebagaimana biasanya yang mana persisnya."
+    }
+   ]
+  },
+  {
+   "no": 49,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Pendiri yang Membangun Seorang Diri",
+   "skenario": "Setiap tahun dikisahkan bahwa pendiri lumbung ini membangunnya seorang diri dari tangan kosong, tanpa bantuan siapa pun. Keturunannya kini memegang seluruh kuncinya. Apa yang dikerjakan kisah itu?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Mengenang jasa pendirinya, dan mengenang jasa orang memang pantas dilakukan setiap tahun sekali."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Meninggikan pendirinya melebihi orang-orang lain yang mungkin ikut membangun lumbung itu bersama dia."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Menjadikan seorang diri sebagai dasar kepemilikan, sebab kunci di tangan keturunannya jadi tidak perlu dipersoalkan."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Menjadikan seorang diri sebagai dasar kepemilikan; ujinya menanyakan siapa lagi yang ikut mengangkat tiangnya."
+    }
+   ]
+  },
+  {
+   "no": 50,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Delapan dari Sepuluh",
+   "skenario": "Pengumuman berbunyi: \"Delapan dari sepuluh warga menyatakan puas atas pelayanan tahun ini.\" Tidak ada keterangan lain yang menyertainya. Apa yang paling perlu ditanyakan?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Tidak ada; delapan dari sepuluh adalah angka yang bagus dan tidak menyisakan pertanyaan apa pun bagi pembacanya."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Apakah angkanya benar, sebab angka di dalam pengumuman sering kali dilebih-lebihkan penyusunnya."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Sepuluh yang mana; tidak disebut berapa orang ditanya, agar angkanya tidak bisa diperiksa siapa pun."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Sepuluh yang mana dan siapa memilihnya, sebab angka tanpa daftar yang ditanya tidak bisa diperiksa siapa pun."
+    }
+   ]
+  },
+  {
+   "no": 51,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "jangkar-palsu",
+   "judul": "Seragam Baru di Depan Loket",
+   "skenario": "Sejak seragam baru dibagikan, mereka yang memakainya didahulukan di setiap loket, sementara yang tidak memakainya menunggu di belakang. Tidak ada satu pun aturan tertulis yang menyebutkan itu. Apa yang sedang terjadi?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Tidak terjadi apa-apa; wajar bila yang berseragam didahulukan sebab mereka sedang menjalankan tugasnya."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Muncul kebiasaan baru yang belum diatur, dan kebiasaan semacam itu biasanya hilang sendiri nanti."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Seragam berubah menjadi aturan tanpa pernah ditulis, dan yang tidak tertulis tidak bisa dibantah siapa pun."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Seragam berubah jadi aturan tak tertulis, supaya urutan loket dituliskan dan ditempel agar bisa dibantah."
+    }
+   ]
+  },
+  {
+   "no": 52,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Jangan Sampai Kita Terpecah",
+   "skenario": "Dalam setiap pertemuan, pembicaraan tentang kekurangan pengurus selalu berakhir pada satu kalimat: \"Yang penting kita jangan sampai terpecah, sebab di luar sana banyak yang menunggu kita jatuh.\" Apa yang dikerjakan kalimat itu?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Mengingatkan pentingnya persatuan, dan persatuan memang syarat menghadapi tekanan yang datang dari luar."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Mengalihkan pembicaraan dari kekurangan pengurus kepada ancaman yang datang dari luar kelompok mereka."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Menjadikan tiap kritik ke dalam sebagai bentuk perpecahan, sehingga pengurusnya tidak pernah bisa dipersoalkan."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Menjadikan kritik sebagai perpecahan; itu dipatahkan dengan menyelesaikan satu kekurangan lebih dulu di forum."
+    }
+   ]
+  },
+  {
+   "no": 53,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Penyesuaian Tekanan pada Jaringan",
+   "skenario": "Ketika ditanya mengapa air tidak mengalir sebulan ini, petugas menjawab: \"Sedang ada penyesuaian tekanan pada jaringan distribusi primer akibat dinamika suplai di hulu.\" Apa yang dikerjakan jawaban itu?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Menerangkan sebab teknisnya, dan hal teknis memang tidak selalu bisa disederhanakan bagi orang awam."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Memakai istilah yang sulit sehingga warga yang bertanya tidak paham isi jawabannya."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Menghentikan pertanyaan tanpa menjawabnya; tidak ada satu pun keterangan tentang kapan airnya mengalir lagi."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Menghentikan pertanyaan tanpa menjawab, supaya tanggal airnya mengalir lagi disebutkan dengan terang."
+    }
+   ]
+  },
+  {
+   "no": 54,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Angka Besar di Atas Spanduk",
+   "skenario": "Sebuah spanduk memuat satu baris: \"Telah disalurkan bantuan senilai dua miliar rupiah bagi warga.\" Tidak ada keterangan lain di sana. Apa yang sebenarnya diukur oleh angka itu?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Besarnya manfaat yang diterima warga, sebab makin besar nilainya makin banyak pula yang tertolong olehnya."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Besarnya dana yang dikeluarkan penyalurnya untuk kegiatan penyaluran bantuan sepanjang tahun itu."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Yang diukur pengeluarannya, bukan penerimaannya, supaya besarnya angka terbaca sebagai besarnya manfaat."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Yang diukur pengeluarannya, dan yang belum ada: berapa penerimanya dan berapa yang sampai kepada tiap orang."
+    }
+   ]
+  },
+  {
+   "no": 55,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Yang Sabar Akan Menuai",
+   "skenario": "Ketika warga menagih perbaikan yang sudah dijanjikan tiga tahun, seorang tokoh berkata: \"Yang sabar akan menuai. Menuntut hanya menunjukkan kita kurang bersyukur atas yang sudah ada.\" Apa yang dikerjakan kalimat itu?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Mengingatkan warga agar tidak lupa mensyukuri apa yang sudah mereka terima selama ini."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Meminta warga menunggu lebih lama lagi sampai perbaikan yang dijanjikan itu benar-benar datang."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Mengubah penagihan janji menjadi cacat batin penagihnya, sebab janjinya sendiri lalu tidak pernah dibicarakan."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Mengubah penagihan menjadi cacat batin penagih; itu dikembalikan dengan menanyakan kapan janji itu diucapkan."
+    }
+   ]
+  },
+  {
+   "no": 56,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "jangkar-palsu",
+   "judul": "Lewat Jalur Kekeluargaan Saja",
+   "skenario": "Dalam rapat, seseorang berkata: \"Untuk yang satu ini sebaiknya kita selesaikan lewat jalur kekeluargaan saja, seperti yang sudah-sudah.\" Apa yang sebenarnya diusulkan?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Penyelesaian secara damai dan kekeluargaan, yang memang selalu lebih baik daripada berperkara panjang."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Penyelesaian di luar forum resmi supaya perkaranya tidak berlarut-larut sampai ke mana-mana."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Penyelesaian tanpa catatan; seperti yang sudah-sudah menunjukkan cara itu pernah dipakai dan tidak tertulis."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Penyelesaian tanpa catatan, supaya perkara mana saja yang dahulu diselesaikan begitu ikut terbuka."
+    }
+   ]
+  },
+  {
+   "no": 57,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Gambar yang Beredar Lebih Dulu",
+   "skenario": "Setiap kali ada musibah, gambar seorang pejabat mengangkat karung bantuan selalu beredar lebih dulu daripada kabar jumlah korbannya. Apa yang dikerjakan urutan itu?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Menunjukkan bahwa pejabatnya turun langsung ke lapangan, dan itu memang yang diharapkan warga dari pemimpinnya."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Menonjolkan pejabat itu di tengah musibah yang sedang menimpa warga di sekitarnya."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Menempatkan penolong sebagai pusat kabar dan korban sebagai latarnya, sehingga yang diingat orang penolongnya."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Menempatkan penolong sebagai pusat dan korban sebagai latar; itu terbaca dari mana yang lebih dulu bisa disebut angkanya."
+    }
+   ]
+  },
+  {
+   "no": 58,
+   "bagian": 2,
+   "tingkat": "Ākāśa",
+   "jenis": "tanpa-jangkar",
+   "judul": "Keberhasilan yang Ia Sebutkan",
+   "skenario": "Seorang yang memimpin ditanya apa keberhasilannya selama menjabat. Ia menjawab: \"Sekarang siapa pun bisa membaca catatan air, dan giliran tidak lagi ditentukan oleh siapa yang kenal saya.\" Apa yang sebenarnya ia sampaikan?",
+   "pilihan": [
+    {
+     "skor": 0,
+     "teks": "Bahwa ia tidak punya keberhasilan yang bisa dibanggakan selain urusan catatan dan giliran air saja."
+    },
+    {
+     "skor": 52.8,
+     "teks": "Bahwa ia menata pembagian air jauh lebih rapi daripada keadaan sebelum ia mulai menjabat di kampung."
+    },
+    {
+     "skor": 85.2,
+     "teks": "Bahwa ia mengurangi kegunaan dirinya sendiri; sesudah ini kampung tidak lagi membutuhkan kedekatan dengan siapa pun."
+    },
+    {
+     "skor": 96.3,
+     "teks": "Bahwa ia mengurangi kegunaan dirinya sendiri, dan itu ukurannya: apa yang tetap berjalan setelah ia tidak menjabat."
+    }
+   ]
+  }
+ ]
+}

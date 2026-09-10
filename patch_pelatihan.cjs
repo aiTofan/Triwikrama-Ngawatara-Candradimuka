@@ -1,4 +1,6 @@
-import { Layout } from "../components/Layout";
+const fs = require('fs');
+
+const code = `import { Layout } from "../components/Layout";
 
 const LATIHAN = [
   ["Cek Diri Dasa Kreta", "Memeriksa reaksi diri terhadap sepuluh keadaan dasar sehari-hari."],
@@ -56,3 +58,7 @@ export default function Pelatihan() {
     </Layout>
   );
 }
+`;
+
+fs.writeFileSync('src/pages/Pelatihan.jsx', code);
+console.log("Patched successfully");

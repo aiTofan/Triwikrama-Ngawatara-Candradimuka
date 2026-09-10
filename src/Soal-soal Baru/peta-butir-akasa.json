@@ -1,0 +1,339 @@
+{
+ "keterangan": "Peta butir Ākāśa untuk laporan diagnostik. Berkas terpisah; struktur bank soal tidak diubah. Nomor sudah mengikuti penomoran baru; no_lama menyimpan nomor bank lama.",
+ "format_butir": "Butir Ākāśa berformat pembacaan, bukan respons. Batang soal menyajikan bahan mentah apa adanya (pengumuman, memo, iklan, percakapan, baris laporan) dan tidak menyebutkan apa yang tersembunyi di dalamnya. Yang ditanyakan adalah apa yang sebenarnya disampaikan, apa yang sengaja tidak ada, siapa yang diuntungkan, unsur Tri Tangtu mana yang hilang, atau apakah sebuah suara organik atau gema buatan.",
+ "skala": {
+  "0": "Salah baca — terbawa prasangka, atau menolak membaca sama sekali",
+  "52.8": "Benar tetapi berhenti di permukaan yang aman, atau curiga tanpa dasar",
+  "85.2": "Tepat menunjuk apa yang disembunyikan",
+  "96.3": "Tepat menunjuk yang disembunyikan, dan menunjuk langkah yang membukanya"
+ },
+ "panca_waluya": {
+  "unsur": [
+   "Cageur",
+   "Bageur",
+   "Bener",
+   "Pinter",
+   "Singer"
+  ],
+  "jujur": "Bukan unsur keenam. Jujur adalah keharusan yang diterapkan di dalam kelima unsur. Rujukan: TNC Bab 2 dan Bab 9. Rumusan Panca Waluya di berkas NST adalah versi lama dan tidak dipakai.",
+  "catatan": "Pada lapis Ākāśa yang diuji adalah mutu pembacaan, sehingga Pinter dan Bener wajar mendominasi. Cageur hampir tidak muncul karena butirnya tidak menuntut pengendalian emosi seperti di Bhurloka."
+ },
+ "aturan_penulisan": [
+  "Batang soal menyajikan bahan mentah dan tidak boleh menyebutkan apa yang tersembunyi; begitu disebutkan, pembacaannya sudah dikerjakan untuk peserta.",
+  "Jawaban 96.3 bukan pengulangan 85.2 ditambah satu kalimat; ia menyatakan temuan sekaligus langkah yang membukanya, dengan panjang yang sebanding.",
+  "Mekanik jangkar dipusatkan di Bhurloka; di Ākāśa porsinya kecil dan hanya dipakai bila ketentuan atau otoritas memang bagian dari bahan yang dibaca."
+ ],
+ "butir": [
+  {
+   "no": 1,
+   "pisau": "Silib",
+   "bab": "Bab 5",
+   "protokol": "Interogasi absensi",
+   "waluya": [
+    "Pinter",
+    "Bener"
+   ],
+   "uji_jujur": "Apakah saya menanyakan siapa penentu hambatan itu untuk tahu, atau untuk menunjukkan bahwa saya lebih teliti?",
+   "no_lama": 16
+  },
+  {
+   "no": 2,
+   "pisau": "Silib",
+   "bab": "Bab 5",
+   "protokol": "Interogasi absensi",
+   "waluya": [
+    "Bageur",
+    "Bener"
+   ],
+   "uji_jujur": "Apakah saya menyebut persetujuan dokter demi pasien, atau supaya tanggung jawabnya lepas dari saya?",
+   "no_lama": 69
+  },
+  {
+   "no": 3,
+   "pisau": "Sampir, Silib",
+   "bab": "Bab 5",
+   "protokol": "Pemisahan kulit-isi",
+   "waluya": [
+    "Pinter"
+   ],
+   "uji_jujur": "Apakah saya memilih syarat yang bisa diuji, atau kesimpulan yang lebih cocok dengan dugaan saya sendiri?",
+   "no_lama": 18
+  },
+  {
+   "no": 4,
+   "pisau": "Silib",
+   "bab": "Bab 5",
+   "protokol": "Interogasi absensi",
+   "waluya": [
+    "Bener",
+    "Pinter"
+   ],
+   "uji_jujur": "Apakah saya mencari yang tidak ada di pasal itu, atau hanya yang sudah saya curigai sebelum membacanya?",
+   "no_lama": 19
+  },
+  {
+   "no": 5,
+   "pisau": "Sampir, Silib",
+   "bab": "Bab 5",
+   "protokol": "Penetralisir bingkai",
+   "waluya": [
+    "Bageur",
+    "Bener"
+   ],
+   "uji_jujur": "Apakah saya menanyakan nama tiga puluh persen itu, atau cukup puas menunjukkan kalimatnya bermasalah?",
+   "no_lama": 20
+  },
+  {
+   "no": 6,
+   "pisau": "Sindir, Sampir",
+   "bab": "Bab 5",
+   "protokol": "Forensik niat tersembunyi",
+   "waluya": [
+    "Bener",
+    "Singer"
+   ],
+   "uji_jujur": "Apakah saya membaca kalimat itu apa adanya, atau lebih keras karena ia menyerang pihak yang saya dukung?",
+   "no_lama": 21
+  },
+  {
+   "no": 7,
+   "pisau": "Siloka, Tri Tangtu di Buana",
+   "bab": "Bab 6",
+   "protokol": "Uji keseimbangan Resi-Ratu-Rama",
+   "waluya": [
+    "Bener",
+    "Bageur"
+   ],
+   "uji_jujur": "Apakah saya menunjuk unsur Resi karena memang itu yang hilang, atau karena sudah menolak pabriknya sejak awal?",
+   "no_lama": 17
+  },
+  {
+   "no": 8,
+   "pisau": "Silib",
+   "bab": "Bab 5",
+   "protokol": "Bedah kalimat pasif dan nominalisasi",
+   "waluya": [
+    "Bener",
+    "Bageur"
+   ],
+   "uji_jujur": "Apakah saya mencari pelakunya untuk memperjelas tanggung jawab, atau untuk mencari orang yang bisa disalahkan?",
+   "no_lama": 22
+  },
+  {
+   "no": 9,
+   "pisau": "Sindir",
+   "bab": "Bab 5",
+   "protokol": "Audit krono-politik: penundaan abadi",
+   "waluya": [
+    "Bener",
+    "Pinter"
+   ],
+   "uji_jujur": "Apakah saya menuntut tanggal karena itu yang mengikat, atau karena ingin manajemen terlihat berkelit?",
+   "no_lama": 23
+  },
+  {
+   "no": 10,
+   "pisau": "Silib",
+   "bab": "Bab 5",
+   "protokol": "Interogasi absensi",
+   "waluya": [
+    "Pinter",
+    "Bener"
+   ],
+   "uji_jujur": "Apakah saya memilih kuitansi ketiga karena rinciannya tidak ada, atau karena angkanya paling besar?",
+   "no_lama": 24
+  },
+  {
+   "no": 11,
+   "pisau": "Silib",
+   "bab": "Bab 5",
+   "protokol": "Forensik kata kerja",
+   "waluya": [
+    "Bener",
+    "Pinter"
+   ],
+   "uji_jujur": "Apakah saya membaca susunan kalimatnya, atau sudah menuduh lebih dulu karena tahu ia sering mangkir?",
+   "no_lama": 26
+  },
+  {
+   "no": 12,
+   "pisau": "Sampir, Silib",
+   "bab": "Bab 5",
+   "protokol": "Penetralisir bingkai",
+   "waluya": [
+    "Bener",
+    "Bageur"
+   ],
+   "uji_jujur": "Apakah saya meminta rinciannya demi seluruh orang tua, atau supaya iuran itu batal naik bagi saya?",
+   "no_lama": 73
+  },
+  {
+   "no": 13,
+   "pisau": "Sandi",
+   "bab": "Bab 7",
+   "protokol": "Deteksi kode di depan publik",
+   "waluya": [
+    "Bener",
+    "Singer"
+   ],
+   "uji_jujur": "Apakah saya mencatat kalimatnya untuk jejak, atau untuk senjata bila suatu saat perlu menekan dia?",
+   "no_lama": 27
+  },
+  {
+   "no": 14,
+   "pisau": "Simbol, Silib",
+   "bab": "Bab 7",
+   "protokol": "Audit kuasa ketentuan",
+   "waluya": [
+    "Bageur",
+    "Bener"
+   ],
+   "uji_jujur": "Apakah saya menunjuk yang sudah punya aset karena begitu bacaannya, atau karena ingin terdengar berpihak?",
+   "no_lama": 28
+  },
+  {
+   "no": 15,
+   "pisau": "Simbol, Siloka",
+   "bab": "Bab 6, Bab 7",
+   "protokol": "Audit kuasa simbol",
+   "waluya": [
+    "Bener",
+    "Bageur"
+   ],
+   "uji_jujur": "Apakah saya mengembalikannya ke angka demi kedua pihak, atau karena sudah memihak salah satunya?",
+   "no_lama": 29
+  },
+  {
+   "no": 16,
+   "pisau": "Sampir, Silib",
+   "bab": "Bab 5",
+   "protokol": "Pemisahan kulit-isi",
+   "waluya": [
+    "Pinter",
+    "Bageur"
+   ],
+   "uji_jujur": "Apakah saya menanyakan berapa rumah mendapat air, atau cukup puas membongkar kata selesai itu?",
+   "no_lama": 30
+  },
+  {
+   "no": 17,
+   "pisau": "Siloka",
+   "bab": "Bab 6",
+   "protokol": "Dekonstruksi mitos modern",
+   "waluya": [
+    "Pinter",
+    "Bageur"
+   ],
+   "uji_jujur": "Apakah saya membongkar mitosnya, atau sedang menolak teknologi karena tidak menyukainya sejak awal?",
+   "no_lama": 25
+  },
+  {
+   "no": 18,
+   "pisau": "Sindir, Siloka",
+   "bab": "Bab 5, Bab 6",
+   "protokol": "Inversi makna",
+   "waluya": [
+    "Bener",
+    "Pinter"
+   ],
+   "uji_jujur": "Apakah saya mengusulkan aturan tetap demi koperasinya, atau supaya pengurus itu terpojok di rapat?",
+   "no_lama": 62
+  },
+  {
+   "no": 19,
+   "pisau": "Silib, Sandi",
+   "bab": "Bab 5, Bab 7",
+   "protokol": "Investigasi kekosongan",
+   "waluya": [
+    "Pinter",
+    "Singer"
+   ],
+   "uji_jujur": "Apakah saya menghitung bunganya sungguh-sungguh, atau menebak dari kesan bahwa iklan itu mencurigakan?",
+   "no_lama": 63
+  },
+  {
+   "no": 20,
+   "pisau": "Silib",
+   "bab": "Bab 5",
+   "protokol": "Investigasi kekosongan",
+   "waluya": [
+    "Bener",
+    "Pinter"
+   ],
+   "uji_jujur": "Apakah saya memeriksa tanda tangannya karena itu yang bisa dibuktikan, atau karena sudah menduga pelakunya?",
+   "no_lama": 67
+  },
+  {
+   "no": 21,
+   "pisau": "Simbol",
+   "bab": "Bab 7",
+   "protokol": "Deteksi gema buatan",
+   "waluya": [
+    "Pinter",
+    "Singer"
+   ],
+   "uji_jujur": "Apakah saya membaca polanya, atau menyimpulkan ulah pesaing karena itu yang paling enak dipercaya?",
+   "no_lama": 68
+  },
+  {
+   "no": 23,
+   "pisau": "Silib",
+   "bab": "Bab 5",
+   "protokol": "Audit krono-politik: urgensi dan penundaan",
+   "waluya": [
+    "Pinter",
+    "Singer"
+   ],
+   "uji_jujur": "Apakah saya menangkap dua kata itu dari teksnya, atau dari kecemasan saya sendiri soal pekerjaan?",
+   "no_lama": 71
+  },
+  {
+   "no": 24,
+   "pisau": "Siloka, Silib",
+   "bab": "Bab 5, Bab 6",
+   "protokol": "Bedah doktrin naratif gotong royong",
+   "waluya": [
+    "Bener",
+    "Bageur"
+   ],
+   "uji_jujur": "Apakah saya menunjuk perpindahan risiko itu demi kelompok, atau karena tidak mau uang saya keluar?",
+   "no_lama": 72
+  },
+  {
+   "no": 25,
+   "pisau": "Simbol, Siloka",
+   "bab": "Bab 6, Bab 7",
+   "protokol": "Audit kuasa simbol dan pencitraan",
+   "waluya": [
+    "Bageur",
+    "Bener"
+   ],
+   "uji_jujur": "Apakah saya menyebut penerima sebagai yang menanggung, atau sedang menghakimi niat orang yang beramal?",
+   "no_lama": 75
+  },
+  {
+   "no": 27,
+   "pisau": "Sindir, Sampir",
+   "bab": "Bab 5",
+   "protokol": "Forensik niat tersembunyi",
+   "waluya": [
+    "Bener",
+    "Singer"
+   ],
+   "uji_jujur": "Apakah saya meminta permintaan itu tertulis demi kejelasan, atau untuk membuat kepala sekolah mundur?",
+   "no_lama": 64
+  },
+  {
+   "no": 36,
+   "pisau": "Siloka",
+   "bab": "Bab 6",
+   "protokol": "Uji otoritas naratif",
+   "waluya": [
+    "Pinter",
+    "Bener"
+   ],
+   "uji_jujur": "Apakah saya menguji sebagian lahan karena itu jalan membuktikannya, atau karena tidak berani menolak penyuluh?",
+   "no_lama": 70
+  }
+ ]
+}

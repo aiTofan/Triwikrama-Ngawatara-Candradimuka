@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { auth } from "./firebase";
-import { GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, signInAnonymously, linkWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, signInAnonymously, linkWithPopup, signInWithCredential } from "firebase/auth";
 import { penggunaService } from "./services/penggunaService";
 
 export async function startAnonymousLogin(nama) {
@@ -22,6 +22,9 @@ export async function startAnonymousLogin(nama) {
 
 export async function startLogin() {
   const provider = new GoogleAuthProvider();
+  provider.setCustomParameters({
+    prompt: 'select_account'
+  });
   let user;
   try {
     if (auth.currentUser && auth.currentUser.isAnonymous) {
@@ -30,9 +33,13 @@ export async function startLogin() {
         user = result.user;
       } catch (linkError) {
         if (linkError.code === 'auth/credential-already-in-use') {
-          await signOut(auth);
-          const result = await signInWithPopup(auth, provider);
-          user = result.user;
+          const credential = GoogleAuthProvider.credentialFromError(linkError);
+          if (credential) {
+            const result = await signInWithCredential(auth, credential);
+            user = result.user;
+          } else {
+            throw linkError;
+          }
         } else {
           throw linkError;
         }
@@ -50,6 +57,10 @@ export async function startLogin() {
 
     return user;
   } catch (error) {
+    if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/cancelled-popup-request') {
+      console.log('User closed the login popup.');
+      return null;
+    }
     console.error("Error signing in", error);
     throw error;
   }
@@ -79,7 +90,8 @@ export function useAuth() {
           email: firebaseUser.email,
           nama_tampilan: firebaseUser.displayName,
           avatar_url: firebaseUser.photoURL,
-          role: 'user'
+          role: 'user',
+          isAnonymous: firebaseUser.isAnonymous
         };
         try {
           const profileRes = await penggunaService.ambilProfil(firebaseUser.uid);

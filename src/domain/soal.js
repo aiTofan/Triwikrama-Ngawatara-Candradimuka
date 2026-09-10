@@ -7,6 +7,9 @@ export const TINGKAT = {
 export const JENIS = {
   INTI: 'inti',
   PEMERIKSA: 'pemeriksa',
+  TANPA_JANGKAR: 'tanpa-jangkar',
+  BERJANGKAR: 'berjangkar',
+  JANGKAR_PALSU: 'jangkar-palsu'
 };
 
 export const KOLOM = {
@@ -30,10 +33,21 @@ export function normalisasiTingkat(tingkat) {
   return null; // return null for unknown
 }
 
-export function normalisasiJenis(jenis) {
-  if (!jenis) return JENIS.INTI;
-  const str = String(jenis).toLowerCase().trim();
+export function normalisasiJenis(jenis, baris = null, warningsList = null) {
+  if (!jenis) {
+      if (warningsList && baris !== null) warningsList.push({ baris, alasan: "Jenis kosong, dilipat menjadi 'inti'" });
+      return JENIS.INTI;
+  }
+  const str = String(jenis).toLowerCase().replace(/[\s_-]+/g, '');
+  if (str === 'inti') return JENIS.INTI;
   if (str === 'pemeriksa') return JENIS.PEMERIKSA;
+  if (str === 'tanpajangkar') return JENIS.TANPA_JANGKAR;
+  if (str === 'berjangkar') return JENIS.BERJANGKAR;
+  if (str === 'jangkarpalsu') return JENIS.JANGKAR_PALSU;
+  
+  if (warningsList && baris !== null) {
+      warningsList.push({ baris, alasan: `Jenis soal '${jenis}' tidak dikenali, dilipat menjadi 'inti'` });
+  }
   return JENIS.INTI; // everything else is considered normal (inti)
 }
 

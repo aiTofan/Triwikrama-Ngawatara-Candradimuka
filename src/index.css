@@ -25,28 +25,6 @@
   --disk-tepi: rgba(210,167,91,0.22);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --ground: #EDEFEC;
-    --ground-2: #E4E8E4;
-    --panel: #F6F8F6;
-    --line: #C8D2CC;
-    --line-2: #B3C1B9;
-    --ink: #0E1413;
-    --ink-2: #46564F;
-    --ink-3: #6C7C74;
-    --patina: #2A6B5A;
-    --gold: #8E6E22;
-    --amber: #A96C22;
-    --s25: #8B3A2C;
-    --s50: #A96C22;
-    --s75: #4A7A52;
-    --s100: #2A6B5A;
-
-    --disk-garis: rgba(42,107,90,0.26);
-    --disk-tepi: rgba(142,110,34,0.20);
-  }
-}
 
 * {
   box-sizing: border-box;
@@ -60,7 +38,7 @@ html, body {
 }
 
 body {
-  font-family: "Archivo", system-ui, sans-serif;
+  font-family: Verdana, Arial, sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.62;
@@ -96,16 +74,27 @@ body {
   padding: 40px 24px 120px;
   flex: 1;
 }
+.cd-top-menu-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
 @media (max-width: 640px) {
   .cd-col { padding: 28px 18px 120px; }
+  .cd-top-menu-inner { padding: 0 18px; }
 }
 
 /* ===== Typography ===== */
-.serif { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; }
+.serif { font-family: Verdana, Arial, sans-serif; font-weight: 400; }
 .mono { font-family: "JetBrains Mono", monospace; }
 
 .cd-h1 {
-  font-family: "Instrument Serif", Georgia, serif;
+  font-family: Verdana, Arial, sans-serif;
   font-weight: 400;
   font-size: 44px;
   line-height: 1.08;
@@ -116,7 +105,7 @@ body {
 @media (min-width: 640px) { .cd-h1 { font-size: 60px; } }
 
 .cd-h2 {
-  font-family: "Instrument Serif", Georgia, serif;
+  font-family: Verdana, Arial, sans-serif;
   font-weight: 400;
   font-size: 30px;
   line-height: 1.15;
@@ -145,7 +134,7 @@ a:hover { text-decoration: underline; }
 .cd-field { display: block; margin: 0 0 18px; }
 .cd-field > label {
   display: block;
-  font-family: "Archivo", system-ui, sans-serif;
+  font-family: Verdana, Arial, sans-serif;
   font-weight: 500;
   font-size: 14px;
   color: var(--ink);
@@ -157,7 +146,7 @@ a:hover { text-decoration: underline; }
   border: 1px solid var(--line);
   border-radius: 2px;
   color: var(--ink);
-  font-family: "Archivo", system-ui, sans-serif;
+  font-family: Verdana, Arial, sans-serif;
   font-size: 16px;
   padding: 11px 13px;
   outline: none;
@@ -172,7 +161,7 @@ a:hover { text-decoration: underline; }
   color: var(--ground);
   border: 1px solid var(--patina);
   border-radius: 2px;
-  font-family: "Archivo", system-ui, sans-serif;
+  font-family: Verdana, Arial, sans-serif;
   font-weight: 500;
   font-size: 15px;
   padding: 12px 22px;
@@ -189,7 +178,7 @@ a:hover { text-decoration: underline; }
   color: var(--ink);
   border: 1px solid var(--line-2);
   border-radius: 2px;
-  font-family: "Archivo", system-ui, sans-serif;
+  font-family: Verdana, Arial, sans-serif;
   font-weight: 500;
   font-size: 15px;
   padding: 12px 22px;
@@ -200,7 +189,7 @@ a:hover { text-decoration: underline; }
 .cd-btn-ghost:hover { border-color: var(--patina); text-decoration: none; }
 
 /* ===== Nav / small links ===== */
-.cd-navlinks { display: flex; gap: 22px; margin-top: 30px; }
+.cd-navlinks { display: flex; flex-wrap: wrap; justify-content: center; gap: 22px; margin-top: 30px; }
 .cd-navlinks a {
   font-family: "JetBrains Mono", monospace;
   font-size: 13px;
@@ -214,7 +203,7 @@ a:hover { text-decoration: underline; }
   margin-bottom: 30px;
 }
 .cd-brand {
-  font-family: "Instrument Serif", Georgia, serif;
+  font-family: Verdana, Arial, sans-serif;
   font-size: 22px;
   color: var(--ink);
 }
@@ -278,7 +267,7 @@ a:hover { text-decoration: underline; }
 .kropak-hole.right { right: 7px; }
 
 .skenario-teks {
-  font-family: "Instrument Serif", Georgia, serif;
+  font-family: Verdana, Arial, sans-serif;
   font-size: 19px;
   line-height: 1.5;
   color: var(--ink);
@@ -302,7 +291,7 @@ a:hover { text-decoration: underline; }
   border-left: 2px solid var(--line);
   border-radius: 2px;
   padding: 14px 16px;
-  font-family: "Archivo", system-ui, sans-serif;
+  font-family: Verdana, Arial, sans-serif;
   font-size: 15px;
   line-height: 1.6;
   color: var(--ink);
@@ -332,7 +321,7 @@ a:hover { text-decoration: underline; }
 
 /* ===== Result ===== */
 .hasil-kategori {
-  font-family: "Instrument Serif", Georgia, serif;
+  font-family: Verdana, Arial, sans-serif;
   font-size: 52px;
   line-height: 1.05;
   color: var(--ink);
@@ -383,7 +372,7 @@ a:hover { text-decoration: underline; }
   border: none;
   border-bottom: 2px solid transparent;
   color: var(--ink-2);
-  font-family: "Archivo", system-ui, sans-serif;
+  font-family: Verdana, Arial, sans-serif;
   font-weight: 500;
   font-size: 15px;
   padding: 10px 6px;
@@ -399,7 +388,7 @@ a:hover { text-decoration: underline; }
   padding: 34px 32px;
 }
 .sertifikat-preview .body {
-  font-family: "Instrument Serif", Georgia, serif;
+  font-family: Verdana, Arial, sans-serif;
   font-size: 22px;
   line-height: 1.4;
   color: var(--ink);

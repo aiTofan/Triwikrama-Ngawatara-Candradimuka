@@ -4,7 +4,13 @@ import { jalankanOperasi, db, collection, query, where, getDocs, writeBatch, doc
 import { TINGKAT, JENIS, KOLOM, validasiSoal, sidikJariSoal, buatVersiPublik, normalisasiTingkat, normalisasiJenis } from "../domain/soal";
 
 export const soalService = {
+  _cachePool: {},
+  _cacheStats: { data: null, timestamp: 0 },
   ambilPoolSoal: async (tingkat = TINGKAT.BHURLOKA) => {
+    const now = Date.now();
+    if (soalService._cachePool[tingkat] && (now - soalService._cachePool[tingkat].timestamp < 3600000)) {
+       return soalService._cachePool[tingkat].data;
+    }
     return jalankanOperasi(async () => {
       const q = query(collection(db, KOLEKSI.SOAL_PUBLIK), where(KOLOM.TINGKAT, '==', tingkat));
       const snap = await getDocs(q);
@@ -12,14 +18,19 @@ export const soalService = {
       const pemeriksa = [];
       snap.forEach(d => {
         const data = { ...d.data(), id: d.id };
-        if (data[KOLOM.JENIS] === JENIS.PEMERIKSA) pemeriksa.push(data);
+        if (data[KOLOM.JENIS] === JENIS.PEMERIKSA || data[KOLOM.JENIS] === JENIS.JANGKAR_PALSU) pemeriksa.push(data);
         else inti.push(data);
       });
+      soalService._cachePool[tingkat] = { data: { inti, pemeriksa }, timestamp: Date.now() };
       return { inti, pemeriksa };
     });
   },
   
   ambilStatistikSoal: async () => {
+    const now = Date.now();
+    if (now - soalService._cacheStats.timestamp < 300000 && soalService._cacheStats.data) {
+       return soalService._cacheStats.data;
+    }
     return jalankanOperasi(async () => {
       const snap = await getDocs(collection(db, KOLEKSI.BANK_SOAL));
       const stats = {};
@@ -27,14 +38,15 @@ export const soalService = {
         const data = d.data();
         const t = data[KOLOM.TINGKAT];
         const j = data[KOLOM.JENIS];
-        if (!stats[t]) stats[t] = { inti: 0, pemeriksa: 0, total: 0 };
-        if (j === JENIS.PEMERIKSA) {
-          stats[t].pemeriksa++;
+        if (!stats[t]) stats[t] = { inti: 0, pemeriksa: 0, 'tanpa-jangkar': 0, berjangkar: 0, 'jangkar-palsu': 0, total: 0 };
+        if (stats[t][j] !== undefined) {
+           stats[t][j]++;
         } else {
-          stats[t].inti++;
+           stats[t].inti++; // fallback
         }
         stats[t].total++;
       });
+      soalService._cacheStats = { data: stats, timestamp: Date.now() };
       return stats;
     });
   },
@@ -43,10 +55,12 @@ export const soalService = {
     return jalankanOperasi(async () => {
       let count = 0;
       let duplicated = 0;
+      let updatedJenis = 0;
       let rejected = 0;
       const rejectedList = [];
       let batch = writeBatch(db);
       let opCount = 0;
+      let failedOptionsCount = 0;
       
       for (let i = 0; i < soalArray.length; i++) {
         const q = soalArray[i];
@@ -66,7 +80,7 @@ export const soalService = {
           continue;
         }
         q[KOLOM.TINGKAT] = normTingkat;
-        q[KOLOM.JENIS] = normalisasiJenis(q[KOLOM.JENIS]);
+        q[KOLOM.JENIS] = normalisasiJenis(q[KOLOM.JENIS], rowNum, rejectedList);
 
         if (!q[KOLOM.PILIHAN] || q[KOLOM.PILIHAN].length !== 4) {
           rejected++;
@@ -74,10 +88,11 @@ export const soalService = {
           continue;
         }
 
-        const scores = q[KOLOM.PILIHAN].map(p => parseInt(p[KOLOM.SKOR], 10)).sort();
-        if (scores.join(',') !== "25,50,75,100") {
+        const scores = q[KOLOM.PILIHAN].map(p => Number(p[KOLOM.SKOR]));
+        const uniqueScores = new Set(scores);
+        if (uniqueScores.size !== 4 || scores.some(isNaN)) {
           rejected++;
-          rejectedList.push({ baris: rowNum, alasan: "Skor tidak unik 25, 50, 75, 100" });
+          rejectedList.push({ baris: rowNum, alasan: "Skor tidak valid atau tidak unik di antara 4 pilihan" });
           continue;
         }
 
@@ -85,7 +100,7 @@ export const soalService = {
         q[KOLOM.PILIHAN] = q[KOLOM.PILIHAN].map(p => ({
           ...p,
           [KOLOM.OPSI_ID]: p[KOLOM.OPSI_ID] || crypto.randomUUID().slice(0, 8),
-          [KOLOM.SKOR]: parseInt(p[KOLOM.SKOR], 10)
+          [KOLOM.SKOR]: Number(p[KOLOM.SKOR])
         }));
 
         const hash = await sidikJariSoal(q);
@@ -94,8 +109,22 @@ export const soalService = {
         // Duplicate check
         const docSnap = await getDoc(docRefBank);
         if (docSnap.exists()) {
-          duplicated++;
-          rejectedList.push({ baris: rowNum, alasan: "Sidik jari (duplikat) sudah ada" });
+          const existingData = docSnap.data();
+          if (existingData[KOLOM.JENIS] !== q[KOLOM.JENIS]) {
+             batch.update(docRefBank, { [KOLOM.JENIS]: q[KOLOM.JENIS], updated_by: userUid });
+             const docRefPublik = doc(db, KOLEKSI.SOAL_PUBLIK, hash);
+             batch.update(docRefPublik, { [KOLOM.JENIS]: q[KOLOM.JENIS] });
+             updatedJenis++;
+             opCount += 2;
+          } else {
+             duplicated++;
+          }
+          // Do not continue if opCount > 400 since we might need to commit.
+          if (opCount > 400) {
+            await batch.commit();
+            batch = writeBatch(db);
+            opCount = 0;
+          }
           continue;
         }
 
@@ -109,29 +138,36 @@ export const soalService = {
         opCount++;
         
         
-        const versiPublik = buatVersiPublik(q);
-        if (versiPublik.pilihan) {
-            let pArr = [...versiPublik.pilihan];
-            for (let i = pArr.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [pArr[i], pArr[j]] = [pArr[j], pArr[i]];
-            }
-            versiPublik.pilihan = pArr.map(p => {
-                const sk = sandiSkor(p.opsi_id, p.skor !== undefined ? p.skor : (p._skor !== undefined ? p._skor : 0));
-                return {
-                    opsi_id: p.opsi_id,
-                    teks: p.teks,
-                    sk: sk
-                };
+        const originalScores = {};
+        if (q[KOLOM.PILIHAN]) {
+            q[KOLOM.PILIHAN].forEach(p => {
+                originalScores[p[KOLOM.OPSI_ID]] = p[KOLOM.SKOR] !== undefined ? Number(p[KOLOM.SKOR]) : (p._skor !== undefined ? Number(p._skor) : null);
             });
         }
-        batch.set(docRefPublik, versiPublik);
 
-        opCount++;
-
-        count++;
+        const versiPublik = buatVersiPublik(q);
+        if (versiPublik.pilihan) {
+            versiPublik.pilihan = versiPublik.pilihan.map(p => {
+                const oriSkor = originalScores[p[KOLOM.OPSI_ID]];
+                if (oriSkor !== undefined && oriSkor !== null) {
+                    p.sk = sandiSkor(p[KOLOM.OPSI_ID], oriSkor);
+                } else {
+                    p.sk = sandiSkor(p[KOLOM.OPSI_ID], 0);
+                    failedOptionsCount++;
+                }
+                return p;
+            });
+        }
         
-        if (opCount >= 398) { // max 400
+        batch.set(docRefPublik, {
+          ...versiPublik,
+          created_at: new Date().toISOString(),
+          updated_by: userUid
+        });
+        opCount++;
+        count++;
+
+        if (opCount > 400) {
           await batch.commit();
           batch = writeBatch(db);
           opCount = 0;
@@ -142,8 +178,8 @@ export const soalService = {
         await batch.commit();
       }
       
-      return { count, duplicated, rejected, rejectedList };
-    });
+      return { count, duplicated, updatedJenis, rejected, rejectedList, failedOptionsCount };
+    }, 60000); // Set timeout ke 60 detik untuk unggah JSON
   },
 
     sinkronkanSoalPublik: async () => {
@@ -152,6 +188,7 @@ export const soalService = {
       let batch = writeBatch(db);
       let opCount = 0;
       let count = 0;
+      let failedOptionsCount = 0;
       for (const d of snap.docs) {
         const docRefBank = doc(db, KOLEKSI.BANK_SOAL, d.id);
         const docRefPublik = doc(db, KOLEKSI.SOAL_PUBLIK, d.id);
@@ -176,6 +213,13 @@ export const soalService = {
         }
 
         
+        const originalScores = {};
+        if (q[KOLOM.PILIHAN]) {
+            q[KOLOM.PILIHAN].forEach(p => {
+                originalScores[p[KOLOM.OPSI_ID]] = p[KOLOM.SKOR] !== undefined ? Number(p[KOLOM.SKOR]) : (p._skor !== undefined ? Number(p._skor) : null);
+            });
+        }
+
         const versiPublik = buatVersiPublik(q);
         if (versiPublik.pilihan) {
             let pArr = [...versiPublik.pilihan];
@@ -184,10 +228,16 @@ export const soalService = {
                 [pArr[i], pArr[j]] = [pArr[j], pArr[i]];
             }
             versiPublik.pilihan = pArr.map(p => {
-                const sk = sandiSkor(p.opsi_id, p.skor !== undefined ? p.skor : (p._skor !== undefined ? p._skor : 0));
+                const nilai = originalScores[p.opsi_id || p[KOLOM.OPSI_ID]];
+                let sk = null;
+                if ([0, 25, 50, 52.8, 75, 85.2, 96.3, 100].includes(nilai)) {
+                    sk = sandiSkor(p.opsi_id || p[KOLOM.OPSI_ID], nilai);
+                } else {
+                    failedOptionsCount++;
+                }
                 return {
-                    opsi_id: p.opsi_id,
-                    teks: p.teks,
+                    opsi_id: p.opsi_id || p[KOLOM.OPSI_ID],
+                    teks: p.teks || p[KOLOM.TEKS],
                     sk: sk
                 };
             });
@@ -205,8 +255,8 @@ export const soalService = {
       if (opCount > 0) {
         await batch.commit();
       }
-      return count;
-    });
+      return `${count} (opsi gagal disandikan: ${failedOptionsCount})`;
+    }, 60000);
   },
 
   samakanOpsiId: async () => {
@@ -254,6 +304,6 @@ export const soalService = {
          await batch.commit();
       }
       return count;
-    });
+    }, 60000);
   }
 };

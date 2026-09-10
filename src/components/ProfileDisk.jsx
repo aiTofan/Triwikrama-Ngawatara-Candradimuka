@@ -1,7 +1,12 @@
 import { useEffect, useRef } from "react";
 import { geodesik } from "../lib/geometri";
 
-const STATE_VAR = { 25: "--s25", 50: "--s50", 75: "--s75", 100: "--s100" };
+const getStateVar = (skor) => {
+  if (skor <= 0) return "--line-2";
+  if (skor <= 53) return "--s25"; // Cicing
+  if (skor <= 86) return "--s50"; // Nyaring
+  return "--s75"; // Eling
+};
 
 // The result visual. Reuses geodesik(). One geodesic per answered question,
 // coloured by the score the participant chose.
@@ -35,7 +40,7 @@ export const ProfileDisk = ({ scores }) => {
       for (let i = 0; i < n; i++) {
         const a = 2 * Math.PI * i / n;
         const b = 2 * Math.PI * ((i + Math.floor(n / 2) - 1) % n) / n;
-        ctx.strokeStyle = cs.getPropertyValue(STATE_VAR[answered[i]] || "--line-2").trim();
+        ctx.strokeStyle = cs.getPropertyValue(getStateVar(answered[i])).trim();
         geodesik(ctx, cx, cy, R, a, b);
       }
     };

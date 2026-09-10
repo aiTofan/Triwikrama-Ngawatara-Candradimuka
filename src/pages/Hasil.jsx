@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Layout } from "../components/Layout";
+import { Loader, SkeletonResult } from "../components/Loader";
 import { ProfileDisk } from "../components/ProfileDisk";
 import { ResultMap } from "../components/ResultMap";
-import { useAuth } from "../auth";
+import { useAuth, startLogin } from "../auth";
 import { sesiService } from "../services/sesiService";
 import { soalService } from "../services/soalService";
 import { CONFIG } from "../config";
@@ -51,12 +52,25 @@ export default function Hasil() {
           }
         }
         
-        if (s.peserta_id !== user.uid) throw new Error("Forbidden");
+        
+        let hasLocalAccess = false;
+        const offlineKey = 'offline_session_' + sesiId;
+        if (localStorage.getItem(offlineKey)) {
+           const parsed = JSON.parse(localStorage.getItem(offlineKey));
+           if (parsed.id === s.id) {
+               hasLocalAccess = true;
+           }
+        }
+        
+        if (s.peserta_id !== user.uid && !hasLocalAccess) {
+           throw new Error("Forbidden");
+        }
+
         
         const getKategori = (skor) => {
           if (skor === undefined || skor === null) return { nama: "Menunggu Kalkulasi", desc: "Sistem sedang mengkalkulasi skor Anda" };
-          if (skor <= 59) return { nama: "Kesadaran Cicing", desc: "diam dan bereaksi dari rasa, emosi atau kebiasaan" };
-          if (skor <= 84) return { nama: "Kesadaran Nyaring", desc: "sudah bangun dan melihat jernih" };
+          if (skor <= 53) return { nama: "Kesadaran Cicing", desc: "diam dan bereaksi dari rasa, emosi atau kebiasaan" };
+          if (skor <= 86) return { nama: "Kesadaran Nyaring", desc: "sudah bangun dan melihat jernih" };
           return { nama: "Kesadaran Eling", desc: "sadar, berdaulat, dan menindaklanjuti apa yang dilihatnya" };
         };
         const kat = getKategori(s.skor);
@@ -112,6 +126,7 @@ export default function Hasil() {
           jenis: s.jenis, 
           tier_nama: TIER_BY_KEY[s.jenis],
           skor: s.skor, status: s.status, 
+          gagal_dinilai: s.gagal_dinilai,
           kategori: kat.nama, 
           kategori_desc: kat.desc,
           kategori_paragraf: `${kat.nama} — ${kat.desc}`,
@@ -147,6 +162,37 @@ export default function Hasil() {
         return;
       }
       
+      if (user && user.isAnonymous) {
+        try {
+           const linkedUser = await startLogin();
+           if (!linkedUser) {
+             setBusy(false);
+             return;
+           }
+           try {
+             const { addDoc, collection } = await import("firebase/firestore");
+             const { db } = await import("../firebase");
+             const offlineDataStr = localStorage.getItem('offline_session_' + sesiId);
+             if (offlineDataStr) {
+                 const offlineData = JSON.parse(offlineDataStr);
+                 if (offlineData.peserta_id !== linkedUser.uid) {
+                    const payload = { ...offlineData, peserta_id: linkedUser.uid };
+                    delete payload.id;
+                    const docRef = await addDoc(collection(db, "sessions"), payload);
+                    const newSessionData = { ...payload, id: docRef.id };
+                    localStorage.setItem('offline_session_' + docRef.id, JSON.stringify(newSessionData));
+                    window.location.href = "/hasil/" + docRef.id;
+                    return;
+                 }
+             }
+           } catch (migErr) { console.error("Migration error", migErr); }
+        } catch (authErr) {
+           setErr("Kamu harus login dengan akun Google untuk melanjutkan. Jika jendela masuk (popup) terblokir, mohon izinkan popup di pengaturan peramban Anda.");
+           setBusy(false);
+           return;
+        }
+      }
+      
       const tier = TIER_BY_KEY[nextTier];
       
       const poolResult = await soalService.ambilPoolSoal(tier.match);
@@ -158,7 +204,8 @@ export default function Hasil() {
 
       const { inti: intiPool, pemeriksa: pemeriksaPool } = poolResult.data;
       
-      const actualTarget = CONFIG.QUOTAS[tier.match] || tier.target;
+      const quotas = await import('../services/pengaturanService').then(m => m.pengaturanService.getQuotas());
+      const actualTarget = quotas[tier.match] || tier.target;
       const hasPemeriksa = pemeriksaPool.length > 0;
       const requiredInti = hasPemeriksa ? actualTarget - 1 : actualTarget;
 
@@ -180,7 +227,8 @@ export default function Hasil() {
           ...it, 
           [KOLOM.PILIHAN]: shuffle(it[KOLOM.PILIHAN] || it.pilihan).map(p => ({ 
             [KOLOM.TEKS]: p[KOLOM.TEKS] || p.teks,
-            [KOLOM.OPSI_ID]: p[KOLOM.OPSI_ID] || p.token || crypto.randomUUID().slice(0, 8)
+            [KOLOM.OPSI_ID]: p[KOLOM.OPSI_ID] || p.token || crypto.randomUUID().slice(0, 8),
+            sk: p.sk
           })) 
         };
       });
@@ -218,7 +266,7 @@ export default function Hasil() {
   };
 
   if (err) return <Layout><p className="err">{err}</p></Layout>;
-  if (!data) return <Layout><p className="cd-muted">Menyusun hasil…</p></Layout>;
+  if (!data) return <Layout><Loader /><SkeletonResult /></Layout>;
 
   return (
     <Layout>
@@ -229,21 +277,25 @@ export default function Hasil() {
       <h1 className="cd-h1" style={{ fontSize: 40, letterSpacing: "-0.01em" }}>Profil Kesadaranmu</h1>
       
       <div className="hasil-hero" data-testid="hasil-hero" style={{ textAlign: 'center' }}>
-        {data.skor === undefined && (
-          <button className="cd-btn" style={{ marginBottom: 16 }} onClick={async () => {
-             const { hitungSkorDariPublik } = await import('../penilaian');
-             const { sesiService } = await import('../services/sesiService');
-             const raw = await sesiService.ambilSesi(data.sesi_id);
-             const hasil = hitungSkorDariPublik(raw);
-             await sesiService.updateSesi(data.sesi_id, {
-                skor: hasil.skor, skor_mentah: hasil.skor_mentah, disk: hasil.disk,
-                penalti_jebakan: hasil.penalti_jebakan, status: 'selesai'
-             });
-             window.location.reload();
-          }}>Hitung Ulang Skor</button>
+        {(data.skor === undefined || data.gagal_dinilai) && (
+          <div style={{ marginBottom: 16 }}>
+             {data.gagal_dinilai && <p style={{ color: 'var(--alert)', marginBottom: 8, fontSize: '14px' }}>⚠️ Maaf, terjadi kegagalan saat mencocokkan beberapa skor jawaban Anda. Klik tombol di bawah ini untuk mencoba menghitung ulang.</p>}
+             <button className="cd-btn" onClick={async () => {
+                const { hitungSkorDariPublik } = await import('../penilaian');
+                const { sesiService } = await import('../services/sesiService');
+                const raw = await sesiService.ambilSesi(data.sesi_id);
+                const hasil = hitungSkorDariPublik(raw);
+                await sesiService.updateSesi(data.sesi_id, {
+                   skor: hasil.skor, skor_mentah: hasil.skor_mentah, disk: hasil.disk,
+                   penalti_jebakan: hasil.penalti_jebakan, status: 'selesai',
+                   gagal_dinilai: hasil.gagal_dinilai, gagal_count: hasil.gagal_count
+                });
+                window.location.reload();
+             }}>Hitung Ulang Skor</button>
+          </div>
         )}
         <p className="cd-h1" style={{ fontSize: data.skor !== undefined ? 96 : 32, margin: 0, lineHeight: 1 }}>
-          {(data.status === 'selesai' || data.status === 'terverifikasi') && data.skor !== undefined && data.skor !== null ? `${data.skor}%` : ''}
+          {(data.status === 'selesai' || data.status === 'terverifikasi') && data.skor !== undefined && data.skor !== null ? `${Number(data.skor).toFixed(1).replace(/\.0$/, '')}%` : ''}
         </p>
         <p className="cd-lead" style={{ marginTop: 8 }}>{data.kategori}</p>
         <p className="cd-muted">{data.kategori_desc}</p>
@@ -252,10 +304,13 @@ export default function Hasil() {
       {data.disk && data.disk.length > 0 && (
         <div style={{ marginTop: 32 }}>
           <p className="cd-label">Distribusi Pilihan</p>
-          <div style={{ height: 300, width: '100%', position: 'relative' }}>
+          <div style={{ width: '100%', position: 'relative' }}>
             <ProfileDisk scores={data.disk} />
           </div>
-          <p className="cd-faint" style={{ marginTop: 12, fontSize: 13 }}>Tiap bilah mewakili satu skenario dalam ujian ini. Panjang bilah menunjukkan tingkat kejernihan dari respon yang kamu pilih.</p>
+          <p className="cd-faint" style={{ marginTop: 12, fontSize: 13, textAlign: 'center' }}>
+            Tiap bilah mewakili satu skenario dalam ujian ini.<br />
+            Panjang bilah menunjukkan tingkat kejernihan dari respon yang kamu pilih.
+          </p>
         </div>
       )}
 
@@ -270,6 +325,50 @@ export default function Hasil() {
         <p className="cd-label" style={{ marginBottom: 12 }}>Peta Perjalanan Kesadaran</p>
         <ResultMap peta={data.peta} />
       </div>
+
+      {user && user.isAnonymous && (
+        <div style={{ marginTop: 32, padding: '24px', borderRadius: '16px', background: 'var(--surface)', border: '1px solid var(--line-2)' }}>
+          <h3 style={{ margin: '0 0 8px 0', fontSize: '18px', fontWeight: 600, color: 'var(--ink)' }}>Simpan Skor ke Mandala Peringkat</h3>
+          <p style={{ margin: '0 0 16px 0', fontSize: '14px', color: 'var(--ink-2)', lineHeight: 1.5 }}>
+            Daftar atau masuk menggunakan akun Google untuk menyimpan perolehan skormu ke dalam Mandala Peringkat secara permanen. Hal ini juga diperlukan untuk melanjutkan ujian ke tahap Ākāśa dan Paramārtha.
+          </p>
+          <button className="cd-btn-ghost" onClick={() => {
+             setBusy(true);
+             startLogin()
+               .then(async linkedUser => {
+                 if (linkedUser) {
+                   try {
+                     const { addDoc, collection } = await import("firebase/firestore");
+                     const { db } = await import("../firebase");
+                     const offlineDataStr = localStorage.getItem('offline_session_' + sesiId);
+                     if (offlineDataStr) {
+                         const offlineData = JSON.parse(offlineDataStr);
+                         if (offlineData.peserta_id !== linkedUser.uid) {
+                            const payload = { ...offlineData, peserta_id: linkedUser.uid };
+                            delete payload.id;
+                            const docRef = await addDoc(collection(db, "sessions"), payload);
+                            const newSessionData = { ...payload, id: docRef.id };
+                            localStorage.setItem('offline_session_' + docRef.id, JSON.stringify(newSessionData));
+                            window.location.href = "/hasil/" + docRef.id;
+                            return;
+                         }
+                     }
+                   } catch (migErr) { console.error("Migration error", migErr); }
+                   window.location.reload();
+                 } else {
+                   setBusy(false);
+                 }
+               })
+               .catch(authErr => {
+                 console.error(authErr);
+                 setErr("Gagal menghubungkan akun Google. Jika jendela masuk (popup) terblokir, mohon izinkan popup di pengaturan peramban Anda.");
+                 setBusy(false);
+               });
+          }} disabled={busy}>
+            {busy ? "Menyiapkan..." : "Masuk dengan Google"}
+          </button>
+        </div>
+      )}
 
       <div style={{ marginTop: 32 }}>
         <div style={{ display: "flex", gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>

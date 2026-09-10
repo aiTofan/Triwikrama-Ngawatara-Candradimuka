@@ -41,9 +41,11 @@ const denganTimeout = (promise, waktu = 3000) => {
 };
 
 // Fungsi tunggal penanganan operasi dan galat
-export const jalankanOperasi = async (operasi) => {
+export const listenerManager = { unsubscribes: [], add: (unsub) => listenerManager.unsubscribes.push(unsub), clearAll: () => { listenerManager.unsubscribes.forEach(unsub => { if (typeof unsub === "function") unsub(); }); listenerManager.unsubscribes = []; } };
+
+export const jalankanOperasi = async (operasi, customTimeout) => {
   try {
-    const hasil = await denganTimeout(operasi());
+    const hasil = await denganTimeout(operasi(), customTimeout || 3000);
     return { success: true, data: hasil, errorCode: null, message: 'Operasi berhasil' };
   } catch (error) {
     // Telan galat yang mungkin datang terlambat atau gagal

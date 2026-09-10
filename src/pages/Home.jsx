@@ -28,24 +28,56 @@ export default function Home() {
   const [err, setErr] = useState("");
   const [lanjut, setLanjut] = useState(null);
   const [guestName, setGuestName] = useState("");
+  const [maintenance, setMaintenance] = useState(false);
 
   useEffect(() => {
-    if (!loading && !user) {
-      (async () => {
-        try {
-          setBusy(true);
-          await signInAnonymously(auth);
-        } catch (e) {
-          console.error("[AUTH] Gagal signInAnonymously:", e.code, e);
-          if (e.code === 'auth/operation-not-allowed') {
-            setErr("Masuk anonim belum diaktifkan di Firebase, hubungi pengelola.");
-          } else {
-            setErr(`Gagal menyiapkan sesi tamu (${e.code || e.message}). Silakan periksa koneksi internet Anda dan coba lagi.`);
+    import('../services/pengaturanService').then(m => {
+      m.pengaturanService.getAppConfig().then(c => {
+        if (c.maintenance_mode) setMaintenance(true);
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      if (!user) {
+        (async () => {
+          try {
+            setBusy(true);
+            await signInAnonymously(auth);
+          } catch (e) {
+            console.error("[AUTH] Gagal signInAnonymously:", e.code, e);
+            if (e.code === 'auth/operation-not-allowed') {
+              setErr("Masuk anonim belum diaktifkan di Firebase, hubungi pengelola.");
+            } else {
+              setErr(`Gagal menyiapkan sesi tamu (${e.code || e.message}). Silakan periksa koneksi internet Anda dan coba lagi.`);
+            }
+          } finally {
+            setBusy(false);
           }
-        } finally {
-          setBusy(false);
-        }
-      })();
+        })();
+      } else {
+        // Cek jika ada sesi yang masih berjalan (titik henti)
+        (async () => {
+          try {
+            const res = await sesiService.ambilSesiAktif(user.uid);
+            if (res.success && res.data) {
+              const sesiBerjalan = res.data;
+              const TIER_BY_KEY = { bhurloka: 'Bhurloka', akasa: 'Ākāśa', paramartha: 'Paramārtha' };
+              setLanjut({
+                sesi_id: sesiBerjalan.id,
+                tier_nama: TIER_BY_KEY[sesiBerjalan.jenis] || sesiBerjalan.jenis,
+                posisi: sesiBerjalan.posisi || 0,
+                total: sesiBerjalan.soal_ids ? sesiBerjalan.soal_ids.length : 0
+              });
+            } else {
+              setLanjut(null);
+            }
+          } catch (e) {
+            console.error("Gagal memeriksa sesi aktif", e);
+          }
+        })();
+      }
     }
   }, [user, loading]);
 
@@ -89,7 +121,8 @@ export default function Home() {
 
       const { inti: intiPool, pemeriksa: pemeriksaPool } = poolResult.data;
 
-      const targetCount = CONFIG.QUOTAS[TINGKAT.BHURLOKA];
+      const quotas = await import('../services/pengaturanService').then(m => m.pengaturanService.getQuotas());
+      const targetCount = quotas[TINGKAT.BHURLOKA] || CONFIG.QUOTAS[TINGKAT.BHURLOKA];
       const hasPemeriksa = pemeriksaPool.length > 0;
       const requiredInti = hasPemeriksa ? targetCount - 1 : targetCount;
 
@@ -110,7 +143,8 @@ export default function Home() {
           ...it, 
           [KOLOM.PILIHAN]: shuffle(it[KOLOM.PILIHAN] || it.pilihan).map(p => ({ 
             [KOLOM.TEKS]: p[KOLOM.TEKS] || p.teks,
-            [KOLOM.OPSI_ID]: p[KOLOM.OPSI_ID] || p.token || crypto.randomUUID().slice(0, 8)
+            [KOLOM.OPSI_ID]: p[KOLOM.OPSI_ID] || p.token || crypto.randomUUID().slice(0, 8),
+            sk: p.sk
           })) 
         };
       });
@@ -150,42 +184,28 @@ export default function Home() {
 
   return (
     <Layout>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: '10px' }}>
-        <p className="cd-label cd-eyebrow" style={{ margin: 0 }}>Triwikramā · Ngawatāra Candradimuka</p>
-        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          {!loading && (
-            <button className="cd-btn-ghost" onClick={startLogin} style={{ padding: '6px 12px' }}>
-              {user && user.isAnonymous ? "Tautkan Akun Google" : "Masuk dengan Google"}
-            </button>
-          )}
-          {user && (
-            <Link to="/profil" className="cd-btn-ghost" style={{ padding: '6px 12px', textDecoration: 'none' }}>Profil</Link>
-          )}
-          {user && user.role === 'admin' && (
-            <Link to="/admin/dashboard" className="cd-btn" style={{ padding: '6px 12px', textDecoration: 'none', background: 'var(--ink)', color: 'var(--ground)' }}>Dasbor Admin</Link>
-          )}
-          {user && (
-            <button className="cd-btn-ghost" onClick={async () => {
-              await logoutAndClear();
-            }} style={{ padding: '6px 12px', color: 'var(--alert)' }}>Keluar</button>
-          )}
+      {maintenance && (!user || user.role !== 'admin') ? (
+        <div style={{ textAlign: 'center', marginTop: '10vh', padding: '40px 20px' }}>
+          <h1 className="cd-h1" style={{ fontSize: 32, marginBottom: 16 }}>Pemeliharaan Sistem</h1>
+          <p className="cd-lead" style={{ fontSize: 16, color: 'var(--ink-2)' }}>
+            Aplikasi sedang dalam mode perbaikan (maintenance). Silakan kembali lagi nanti.
+          </p>
         </div>
-      </div>
+      ) : (
+        <>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: '10px' }}>
+            <p className="cd-label cd-eyebrow" style={{ margin: 0 }}>Ngawatāra Candradimuka</p>
+            <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+              {/* Menu top bar dipindahkan ke komponen TopMenu di Layout.jsx */}
+            </div>
+          </div>
       
       <h1 className="cd-h1" data-testid="hook-question">Seberapa Jernih Kesadaranmu?</h1>
-      <p className="cd-lead" style={{ fontSize: 17 }} data-testid="hook-intro">
-        Uji Profil Kesadaran ini memetakan cara kamu membaca situasi pada satu kesempatan melalui
+      <p className="cd-lead" style={{ fontSize: 15 }} data-testid="hook-intro">
+        Uji Profil Kesadaran ini memetakan cara kamu membaca situasi dan bertindak melalui
         serangkaian skenario. Ini bukan ujian benar-salah, melainkan cermin bagi cara kesadaranmu
         bekerja saat berhadapan dengan keadaan nyata.
       </p>
-
-      {lanjut && (
-        <div className="notice" data-testid="lanjutkan-box">
-          <p style={{ color: "var(--ink)", fontWeight: 500 }}>Lanjutkan ujianmu</p>
-          <p>{lanjut.tier_nama} — soal ke {Math.min(lanjut.posisi + 1, lanjut.total)} dari {lanjut.total}.</p>
-          <button className="cd-btn" style={{ marginTop: 8 }} data-testid="lanjutkan-btn" onClick={() => nav(`/uji/${lanjut.sesi_id}`)}>Lanjutkan</button>
-        </div>
-      )}
 
       <div className="cd-block">
         {!user || !user.nama_tampilan ? (
@@ -215,19 +235,35 @@ export default function Home() {
             )}
           </div>
         )}
-        <button className="cd-btn" style={{ marginTop: 8 }} onClick={mulai} disabled={busy || loading} data-testid="mulai-btn">
-          {busy || loading ? "Menyiapkan…" : "Mulai Ujian"}
-        </button>
+
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap', marginTop: 8 }}>
+          <button className="cd-btn" onClick={mulai} disabled={busy || loading} data-testid="mulai-btn">
+            {busy || loading ? "Menyiapkan…" : (lanjut ? "Mulai dari Awal" : "Mulai Ujian")}
+          </button>
+          {lanjut && (
+            <button className="cd-btn-ghost" data-testid="lanjutkan-btn" onClick={() => nav(`/uji/${lanjut.sesi_id}`)} disabled={busy || loading} style={{ color: 'var(--patina)', borderColor: 'var(--patina)' }}>
+              Lanjutkan Ujian
+            </button>
+          )}
+        </div>
         <p className="cd-faint" style={{ marginTop: 12, fontSize: 13 }}>
-          Tahap 1: {TINGKAT.BHURLOKA} — Estimasi waktu {CONFIG.WAKTU_MENIT[TINGKAT.BHURLOKA]} menit
+          {lanjut 
+            ? `Kamu memiliki ujian yang belum selesai (Tahap ${lanjut.tier_nama}, Soal ${Math.min(lanjut.posisi + 1, lanjut.total)} dari ${lanjut.total}).`
+            : `Tahap 1: ${TINGKAT.BHURLOKA} — Estimasi waktu ${CONFIG.WAKTU_MENIT[TINGKAT.BHURLOKA]} menit`
+          }
         </p>
       </div>
 
       <div className="cd-navlinks">
-        <Link to="/papan" data-testid="link-papan">Peta Kejernihan</Link>
+        <Link to="/metodologi" data-testid="link-metodologi">Landasan Skenario</Link>
+        <Link to="/pustaka" data-testid="link-pustaka">Pustaka & Literatur</Link>
+        <Link to="/papan" data-testid="link-papan">Mandala Peringkat</Link>
+        <Link to="/kemitraan" data-testid="link-kemitraan">Kemitraan (B2B)</Link>
         <Link to="/pelatihan" data-testid="link-pelatihan">Pelatihan</Link>
-        <Link to="/harga" data-testid="link-harga">Harga</Link>
+        <Link to="/peluang" data-testid="link-peluang">Lisensi Pelatih</Link>
       </div>
+        </>
+      )}
     </Layout>
   );
 }

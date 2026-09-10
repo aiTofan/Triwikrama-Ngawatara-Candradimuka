@@ -1,0 +1,693 @@
+{
+ "keterangan": "Peta butir Bhurloka untuk laporan diagnostik. Berkas terpisah; struktur bank soal tidak diubah. Nomor sudah mengikuti penomoran baru; no_lama menyimpan nomor bank lama.",
+ "skala": {
+  "0": "Dikuasai",
+  "52.8": "Menghitung",
+  "85.2": "Jernih, berhenti",
+  "96.3": "Jernih, membumi"
+ },
+ "panca_waluya": {
+  "unsur": [
+   "Cageur",
+   "Bageur",
+   "Bener",
+   "Pinter",
+   "Singer"
+  ],
+  "jujur": "Bukan unsur keenam. Jujur adalah keharusan yang diterapkan di dalam kelima unsur. Tanpanya kelimanya tetap bisa dijalankan, tetapi dihitung di atas data yang sudah melengkung sejak awal. Rujukan: TNC Bab 2 dan Bab 9. Rumusan Panca Waluya di berkas NST adalah versi lama dan tidak dipakai.",
+  "kegagalan_tanpa_jujur": {
+   "Cageur": "merasa sehat padahal sedang menghindar",
+   "Bageur": "merasa berempati padahal sedang mencari pengakuan",
+   "Bener": "merasa benar padahal sedang membela kepentingan",
+   "Pinter": "merasa cerdas padahal sedang membenarkan yang sudah dipercayai lebih dulu",
+   "Singer": "merasa tangkas padahal sedang menikmati kesempatan bertindak"
+  }
+ },
+ "aturan_penulisan": [
+  "Bila skenario menetapkan peserta berada di pihak yang benar, jawaban 96.3 tidak boleh berupa pemeriksaan diri; ia harus menangani pihak atau bahaya yang sebenarnya lewat jalur yang sah.",
+  "Bila tidak ada pihak yang bersalah, pemeriksaan diri sah menjadi jawaban 96.3.",
+  "Pembeda keempat keadaan adalah apa yang mengendalikan tindakan dan ke mana pisaunya diarahkan; bukan keras atau lembut, cepat atau ditunda, prosedural atau spontan, terbuka atau berdua.",
+  "Keadaan 0 punya dua wajah: meledak (menyerang) dan mengkerut (menghindar karena takut)."
+ ],
+ "butir": [
+  {
+   "no": 1,
+   "pisau": "Prajna Jagratara",
+   "bab": "Bab 4",
+   "waluya": [
+    "Cageur",
+    "Pinter"
+   ],
+   "uji_jujur": "Apakah saya benar-benar ingin belajar darinya, atau sedang menutupi rasa tersaingi?",
+   "pemicu": "keberhasilan pesaing terdekat",
+   "no_lama": 6
+  },
+  {
+   "no": 2,
+   "pisau": "Silib",
+   "bab": "Bab 5",
+   "waluya": [
+    "Bener",
+    "Singer"
+   ],
+   "uji_jujur": "Apakah saya mengajak rekan-rekan karena angkanya perlu dicocokkan, atau karena tidak berani sendirian?",
+   "pemicu": "pemotongan upah sepihak, rekan memilih diam",
+   "no_lama": 51
+  },
+  {
+   "no": 3,
+   "pisau": "Sampir, Silib",
+   "bab": "Bab 3, Bab 5",
+   "waluya": [
+    "Pinter",
+    "Bener"
+   ],
+   "uji_jujur": "Apakah saya mencari rekaman utuhnya untuk tahu, atau untuk menemukan bahan yang membela pihak saya?",
+   "pemicu": "narasi viral menyerang kelompok yang didukung",
+   "no_lama": 1
+  },
+  {
+   "no": 4,
+   "pisau": "Prajna Jagratara",
+   "bab": "Bab 3, Bab 4",
+   "waluya": [
+    "Bener",
+    "Singer"
+   ],
+   "uji_jujur": "Apakah saya mengakui kekeliruan itu karena memang keliru, atau supaya terlihat berbesar hati?",
+   "pemicu": "harga diri dilukai di depan orang, sebagian tuduhan benar",
+   "no_lama": 2
+  },
+  {
+   "no": 5,
+   "pisau": "Prajna Jagratara",
+   "bab": "Bab 3, Bab 4",
+   "waluya": [
+    "Bageur",
+    "Bener"
+   ],
+   "uji_jujur": "Apakah saya mengakui instruksinya mudah terlewat karena memang begitu, atau supaya pelanggan berhenti marah?",
+   "pemicu": "kemarahan pelanggan, kesalahan sebagian di pihak sendiri",
+   "no_lama": 7
+  },
+  {
+   "no": 6,
+   "pisau": "Sindir, Prajna Jagratara",
+   "bab": "Bab 4, Bab 5",
+   "waluya": [
+    "Bageur",
+    "Singer"
+   ],
+   "uji_jujur": "Apakah saya menghentikan obrolan itu demi orang yang dibicarakan, atau supaya saya tidak ikut terlihat buruk?",
+   "pemicu": "diajak ikut membicarakan orang yang tidak hadir",
+   "no_lama": 3
+  },
+  {
+   "no": 7,
+   "pisau": "Silib, Prajna Jagratara",
+   "bab": "Bab 3, Bab 5",
+   "waluya": [
+    "Bener",
+    "Singer"
+   ],
+   "uji_jujur": "Apakah saya menanyakan dasar urutannya demi antrean, atau supaya orang itu dipermalukan petugas?",
+   "pemicu": "penyerobotan antrean berdalih hubungan kerabat",
+   "no_lama": 8
+  },
+  {
+   "no": 8,
+   "pisau": "Prajna Jagratara",
+   "bab": "Bab 3",
+   "waluya": [
+    "Cageur",
+    "Bageur"
+   ],
+   "uji_jujur": "Apakah saya menanyakan keinginan anak-anak, atau sedang mencari cara agar kekecewaan saya sendiri reda?",
+   "pemicu": "rencana panjang batal, tidak ada pihak yang bersalah",
+   "no_lama": 9
+  },
+  {
+   "no": 9,
+   "pisau": "Sampir, Prajna Jagratara",
+   "bab": "Bab 4, Bab 5",
+   "waluya": [
+    "Bener",
+    "Bageur"
+   ],
+   "uji_jujur": "Apakah saya menyebut nama rekan karena mereka memang mengerjakannya, atau supaya saya terlihat rendah hati?",
+   "pemicu": "pujian berlebihan dari bawahan",
+   "no_lama": 5
+  },
+  {
+   "no": 10,
+   "pisau": "Prajna Jagratara",
+   "bab": "Bab 3, Bab 4",
+   "waluya": [
+    "Bageur",
+    "Cageur"
+   ],
+   "uji_jujur": "Apakah saya menunda rapat demi anak saya, atau supaya saya tidak merasa bersalah sepanjang hari?",
+   "pemicu": "penolakan anak berbenturan dengan kepentingan sendiri",
+   "no_lama": 13
+  },
+  {
+   "no": 11,
+   "pisau": "Silib",
+   "bab": "Bab 5",
+   "waluya": [
+    "Bener",
+    "Singer"
+   ],
+   "uji_jujur": "Apakah tenggat itu untuk memberi ia kesempatan, atau formalitas sebelum saya melaporkannya?",
+   "pemicu": "karya dipakai orang lain tanpa penyebutan",
+   "no_lama": 59
+  },
+  {
+   "no": 12,
+   "pisau": "Prajna Jagratara",
+   "bab": "Bab 3",
+   "waluya": [
+    "Cageur",
+    "Bageur"
+   ],
+   "uji_jujur": "Apakah laporan itu demi keselamatan pengguna jalan lain, atau pelampiasan yang dibungkus prosedur?",
+   "pemicu": "provokasi mendadak, kesalahan jelas di pihak lain",
+   "no_lama": 4
+  },
+  {
+   "no": 13,
+   "pisau": "Prajna Jagratara",
+   "bab": "Bab 3, Bab 5",
+   "waluya": [
+    "Cageur",
+    "Bener"
+   ],
+   "uji_jujur": "Apakah saya menyampaikan keberatan itu untuk pengemudi lain juga, atau hanya untuk memulihkan nilai saya?",
+   "pemicu": "penilaian sepihak tanpa keterangan yang merugikan penghasilan",
+   "no_lama": 46
+  },
+  {
+   "no": 14,
+   "pisau": "Prajna Jagratara",
+   "bab": "Bab 4",
+   "waluya": [
+    "Bageur",
+    "Bener"
+   ],
+   "uji_jujur": "Apakah saya menemuinya berdua demi dia, atau supaya saya tidak menanggung akibat menegur terbuka?",
+   "pemicu": "pelanggaran kecil oleh orang yang disayangi",
+   "no_lama": 15
+  },
+  {
+   "no": 15,
+   "pisau": "Sampir",
+   "bab": "Bab 5",
+   "waluya": [
+    "Bener",
+    "Pinter"
+   ],
+   "uji_jujur": "Apakah saya menyebut harga terbaik dengan jujur, atau masih menyisakan ruang yang saya sembunyikan?",
+   "pemicu": "pembeli menawar dengan pembanding yang tidak sebanding",
+   "no_lama": 47
+  },
+  {
+   "no": 16,
+   "pisau": "Silib",
+   "bab": "Bab 5",
+   "waluya": [
+    "Pinter",
+    "Bener"
+   ],
+   "uji_jujur": "Apakah saya benar-benar akan memeriksanya, atau kalimat itu hanya cara halus menolak?",
+   "pemicu": "permintaan sumbangan dengan berkas yang tampak resmi",
+   "no_lama": 10
+  },
+  {
+   "no": 17,
+   "pisau": "Sindir, Silib",
+   "bab": "Bab 5",
+   "waluya": [
+    "Bageur",
+    "Singer"
+   ],
+   "uji_jujur": "Apakah saya mendatangi mereka untuk berkenalan, atau supaya terlihat paling waras di grup?",
+   "pemicu": "pembicaraan tentang orang yang belum pernah ditemui",
+   "no_lama": 49
+  },
+  {
+   "no": 18,
+   "pisau": "Prajna Jagratara, Silib",
+   "bab": "Bab 4",
+   "waluya": [
+    "Bener",
+    "Singer"
+   ],
+   "uji_jujur": "Apakah ketegasan ini untuk memperbaiki keadaan, atau untuk melepaskan kejengkelan saya?",
+   "pemicu": "keteledoran orang lain berdampak fatal - uji Silih Asah",
+   "no_lama": 12
+  },
+  {
+   "no": 19,
+   "pisau": "Prajna Jagratara, Sampir",
+   "bab": "Bab 3, Bab 5",
+   "waluya": [
+    "Cageur",
+    "Bener"
+   ],
+   "uji_jujur": "Apakah saya menonton ulang untuk memperbaiki diri, atau untuk mencari bukti bahwa murid itu keliru?",
+   "pemicu": "potongan rekaman menyudutkan, kesalahan sebagian di pihak sendiri",
+   "no_lama": 48
+  },
+  {
+   "no": 20,
+   "pisau": "Silib",
+   "bab": "Bab 5",
+   "waluya": [
+    "Pinter",
+    "Bageur"
+   ],
+   "uji_jujur": "Apakah saya mengabari kelompok tani apa pun hasilnya, termasuk bila ternyata kabarnya keliru?",
+   "pemicu": "kabar berantai mendesak menjelang musim tanam",
+   "no_lama": 52
+  },
+  {
+   "no": 21,
+   "pisau": "Silib",
+   "bab": "Bab 5",
+   "waluya": [
+    "Pinter",
+    "Singer"
+   ],
+   "uji_jujur": "Apakah saya membaca keterangan datanya, atau hanya menebak mana izin yang aman diberikan?",
+   "pemicu": "syarat izin yang tidak sebanding dengan kebutuhan",
+   "no_lama": 65
+  },
+  {
+   "no": 22,
+   "pisau": "Prajna Jagratara",
+   "bab": "Bab 3",
+   "waluya": [
+    "Cageur",
+    "Bageur"
+   ],
+   "uji_jujur": "Apakah saya melapor ke kepala puskesmas demi antrean besok, atau demi membersihkan nama saya?",
+   "pemicu": "kemarahan diarahkan kepada orang yang tidak bersalah",
+   "no_lama": 54
+  },
+  {
+   "no": 23,
+   "pisau": "Sampir, Prajna Jagratara",
+   "bab": "Bab 3, Bab 5",
+   "waluya": [
+    "Cageur",
+    "Pinter"
+   ],
+   "uji_jujur": "Apakah saya memeriksa rekam jejak sendiri, atau sedang mencari siapa yang bisa disalahkan atas linimasa saya?",
+   "pemicu": "pemicu berulang tanpa pihak lain yang bersalah",
+   "no_lama": 56
+  },
+  {
+   "no": 24,
+   "pisau": "Prajna Jagratara, Sindir",
+   "bab": "Bab 3, Bab 5",
+   "waluya": [
+    "Bener",
+    "Cageur"
+   ],
+   "uji_jujur": "Apakah angka yang saya sebutkan angka yang sebenarnya, atau angka yang membuat saya terlihat sudah berusaha?",
+   "pemicu": "tekanan kewajiban keluarga, tanpa lawan yang bisa dikonfrontasi",
+   "no_lama": 53
+  },
+  {
+   "no": 25,
+   "pisau": "Sampir, Prajna Jagratara",
+   "bab": "Bab 4, Bab 5",
+   "waluya": [
+    "Cageur",
+    "Pinter"
+   ],
+   "uji_jujur": "Apakah saya menanyakan bagian yang membosankan untuk memperbaiki karya, atau untuk membuktikan ia tidak punya alasan?",
+   "pemicu": "karya paling bermakna dinilai kosong di ruang terbuka",
+   "no_lama": 11
+  },
+  {
+   "no": 26,
+   "pisau": "Sampir, Silib",
+   "bab": "Bab 3, Bab 5",
+   "waluya": [
+    "Cageur",
+    "Bener"
+   ],
+   "uji_jujur": "Apakah saya membuka angkanya untuk menjernihkan, atau untuk mempermalukan penuduh saya?",
+   "pemicu": "nama baik diserang dengan bukti palsu",
+   "no_lama": 14
+  },
+  {
+   "no": 27,
+   "pisau": "Prajna Jagratara",
+   "bab": "Bab 3, Bab 4",
+   "waluya": [
+    "Bener",
+    "Cageur"
+   ],
+   "uji_jujur": "Apakah saya mengatakan sedang membutuhkannya dengan terus terang, atau memperhalusnya sampai tidak terdengar?",
+   "pemicu": "piutang yang tidak pernah disinggung, kebutuhan nyata",
+   "no_lama": 58
+  },
+  {
+   "no": 28,
+   "pisau": "Prajna Jagratara",
+   "bab": "Bab 4",
+   "waluya": [
+    "Bageur",
+    "Bener"
+   ],
+   "uji_jujur": "Apakah saya bersedia batas itu berlaku untuk saya sendiri, atau hanya menyebutnya agar terdengar adil?",
+   "pemicu": "kebiasaan anak yang juga kebiasaan orang tuanya",
+   "no_lama": 55
+  },
+  {
+   "no": 29,
+   "pisau": "Silib, Sandi",
+   "bab": "Bab 5, Bab 7",
+   "waluya": [
+    "Pinter",
+    "Bener"
+   ],
+   "uji_jujur": "Apakah saya benar-benar memeriksa angkanya, atau sudah menyimpulkan lebih dulu lalu mencari pembenaran?",
+   "pemicu": "diperlakukan tidak setara dalam urusan angka",
+   "no_lama": 61
+  },
+  {
+   "no": 30,
+   "pisau": "Silib",
+   "bab": "Bab 5",
+   "waluya": [
+    "Bener",
+    "Singer"
+   ],
+   "uji_jujur": "Apakah saya membaca tiga bagian itu untuk paham, atau supaya terlihat teliti di depan mereka?",
+   "pemicu": "tekanan waktu untuk menandatangani yang belum dibaca",
+   "no_lama": 74
+  },
+  {
+   "no": 31,
+   "pisau": "Prajna Jagratara, Sindir",
+   "bab": "Bab 3, Bab 4",
+   "waluya": [
+    "Bageur",
+    "Cageur"
+   ],
+   "uji_jujur": "Apakah saya bertanya kepada anak saya untuk mendengarnya, atau untuk memastikan tetangga itu keliru?",
+   "pemicu": "penghinaan tentang keluarga, terdengar oleh anak",
+   "no_lama": 50
+  },
+  {
+   "no": 32,
+   "pisau": "Prajna Jagratara",
+   "bab": "Bab 3",
+   "waluya": [
+    "Bener",
+    "Bageur"
+   ],
+   "uji_jujur": "Apakah saya bersedia menunggu karena pemiliknya butuh kepastian, atau karena berharap imbalan?",
+   "pemicu": "temuan berharga berbenturan dengan penghasilan hari itu",
+   "no_lama": 60
+  },
+  {
+   "no": 33,
+   "pisau": "Prajna Jagratara, Sampir",
+   "bab": "Bab 3, Bab 5",
+   "waluya": [
+    "Cageur",
+    "Pinter"
+   ],
+   "uji_jujur": "Apakah saya menonton ulang untuk memahami, atau untuk mencari bahan yang menguatkan marah saya?",
+   "pemicu": "pemicu murni internal, tanpa pihak lain",
+   "no_lama": 152
+  },
+  {
+   "no": 34,
+   "pisau": "Silib",
+   "bab": "Bab 5",
+   "waluya": [
+    "Pinter",
+    "Bageur"
+   ],
+   "uji_jujur": "Apakah saya mengabari orang tua saya karena mereka berisiko, atau supaya saya terlihat paling tahu?",
+   "pemicu": "penipuan berdalih ketentuan resmi, tekanan waktu",
+   "no_lama": 57
+  },
+  {
+   "no": 35,
+   "pisau": "Prajna Jagratara",
+   "bab": "Bab 3",
+   "waluya": [
+    "Cageur",
+    "Pinter"
+   ],
+   "uji_jujur": "Apakah saya menuliskannya untuk memutuskan jernih, atau untuk mencari pembenaran agar tetap membeli?",
+   "pemicu": "urgensi buatan, tanpa pihak lain yang bersalah",
+   "no_lama": 154
+  },
+  {
+   "no": 36,
+   "pisau": "Silib, Sampir",
+   "bab": "Bab 5",
+   "waluya": [
+    "Pinter",
+    "Bageur"
+   ],
+   "uji_jujur": "Apakah saya mengabarkan hasilnya karena orang perlu tahu, atau supaya terlihat lebih cermat dari yang lain?",
+   "pemicu": "kabar duka yang belum bisa dipastikan, sudah menyebar",
+   "no_lama": 153
+  },
+  {
+   "no": 37,
+   "pisau": "Prajna Jagratara",
+   "bab": "Bab 3",
+   "waluya": [
+    "Cageur"
+   ],
+   "uji_jujur": "Apakah saya menyebutkan kekecewaan itu dengan jujur, atau memilih yang paling enak didengar diri sendiri?",
+   "pemicu": "dorongan yang datang dari lelah, tanpa pihak lain",
+   "no_lama": 160
+  },
+  {
+   "no": 38,
+   "pisau": "Prajna Jagratara, Siloka",
+   "bab": "Bab 4, Bab 6",
+   "waluya": [
+    "Singer",
+    "Bener"
+   ],
+   "uji_jujur": "Apakah saya menyampaikan keberatan itu untuk yang mereka ejek, atau supaya keluar saya terlihat terhormat?",
+   "pemicu": "tekanan kelompok yang menutup perbedaan",
+   "no_lama": 157
+  },
+  {
+   "no": 39,
+   "pisau": "Prajna Jagratara",
+   "bab": "Bab 3, Bab 4",
+   "waluya": [
+    "Bageur",
+    "Bener"
+   ],
+   "uji_jujur": "Apakah saya mendatanginya pagi hari demi kesepakatan, atau supaya kemarahan semalam tersalurkan dengan sopan?",
+   "pemicu": "gangguan berulang oleh tetangga, anak ikut menanggung",
+   "no_lama": 151
+  },
+  {
+   "no": 40,
+   "pisau": "Prajna Jagratara, Sampir",
+   "bab": "Bab 3",
+   "waluya": [
+    "Cageur",
+    "Bener"
+   ],
+   "uji_jujur": "Apakah saya mencatat waktunya untuk mengubah kebiasaan, atau supaya merasa sudah berbuat sesuatu?",
+   "pemicu": "perbandingan diri yang dipicu tampilan orang lain",
+   "no_lama": 155
+  },
+  {
+   "no": 41,
+   "pisau": "Sampir, Prajna Jagratara",
+   "bab": "Bab 4, Bab 5",
+   "waluya": [
+    "Bener",
+    "Singer"
+   ],
+   "uji_jujur": "Apakah saya menunda jawaban untuk memeriksa, atau supaya punya waktu menyusun penolakan yang halus?",
+   "pemicu": "pujian dipakai sebagai pembuka permintaan",
+   "no_lama": 163
+  },
+  {
+   "no": 42,
+   "pisau": "Sindir",
+   "bab": "Bab 5",
+   "waluya": [
+    "Bener",
+    "Cageur"
+   ],
+   "uji_jujur": "Apakah saya menunggu sampai sore karena tenang, atau karena berharap perkaranya hilang sendiri?",
+   "pemicu": "agresi pasif di ruang bersama",
+   "no_lama": 156
+  },
+  {
+   "no": 43,
+   "pisau": "Sampir, Silib",
+   "bab": "Bab 5",
+   "waluya": [
+    "Pinter",
+    "Cageur"
+   ],
+   "uji_jujur": "Apakah saya mencari sumber yang tidak sepakat, atau hanya yang mudah saya patahkan?",
+   "pemicu": "berita yang mencocoki keyakinan sendiri",
+   "no_lama": 165
+  },
+  {
+   "no": 44,
+   "pisau": "Silib",
+   "bab": "Bab 5",
+   "waluya": [
+    "Pinter",
+    "Singer"
+   ],
+   "uji_jujur": "Apakah saya sungguh memeriksa, atau menunda keputusan karena takut kehilangan kesempatan?",
+   "pemicu": "desakan kebutuhan ditambah ketentuan yang diklaim tanpa bukti",
+   "no_lama": 66
+  },
+  {
+   "no": 45,
+   "pisau": "Prajna Jagratara",
+   "bab": "Bab 4",
+   "waluya": [
+    "Bageur",
+    "Bener"
+   ],
+   "uji_jujur": "Apakah saya mendatanginya untuk mencari jalan bersama, atau untuk menagih dengan cara yang sopan?",
+   "pemicu": "gangguan nyata dari orang yang keadaannya sulit",
+   "no_lama": 164
+  },
+  {
+   "no": 46,
+   "pisau": "Silib",
+   "bab": "Bab 5",
+   "waluya": [
+    "Pinter",
+    "Cageur"
+   ],
+   "uji_jujur": "Apakah saya menghubungi keluarga lebih dulu karena itu yang pasti, atau karena takut menghadapi penelepon itu?",
+   "pemicu": "urgensi yang diklaim menyangkut keluarga",
+   "no_lama": 166
+  },
+  {
+   "no": 47,
+   "pisau": "Prajna Jagratara",
+   "bab": "Bab 4",
+   "waluya": [
+    "Bageur",
+    "Bener"
+   ],
+   "uji_jujur": "Apakah saya menanyakan izin orang itu karena hak dia, atau supaya saya bersih dari perkaranya?",
+   "pemicu": "diseret ikut menyebarkan aib orang lain",
+   "no_lama": 159
+  },
+  {
+   "no": 48,
+   "pisau": "Prajna Jagratara, Silib",
+   "bab": "Bab 3, Bab 4",
+   "waluya": [
+    "Singer",
+    "Bageur"
+   ],
+   "uji_jujur": "Apakah saya bersuara demi anak-anak di ruangan itu, atau demi terlihat berani?",
+   "pemicu": "pelanggaran terbuka merugikan pihak yang tak bisa membela diri",
+   "no_lama": 158
+  },
+  {
+   "no": 49,
+   "pisau": "Silib, Sindir",
+   "bab": "Bab 5",
+   "waluya": [
+    "Bener",
+    "Bageur"
+   ],
+   "uji_jujur": "Apakah saya tidak menyebut dugaan karena belum pasti, atau supaya tetap terlihat baik di mata warga?",
+   "pemicu": "kerugian berulang dengan pelaku yang hanya diduga",
+   "no_lama": 167
+  },
+  {
+   "no": 50,
+   "pisau": "Sindir, Prajna Jagratara",
+   "bab": "Bab 4, Bab 5",
+   "waluya": [
+    "Bener",
+    "Singer"
+   ],
+   "uji_jujur": "Apakah saya menyatakan tidak berpihak karena memang begitu, atau untuk menghindari kehilangan salah satunya?",
+   "pemicu": "nama diseret ke dalam perkara orang lain",
+   "no_lama": 161
+  },
+  {
+   "no": 51,
+   "pisau": "Prajna Jagratara",
+   "bab": "Bab 3, Bab 4",
+   "waluya": [
+    "Bageur",
+    "Bener"
+   ],
+   "uji_jujur": "Apakah saya menjawab sebatas yang ia tanyakan karena itu haknya, atau karena saya sendiri tidak siap?",
+   "pemicu": "pertanyaan anak yang melampaui kesiapan orang tuanya",
+   "no_lama": 168
+  },
+  {
+   "no": 52,
+   "pisau": "Prajna Jagratara",
+   "bab": "Bab 4",
+   "waluya": [
+    "Bener",
+    "Singer"
+   ],
+   "uji_jujur": "Apakah saya menyepakati aturannya demi peserta lain, atau untuk membalas rasa jengkel yang menumpuk?",
+   "pemicu": "keteledoran berulang yang ditanggung banyak orang",
+   "no_lama": 169
+  },
+  {
+   "no": 53,
+   "pisau": "Silib",
+   "bab": "Bab 5",
+   "waluya": [
+    "Bener",
+    "Singer"
+   ],
+   "uji_jujur": "Apakah saya menanyakannya ke loket demi pengunjung lain juga, atau hanya agar uang saya tidak keluar?",
+   "pemicu": "pungutan berdalih ketentuan yang tidak ditunjukkan",
+   "no_lama": 162
+  },
+  {
+   "no": 54,
+   "pisau": "Prajna Jagratara",
+   "bab": "Bab 3, Bab 4",
+   "waluya": [
+    "Bener",
+    "Cageur"
+   ],
+   "uji_jujur": "Apakah saya menelepon hari itu juga demi kasirnya, atau supaya saya cepat lepas dari rasa tidak enak?",
+   "pemicu": "keuntungan yang datang dari kekeliruan orang lain",
+   "no_lama": 170
+  },
+  {
+   "no": 55,
+   "pisau": "Sindir, Prajna Jagratara",
+   "bab": "Bab 4, Bab 5",
+   "waluya": [
+    "Cageur",
+    "Bageur"
+   ],
+   "uji_jujur": "Apakah saya menyebutkan batas itu dengan terus terang, atau membungkusnya supaya ibu saya tidak kecewa?",
+   "pemicu": "kewajiban keluarga berbenturan dengan kenyamanan sendiri",
+   "no_lama": 171
+  }
+ ]
+}

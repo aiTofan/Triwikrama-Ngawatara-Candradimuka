@@ -5,5 +5,6 @@ export const KOLEKSI = {
   USERS: "users",
   PAPAN: "papan",
   PESANAN: "pesanan",
-  KODE_AKSES: "kode_akses"
+  KODE_AKSES: "kode_akses",
+  PENGATURAN: "pengaturan"
 };

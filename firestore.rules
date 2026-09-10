@@ -32,9 +32,15 @@ service cloud.firestore {
     }
 
     match /sessions/{sessionId} {
-      allow read: if isSignedIn() && (resource.data.peserta_id == request.auth.uid || isAdmin() || resource.data.status == 'selesai'); // Allow reading finished sessions for leaderboard
+      allow read: if isSignedIn() && (resource.data.peserta_id == request.auth.uid || isAdmin() || resource.data.status == 'selesai' || resource.data.status == 'terverifikasi'); // Allow reading finished sessions for leaderboard
       allow create: if isSignedIn() && incoming().peserta_id == request.auth.uid;
       allow update: if isSignedIn() && resource.data.peserta_id == request.auth.uid;
+      allow delete: if isAdmin();
+    }
+    
+    match /rankings/{rankingId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
     }
 
     match /bank_soal/{soalId} {
@@ -42,6 +48,11 @@ service cloud.firestore {
     }
     match /soal_publik/{soalId} {
       allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    match /pengaturan/{document=**} {
+      allow read: if true;
       allow write: if isAdmin();
     }
   }

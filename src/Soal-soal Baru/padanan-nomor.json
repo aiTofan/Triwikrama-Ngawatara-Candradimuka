@@ -1,0 +1,1428 @@
+{
+ "keterangan": "Padanan nomor baru dan nomor lama bank soal. Alamat unik sebuah butir adalah pasangan bagian dan no.",
+ "aturan_penomoran": "Penomoran ulang hanya dikerjakan sekali. Sesudah ini bank bersifat tambah-di-belakang: butir baru mengambil nomor berikutnya dan tidak pernah menggeser nomor yang sudah ada, supaya catatan jawaban peserta tidak ikut bergeser.",
+ "catatan_urutan": "Butir berjangkar dan jangkar-palsu disisipkan pada jarak yang merata sepanjang deret dan diselang-seling satu sama lain. Butir polos disusun dengan meratakan wajah keadaan 0 (meledak dan mengkerut); pada Akasa hal itu tidak berlaku sebab butirnya berformat pembacaan, bukan tindakan.",
+ "padanan": [
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 1,
+   "no_lama": 6,
+   "judul": "Berita Keberhasilan Kompetitor"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 2,
+   "no_lama": 51,
+   "judul": "Upah Dipotong Sepihak"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 3,
+   "no_lama": 1,
+   "judul": "Kebisingan Media Sosial"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 4,
+   "no_lama": 2,
+   "judul": "Kritik dari Atasan di Depan Umum"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 5,
+   "no_lama": 7,
+   "judul": "Keluhan Pelanggan yang Marah"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 6,
+   "no_lama": 3,
+   "judul": "Gosip di Lingkungan Kerja"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 7,
+   "no_lama": 8,
+   "judul": "Antrean yang Diserobot"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 8,
+   "no_lama": 9,
+   "judul": "Kegagalan Rencana Liburan"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 9,
+   "no_lama": 5,
+   "judul": "Pujian Berlebihan"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 10,
+   "no_lama": 13,
+   "judul": "Anak yang Mogok Sekolah"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 11,
+   "no_lama": 59,
+   "judul": "Foto Dagangan Dipakai Orang Lain"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 12,
+   "no_lama": 4,
+   "judul": "Menghadapi Provokasi di Jalan"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 13,
+   "no_lama": 46,
+   "judul": "Bintang Satu Tanpa Keterangan"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 14,
+   "no_lama": 15,
+   "judul": "Inventaris Kantor Dibawa Pulang"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 15,
+   "no_lama": 47,
+   "judul": "Pembeli Menawar dengan Harga Aplikasi"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 16,
+   "no_lama": 10,
+   "judul": "Permintaan Sumbangan Dadakan"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 17,
+   "no_lama": 49,
+   "judul": "Warga Baru yang Dibicarakan"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 18,
+   "no_lama": 12,
+   "judul": "Kesalahan Rekan Setim"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 19,
+   "no_lama": 48,
+   "judul": "Murid Merekam Anda Mengajar"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 20,
+   "no_lama": 52,
+   "judul": "Kabar Berantai tentang Pupuk Palsu"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 21,
+   "no_lama": 65,
+   "judul": "Aplikasi Meminta Akses Kontak"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 22,
+   "no_lama": 54,
+   "judul": "Kemarahan di Ruang Tunggu"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 23,
+   "no_lama": 56,
+   "judul": "Linimasa yang Selalu Membuat Marah"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 24,
+   "no_lama": 53,
+   "judul": "Permintaan Kiriman dari Kampung"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 25,
+   "no_lama": 11,
+   "judul": "Kritik Terhadap Karya Anda"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 26,
+   "no_lama": 14,
+   "judul": "Fitnah di Grup Komunitas"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 27,
+   "no_lama": 58,
+   "judul": "Pinjaman yang Tidak Pernah Disinggung"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 28,
+   "no_lama": 55,
+   "judul": "Anak dan Gawainya"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 29,
+   "no_lama": 61,
+   "judul": "Pemasok Menaikkan Harga Sepihak"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 30,
+   "no_lama": 74,
+   "judul": "Kontrak yang Tidak Sempat Dibaca"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 31,
+   "no_lama": 50,
+   "judul": "Komentar Tetangga tentang Anak Anda"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 32,
+   "no_lama": 60,
+   "judul": "Dompet Tertinggal di Jok"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 33,
+   "no_lama": 152,
+   "judul": "Tayangan yang Membuat Anda Marah"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 34,
+   "no_lama": 57,
+   "judul": "Telepon Mengatasnamakan Bank"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 35,
+   "no_lama": 154,
+   "judul": "Diskon yang Habis Dalam Satu Jam"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 36,
+   "no_lama": 153,
+   "judul": "Kabar Duka yang Belum Jelas"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 37,
+   "no_lama": 160,
+   "judul": "Makan Malam Setelah Hari yang Buruk"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 38,
+   "no_lama": 157,
+   "judul": "Grup yang Hanya Membenarkan"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 39,
+   "no_lama": 151,
+   "judul": "Suara Tetangga di Malam Hari"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 40,
+   "no_lama": 155,
+   "judul": "Foto Liburan Teman Seangkatan"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 41,
+   "no_lama": 163,
+   "judul": "Pujian yang Terasa Berlebihan"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 42,
+   "no_lama": 156,
+   "judul": "Pesan Sindiran di Grup Kantor"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 43,
+   "no_lama": 165,
+   "judul": "Berita yang Membenarkan Pendapat Anda"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 44,
+   "no_lama": 66,
+   "judul": "Lowongan yang Meminta Bayar di Muka"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 45,
+   "no_lama": 164,
+   "judul": "Bau Menyengat dari Warung Sebelah"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 46,
+   "no_lama": 166,
+   "judul": "Panggilan Tak Dikenal Berulang"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 47,
+   "no_lama": 159,
+   "judul": "Tangkapan Layar Percakapan Pribadi"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 48,
+   "no_lama": 158,
+   "judul": "Rokok di Ruang Tunggu"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 49,
+   "no_lama": 167,
+   "judul": "Sampah di Depan Pagar"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 50,
+   "no_lama": 161,
+   "judul": "Perdebatan yang Tidak Anda Mulai"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 51,
+   "no_lama": 168,
+   "judul": "Anak Bertanya Soal yang Belum Waktunya"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 52,
+   "no_lama": 169,
+   "judul": "Rekan yang Selalu Datang Terlambat"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 53,
+   "no_lama": 162,
+   "judul": "Pungutan di Pintu Masuk"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 54,
+   "no_lama": 170,
+   "judul": "Uang Kembalian yang Kelebihan"
+  },
+  {
+   "tingkat": "Bhurloka",
+   "bagian": 1,
+   "no_baru": 55,
+   "no_lama": 171,
+   "judul": "Undangan yang Tidak Ingin Anda Datangi"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 1,
+   "no_lama": 16,
+   "judul": "Laporan Proyek Sempurna"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 2,
+   "no_lama": 69,
+   "judul": "Tawaran Merek Pengganti di Apotek"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 3,
+   "no_lama": 18,
+   "judul": "Dua Ahli yang Bertolak Belakang"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 4,
+   "no_lama": 19,
+   "judul": "Pasal dalam Draf Aturan Pengadaan"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 5,
+   "no_lama": 20,
+   "judul": "Pengumuman Penyaluran Bantuan"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 6,
+   "no_lama": 21,
+   "judul": "Bahan Kampanye yang Disiapkan Tim"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 7,
+   "no_lama": 17,
+   "judul": "Pengumuman Pembangunan Pabrik"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 8,
+   "no_lama": 22,
+   "judul": "Memo Efisiensi Struktural"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 9,
+   "no_lama": 23,
+   "judul": "Tanggapan Manajemen atas Tuntutan Upah"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 10,
+   "no_lama": 24,
+   "judul": "Tiga Kuitansi yang Berdampingan"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 11,
+   "no_lama": 26,
+   "judul": "Presentasi Hasil Proyek"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 12,
+   "no_lama": 73,
+   "judul": "Pengumuman Kenaikan Iuran Komite"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 13,
+   "no_lama": 27,
+   "judul": "Percakapan di Tahap Akhir Tender"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 14,
+   "no_lama": 28,
+   "judul": "Ketentuan Agunan Kredit Usaha"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 15,
+   "no_lama": 29,
+   "judul": "Jawaban Pengurus soal Pengeras Suara"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 16,
+   "no_lama": 30,
+   "judul": "Baris Laporan Tahunan CSR"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 17,
+   "no_lama": 25,
+   "judul": "Surat Edaran Pembelajaran Berbasis Aplikasi"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 18,
+   "no_lama": 62,
+   "judul": "Jawaban Pengurus Koperasi"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 19,
+   "no_lama": 63,
+   "judul": "Tawaran Pinjaman Sepuluh Menit"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 20,
+   "no_lama": 67,
+   "judul": "Daftar Penerima yang Bertanda Tangan Lengkap"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 21,
+   "no_lama": 68,
+   "judul": "Belasan Ulasan dalam Satu Malam"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 22,
+   "no_lama": 173,
+   "judul": "Pengumuman di Papan Puskesmas"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 23,
+   "no_lama": 71,
+   "judul": "Pengumuman Pemasangan Mesin Baru"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 24,
+   "no_lama": 72,
+   "judul": "Usulan Ketua Arisan"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 25,
+   "no_lama": 75,
+   "judul": "Unggahan Pembagian Bantuan"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 26,
+   "no_lama": 172,
+   "judul": "Selebaran tentang Satu Tangan yang Kuat"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 27,
+   "no_lama": 64,
+   "judul": "Permintaan Kepala Sekolah"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 28,
+   "no_lama": 174,
+   "judul": "Pesan yang Menyebar Cepat"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 29,
+   "no_lama": 175,
+   "judul": "Dapur Bersama dan Koperasi Desa"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 30,
+   "no_lama": 176,
+   "judul": "Aliran Anggaran Dapur Bersama"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 31,
+   "no_lama": 184,
+   "judul": "Enam Berbanding Empat"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 32,
+   "no_lama": 177,
+   "judul": "Saya Sudah Perintahkan"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 33,
+   "no_lama": 178,
+   "judul": "Dua Sambutan untuk Jembatan yang Sama"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 34,
+   "no_lama": 179,
+   "judul": "Lukisan di Gerbang Kampung"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 35,
+   "no_lama": 180,
+   "judul": "Calon yang Tidak Punya Apa-apa"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 36,
+   "no_lama": 70,
+   "judul": "Keterangan Penyuluh tentang Bibit"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 37,
+   "no_lama": 181,
+   "judul": "Yang Paham Situasi Tentu Mengerti"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 38,
+   "no_lama": 182,
+   "judul": "Istilah yang Tiba-tiba Ada di Mana-mana"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 39,
+   "no_lama": 183,
+   "judul": "Dahulu Kampung Ini Tidak Pernah Berselisih"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 40,
+   "no_lama": 185,
+   "judul": "Lambang yang Dipasang Kembali"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 41,
+   "no_lama": 200,
+   "judul": "Dihadiri Seluruh Perwakilan"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 42,
+   "no_lama": 186,
+   "judul": "Mengencangkan Ikat Pinggang"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 43,
+   "no_lama": 188,
+   "judul": "Dua Kabar pada Satu Halaman"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 44,
+   "no_lama": 189,
+   "judul": "Yang Akan Datang Menyelesaikan Semuanya"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 45,
+   "no_lama": 190,
+   "judul": "Rincian yang Hanya Sebelah"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 46,
+   "no_lama": 187,
+   "judul": "Syarat pada Pengumuman Lelang"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 47,
+   "no_lama": 191,
+   "judul": "Deretan Sebutan di Depan Nama"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 48,
+   "no_lama": 192,
+   "judul": "Pengertian Sebagaimana Biasanya"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 49,
+   "no_lama": 193,
+   "judul": "Pendiri yang Membangun Seorang Diri"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 50,
+   "no_lama": 195,
+   "judul": "Delapan dari Sepuluh"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 51,
+   "no_lama": 194,
+   "judul": "Seragam Baru di Depan Loket"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 52,
+   "no_lama": 196,
+   "judul": "Jangan Sampai Kita Terpecah"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 53,
+   "no_lama": 197,
+   "judul": "Penyesuaian Tekanan pada Jaringan"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 54,
+   "no_lama": 198,
+   "judul": "Angka Besar di Atas Spanduk"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 55,
+   "no_lama": 199,
+   "judul": "Yang Sabar Akan Menuai"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 56,
+   "no_lama": 202,
+   "judul": "Lewat Jalur Kekeluargaan Saja"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 57,
+   "no_lama": 201,
+   "judul": "Gambar yang Beredar Lebih Dulu"
+  },
+  {
+   "tingkat": "Ākāśa",
+   "bagian": 2,
+   "no_baru": 58,
+   "no_lama": 203,
+   "judul": "Keberhasilan yang Ia Sebutkan"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 1,
+   "no_lama": 34,
+   "judul": "Jembatan yang Patah di Hari Pertama"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 2,
+   "no_lama": 33,
+   "judul": "Nasihat untuk Merawat Taman Sendiri"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 3,
+   "no_lama": 32,
+   "judul": "Jejak yang Diminta Dihapus"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 4,
+   "no_lama": 37,
+   "judul": "Sumur yang Masih Berair di Musim Kering"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 5,
+   "no_lama": 31,
+   "judul": "Saluran yang Digali Bertahun-tahun"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 6,
+   "no_lama": 102,
+   "judul": "Kabar dari Mulut Orang Tua Sendiri"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 7,
+   "no_lama": 41,
+   "judul": "Dua yang Mencalonkan Diri Menjaga Air"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 8,
+   "no_lama": 39,
+   "judul": "Tangan yang Mulai Dicium"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 9,
+   "no_lama": 35,
+   "judul": "Sepuluh Petak dan Yang Menunggui"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 10,
+   "no_lama": 44,
+   "judul": "Catatan Lama yang Dibawa Pulang"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 11,
+   "no_lama": 76,
+   "judul": "Tali Perahu yang Dilepas"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 12,
+   "no_lama": 77,
+   "judul": "Kembalian dari Penjual di Ujung Pasar"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 13,
+   "no_lama": 110,
+   "judul": "Nama di Umbul-umbul"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 14,
+   "no_lama": 38,
+   "judul": "Beras untuk Anak Yatim"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 15,
+   "no_lama": 78,
+   "judul": "Pipa yang Ditanam Sendiri"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 16,
+   "no_lama": 79,
+   "judul": "Beras untuk Tungku yang Jarang Menyala"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 17,
+   "no_lama": 36,
+   "judul": "Sumur yang Dianggap Keramat"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 18,
+   "no_lama": 83,
+   "judul": "Usulan dari Orang yang Berseberangan"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 19,
+   "no_lama": 85,
+   "judul": "Kekeliruan Orang yang Rumahnya Tertimpa"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 20,
+   "no_lama": 80,
+   "judul": "Anak Ayam di Dalam Keranjang"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 21,
+   "no_lama": 113,
+   "judul": "Tampuk yang Tidak Diinginkan"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 22,
+   "no_lama": 87,
+   "judul": "Tempat yang Licin"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 23,
+   "no_lama": 43,
+   "judul": "Jalan Lain yang Ditempuh Diam-diam"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 24,
+   "no_lama": 40,
+   "judul": "Guru yang Melukai Murid Baru"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 25,
+   "no_lama": 91,
+   "judul": "Palang Kandang yang Salah Letak"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 26,
+   "no_lama": 81,
+   "judul": "Diminta Memimpin Kerja Bakti"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 27,
+   "no_lama": 94,
+   "judul": "Patok Pematang yang Dipersoalkan"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 28,
+   "no_lama": 123,
+   "judul": "Tulisan di Papan Pengumuman"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 29,
+   "no_lama": 95,
+   "judul": "Pantun yang Disalin Tanpa Nama"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 30,
+   "no_lama": 82,
+   "judul": "Petak Sawah yang Hendak Dijual"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 31,
+   "no_lama": 100,
+   "judul": "Ladang yang Disebut Miliknya"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 32,
+   "no_lama": 42,
+   "judul": "Petak Hutan dan Surat yang Sah"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 33,
+   "no_lama": 45,
+   "judul": "Api yang Tidak Pernah Padam"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 34,
+   "no_lama": 101,
+   "judul": "Selendang Kehormatan"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 35,
+   "no_lama": 84,
+   "judul": "Tepuk Tangan untuk Lumbung"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 36,
+   "no_lama": 127,
+   "judul": "Cap untuk Teman yang Tidak Datang"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 37,
+   "no_lama": 103,
+   "judul": "Berdiri di Depan Balai"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 38,
+   "no_lama": 86,
+   "judul": "Patokan yang Ternyata Keliru"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 39,
+   "no_lama": 90,
+   "judul": "Takaran Panen yang Diminta Ditulis"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 40,
+   "no_lama": 104,
+   "judul": "Air Mata dan Pembeli yang Belum Tahu"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 41,
+   "no_lama": 108,
+   "judul": "Kendi Balai yang Pecah"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 42,
+   "no_lama": 105,
+   "judul": "Buntalan di Tepi Jalan"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 43,
+   "no_lama": 142,
+   "judul": "Menang karena Berkas Lawan Terlambat"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 44,
+   "no_lama": 88,
+   "judul": "Yang Diminta Ditutupi demi Nama"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 45,
+   "no_lama": 107,
+   "judul": "Tuduhan di Tengah Balai"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 46,
+   "no_lama": 111,
+   "judul": "Tangga yang Dahulu Ditarik"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 47,
+   "no_lama": 106,
+   "judul": "Tembok yang Melewati Patok"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 48,
+   "no_lama": 89,
+   "judul": "Giliran Air yang Berlebih"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 49,
+   "no_lama": 114,
+   "judul": "Pembangunan yang Salah Sasaran"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 50,
+   "no_lama": 117,
+   "judul": "Dibantah di Hadapan Anak"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 51,
+   "no_lama": 109,
+   "judul": "Dua Nama yang Harus Turun"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 52,
+   "no_lama": 115,
+   "judul": "Anyaman yang Ditiru"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 53,
+   "no_lama": 92,
+   "judul": "Kunci Lumbung yang Ditawarkan"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 54,
+   "no_lama": 112,
+   "judul": "Cap pada Catatan Musyawarah"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 55,
+   "no_lama": 118,
+   "judul": "Sampan yang Diperbaiki di Buritan"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 56,
+   "no_lama": 122,
+   "judul": "Perkumpulan yang Menutup Pintu"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 57,
+   "no_lama": 93,
+   "judul": "Yang Tidak Lagi Disapa"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 58,
+   "no_lama": 116,
+   "judul": "Cerita Enaknya Masakan"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 59,
+   "no_lama": 121,
+   "judul": "Dipuji sebagai Yang Tidak Pernah Naik Suara"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 60,
+   "no_lama": 125,
+   "judul": "Yang Terlihat di Sumur Ujung"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 61,
+   "no_lama": 96,
+   "judul": "Lukisan yang Ditempel di Balai"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 62,
+   "no_lama": 120,
+   "judul": "Uang Damai di Pinggir Jalan"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 63,
+   "no_lama": 126,
+   "judul": "Murid yang Melampaui"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 64,
+   "no_lama": 130,
+   "judul": "Orang Tua yang Menolak Dibantu"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 65,
+   "no_lama": 97,
+   "judul": "Yang Berlutut di Tengah Balai"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 66,
+   "no_lama": 128,
+   "judul": "Selisih dalam Sumbangan Hajatan"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 67,
+   "no_lama": 131,
+   "judul": "Mewakili tanpa Ditunjuk Semua"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 68,
+   "no_lama": 124,
+   "judul": "Yang Berbicara atas Nama Anda"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 69,
+   "no_lama": 129,
+   "judul": "Utang yang Disembunyikan Pasangan"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 70,
+   "no_lama": 133,
+   "judul": "Rencana Sahabat yang Anda Ragukan"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 71,
+   "no_lama": 98,
+   "judul": "Kunci Peti Kas dan Atap yang Roboh"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 72,
+   "no_lama": 134,
+   "judul": "Menengahi Dua yang Sama Dekatnya"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 73,
+   "no_lama": 135,
+   "judul": "Lumbung yang Tidak Pernah Dibuka Catatannya"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 74,
+   "no_lama": 137,
+   "judul": "Laku yang Belum Anda Jalani"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 75,
+   "no_lama": 99,
+   "judul": "Padi yang Tidak Pernah Kembali"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 76,
+   "no_lama": 138,
+   "judul": "Yang Ditolong Menjadi Bergantung"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 77,
+   "no_lama": 139,
+   "judul": "Kunci Pintu Air yang Bukan Milik Anda"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 78,
+   "no_lama": 136,
+   "judul": "Dikritik yang Lebih Muda di Depan Orang"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 79,
+   "no_lama": 143,
+   "judul": "Cerita yang Disebarkan tentang Anda"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 80,
+   "no_lama": 119,
+   "judul": "Takaran Panen yang Sudah Terkirim"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 81,
+   "no_lama": 140,
+   "judul": "Menimbang Kerabat Sendiri"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 82,
+   "no_lama": 144,
+   "judul": "Retakan yang Diminta Dilembutkan"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 83,
+   "no_lama": 132,
+   "judul": "Perahu dengan Lubang Kecil"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 84,
+   "no_lama": 145,
+   "judul": "Warisan yang Berat Sebelah"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 85,
+   "no_lama": 147,
+   "judul": "Cara Menakar yang Ternyata Keliru"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 86,
+   "no_lama": 141,
+   "judul": "Musyawarah yang Sudah Diputuskan"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 87,
+   "no_lama": 149,
+   "judul": "Kentongan yang Harus Dibunyikan"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 88,
+   "no_lama": 148,
+   "judul": "Barang yang Datang Menjelang Hari Raya"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 89,
+   "no_lama": 146,
+   "judul": "Diajak Menjauhi atas Kesalahan Lampau"
+  },
+  {
+   "tingkat": "Paramārtha",
+   "bagian": 3,
+   "no_baru": 90,
+   "no_lama": 150,
+   "judul": "Gerbang yang Dibuka Setahun Sekali"
+  }
+ ]
+}

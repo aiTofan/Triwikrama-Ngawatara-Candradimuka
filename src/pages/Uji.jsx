@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { Layout } from "../components/Layout";
+import { Loader, SkeletonTest } from "../components/Loader";
 import { Kropak } from "../components/Kropak";
 import { Tritangtu } from "../components/Tritangtu";
 import { useAuth } from "../auth";
@@ -9,8 +10,10 @@ import { sesiService } from "../services/sesiService";
 const BLOCK = 15;
 
 import { TINGKAT } from "../domain/soal";
+import { usePelindungUji } from "../lib/pelindungUji.jsx";
 
 export default function Uji() {
+  const { pindahFokusCount, PelindungOverlay } = usePelindungUji();
   const { sesiId } = useParams();
   const nav = useNavigate();
   const { user, loading } = useAuth();
@@ -19,6 +22,30 @@ export default function Uji() {
   const [err, setErr] = useState("");
   const [finishing, setFinishing] = useState(false);
   const [checkpoint, setCheckpoint] = useState(null); // {blk, totalBlocks}
+
+  const lastEnterTime = useRef(Date.now());
+  const durasiAccumulator = useRef({});
+  const prevIdx = useRef(0);
+
+  useEffect(() => {
+    const localDurasi = localStorage.getItem(`sesi_${sesiId}_durasi`);
+    if (localDurasi) {
+      try {
+        durasiAccumulator.current = JSON.parse(localDurasi);
+      } catch (e) {}
+    }
+  }, [sesiId]);
+
+  useEffect(() => {
+    if (prevIdx.current !== idx) {
+      const now = Date.now();
+      const elapsed = now - lastEnterTime.current;
+      durasiAccumulator.current[prevIdx.current] = (durasiAccumulator.current[prevIdx.current] || 0) + elapsed;
+      lastEnterTime.current = now;
+      prevIdx.current = idx;
+      localStorage.setItem(`sesi_${sesiId}_durasi`, JSON.stringify(durasiAccumulator.current));
+    }
+  }, [idx, sesiId]);
 
   useEffect(() => {
     if (loading) return;
@@ -73,6 +100,8 @@ export default function Uji() {
         if (firstUnanswered !== -1) start = Math.min(start, firstUnanswered);
         if (start >= ids.length) start = ids.length - 1;
         setIdx(Math.max(0, start));
+        prevIdx.current = Math.max(0, start);
+        lastEnterTime.current = Date.now();
       } catch (e) { 
         console.error(e);
         setErr("Sesi tidak ditemukan."); 
@@ -81,7 +110,7 @@ export default function Uji() {
   }, [sesiId, user, loading, nav]);
 
   if (err) return <Layout><p className="err">{err}</p><Link to="/">Kembali ke beranda</Link></Layout>;
-  if (!sesi) return <Layout><p className="cd-muted">Memuat…</p></Layout>;
+  if (!sesi) return <Layout><Loader /><SkeletonTest /></Layout>;
 
   const ids = sesi.soal_ids;
   const total = ids.length;
@@ -131,11 +160,6 @@ export default function Uji() {
 
   const goNext = () => {
     const nextIdx = idx + 1;
-    if (sesi.jenis === "paramartha" && nextIdx % BLOCK === 0 && nextIdx < total) {
-      setCheckpoint({ blk: nextIdx / BLOCK, totalBlocks });
-      persistStateToDb(nextIdx, jawaban);
-      return;
-    }
     setIdx(nextIdx);
   };
 
@@ -153,8 +177,26 @@ export default function Uji() {
   const selesai = async () => {
     setFinishing(true);
     try { 
+      // Update the final duration for the current index before submitting
+      const now = Date.now();
+      const elapsed = now - lastEnterTime.current;
+      durasiAccumulator.current[idx] = (durasiAccumulator.current[idx] || 0) + elapsed;
+      
+      const durasi_ms = ids.map((_, i) => durasiAccumulator.current[i] || 0);
+      const total_durasi_ms = durasi_ms.reduce((a, b) => a + b, 0);
+
       const { hitungSkorDariPublik } = await import('../penilaian');
+      const { analisisPerilaku } = await import('../lib/deteksiBot');
+      const { pengaturanService } = await import('../services/pengaturanService');
+      
+      const appConfig = await pengaturanService.getAppConfig();
       const hasil = hitungSkorDariPublik({ ...sesi, jawaban: sesi.jawaban });
+      
+      let deteksi = { skor_curiga: 0, alasan: [] };
+      if (appConfig.bot_protection !== false) {
+        deteksi = analisisPerilaku(durasi_ms, sesi.jawaban, ids, sesi.soal_detail, pindahFokusCount);
+      }
+      
       const payload = {
         jawaban: sesi.jawaban,
         status: 'selesai',
@@ -163,6 +205,12 @@ export default function Uji() {
         disk: hasil.disk,
         penalti_jebakan: hasil.penalti_jebakan,
         penalti_deviasi: hasil.penalti_deviasi,
+        pindah_fokus: pindahFokusCount,
+        durasi_ms: durasi_ms,
+        total_durasi_ms: total_durasi_ms,
+        curiga: deteksi.skor_curiga > 0,
+        skor_curiga: deteksi.skor_curiga,
+        alasan_curiga: deteksi.alasan,
         selesai_pada: new Date().toISOString()
       };
 
@@ -185,6 +233,7 @@ export default function Uji() {
       
       localStorage.removeItem(`sesi_${sesiId}_jawaban`);
       localStorage.removeItem(`sesi_${sesiId}_posisi`);
+      localStorage.removeItem(`sesi_${sesiId}_durasi`);
       
       nav(`/hasil/${sesiId}`); 
     }
@@ -213,19 +262,25 @@ export default function Uji() {
 
   return (
     <Layout>
+      <PelindungOverlay />
+      {idx === 0 && (
+        <p className="cd-muted" style={{ marginBottom: 16, fontSize: '13px', textAlign: 'center' }}>
+          Selama ujian, penyalinan teks dimatikan dan layar akan diburamkan bila kamu berpindah tab.
+        </p>
+      )}
       <div className="uji-head">
         <Tritangtu corners={corners} answered={answeredCount} total={total} size={34} />
         <span className="uji-count" data-testid="uji-count">{sesi.tier_nama} · {idx + 1} / {total}</span>
       </div>
       <Kropak>
-        {soal.judul && <div className="skenario-judul">{soal.judul}</div>}
-        <p className="skenario-teks" data-testid="skenario">{soal.skenario}</p>
+        {soal.judul && <div className="skenario-judul protected-text">{soal.judul}</div>}
+        <p className="skenario-teks protected-text" data-testid="skenario">{soal.skenario}</p>
       </Kropak>
       <div className="opsi-list" data-testid="opsi-list">
         {soal.pilihan.map((p) => {
           const optId = p.opsi_id || p.id || p.token; // Fallbacks just in case but relying on opsi_id
           return (
-            <button key={optId} className={"opsi-card" + (chosen === optId ? " selected" : "")} data-testid={`opsi-${optId}`} onClick={() => pick(optId)}>
+            <button key={optId} className={"opsi-card protected-text" + (chosen === optId ? " selected" : "")} data-testid={`opsi-${optId}`} onClick={() => pick(optId)}>
               {p.teks}
             </button>
           )

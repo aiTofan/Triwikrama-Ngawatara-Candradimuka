@@ -1,4 +1,6 @@
-import { bukaSkor } from "./lib/kunciSkor";
+const fs = require('fs');
+
+const code = `import { bukaSkor } from "./lib/kunciSkor";
 import { JENIS } from "./domain/soal";
 
 const SKALA_PENUH = 100;
@@ -155,3 +157,7 @@ export function hitungSkorDariPublik(sesi) {
       skala_versi: 2
    };
 }
+`;
+
+fs.writeFileSync('src/penilaian.js', code);
+console.log("Patched penilaian");
